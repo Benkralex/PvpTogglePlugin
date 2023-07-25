@@ -1,0 +1,7 @@
+name: Pvptoggle
+version: '${project.version}'
+main: benkralex.pvptoggle.Pvptoggle
+api-version: 1.20
+permissions:
+  pvp.toggle:
+    default: true
