@@ -2,82 +2,49 @@ package benkralex.pvptoggle;
 
 
 import org.bukkit.NamespacedKey;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.persistence.PersistentDataAdapterContext;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
-import sun.reflect.generics.tree.ArrayTypeSignature;
-
-import java.sql.Array;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.projectiles.ProjectileSource;
 
 public class PvpEvent implements Listener {
 
-    @EventHandler
-    public static void pvpListener(EntityDamageByEntityEvent event) {
+    @EventHandler(ignoreCancelled = true)
+    public void pvpListener(EntityDamageByEntityEvent event) {
         Entity damager = event.getDamager();
         Entity victim = event.getEntity();
 
-        if (damager instanceof Player && victim instanceof Player) {
-            List<PersistentDataContainer> pvpvictimsList;
-            List<PersistentDataContainer> pvpvictimsListdamager;
-            PersistentDataContainer pdc = victim.getPersistentDataContainer();
-            PersistentDataContainer pdcdamager = damager.getPersistentDataContainer();
-            PersistentDataContainer[] pvpvictims = pdc.get(new NamespacedKey(Pvptoggle.pvptoggle, "pvpvictims"), PersistentDataType.TAG_CONTAINER_ARRAY);
-            PersistentDataContainer[] pvpvictimsdamager = pdcdamager.get(new NamespacedKey(Pvptoggle.pvptoggle, "pvpvictims"), PersistentDataType.TAG_CONTAINER_ARRAY);
-            boolean canpvp = false;
-            String victimuuid = victim.getUniqueId().toString();
-
-            if (pvpvictims != null) {
-                pvpvictimsList = new ArrayList<PersistentDataContainer>(Arrays.asList(pvpvictims));
-            } else {
-                pvpvictimsList = new ArrayList<PersistentDataContainer>();
-            }
-
-            if (pvpvictimsdamager != null) {
-                pvpvictimsListdamager = new ArrayList<PersistentDataContainer>(Arrays.asList(pvpvictimsdamager));
-            } else {
-                pvpvictimsListdamager = new ArrayList<PersistentDataContainer>();
-            }
-
-            for (int i = 0; i<pvpvictimsListdamager.size(); i++) {
-                PersistentDataContainer pdcfor = pvpvictimsListdamager.get(i);
-                if (pdcfor.get(new NamespacedKey(Pvptoggle.pvptoggle, "time"), PersistentDataType.LONG) >= Instant.now().getEpochSecond() - Config.getpvptime()) {
-                    if (pdcfor.get(new NamespacedKey(Pvptoggle.pvptoggle, "uuid"), PersistentDataType.STRING).equals(victimuuid)) {
-                        canpvp = true;
-                    }
+        if (victim instanceof Player) {
+            Player victimplayer=(Player) victim;
+            Player damagerplayer;
+            if (damager instanceof Player) {
+                damagerplayer=(Player) damager;
+            } else if (damager instanceof Projectile) {
+                ProjectileSource shooter =((Projectile) damager).getShooter();
+                if(shooter instanceof Player){
+                    damagerplayer=(Player) shooter;
                 } else {
-                    pvpvictimsListdamager.remove(i);
-                    i--;
+                    return;
                 }
+            } else {
+                return;
             }
 
-            if (pdc.has(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN) &&
-                    pdc.get(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN) &&
-                    !canpvp) {
-
-                        event.setCancelled(true);
-
+            if (!Util.canPvP(damagerplayer, victimplayer)) {
+                event.setCancelled(true);
             } else {
-                PersistentDataContainer pdcupdated = pdc.getAdapterContext().newPersistentDataContainer();
-                String uuid = damager.getUniqueId().toString();
-                pdcupdated.set(new NamespacedKey(Pvptoggle.pvptoggle, "uuid"), PersistentDataType.STRING, uuid);
-                pdcupdated.set(new NamespacedKey(Pvptoggle.pvptoggle, "time"), PersistentDataType.LONG, Instant.now().getEpochSecond());
-                pvpvictimsList.add(pdcupdated);
-                pvpvictims = pvpvictimsList.toArray(new PersistentDataContainer[pvpvictimsList.size()]);
-                pdc.set(new NamespacedKey(Pvptoggle.pvptoggle, "pvpvictims"), PersistentDataType.TAG_CONTAINER_ARRAY, pvpvictims);
+                Util.savePvPData(damagerplayer,victimplayer);
             }
         }
     }
 
+    @EventHandler
+    public void playerLeaveListener(PlayerQuitEvent event){
+        event.getPlayer().getPersistentDataContainer().remove(new NamespacedKey(Pvptoggle.pvptoggle,"pvpdamagers"));
+    }
 }
-//pdc.getAdapterContext().newPersistentDataContainer()
