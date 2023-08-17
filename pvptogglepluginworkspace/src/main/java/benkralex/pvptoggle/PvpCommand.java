@@ -56,43 +56,60 @@ public class PvpCommand {
     }
 
     public static void pvpToggle(Player sender, CommandArguments args) {
+        NamespacedKey pvptoggle = new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle");
         PersistentDataContainer pdc = sender.getPersistentDataContainer();
-        if (pdc.has(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN)) {
-            pdc.set(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN,
-                    !pdc.get(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN));
-            sender.sendMessage("Dein PvP-Schutz ist jetzt " + (pdc.get(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN)?"an":"aus"));
+        if (pdc.has(pvptoggle, PersistentDataType.BOOLEAN)) {
+            pdc.set(pvptoggle, PersistentDataType.BOOLEAN, !pdc.get(pvptoggle, PersistentDataType.BOOLEAN));
+            sender.sendMessage("Dein PvP-Schutz ist jetzt " + (pdc.get(pvptoggle, PersistentDataType.BOOLEAN)?"an":"aus"));
         } else {
-            pdc.set(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN, true);
-            sender.sendMessage("Dein PvP-Schutz ist jetzt " + (pdc.get(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN)?"an":"aus"));
+            pdc.set(pvptoggle, PersistentDataType.BOOLEAN, true);
+            sender.sendMessage("Dein PvP-Schutz ist jetzt " + (pdc.get(pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN)?"an":"aus"));
         }
     }
 
     public static void pvpUltra(Player sender, CommandArguments args) {
         //PvP Ultra Command
-        sender.sendMessage("Command noch nicht verfügbar");
+        sender.sendMessage("Command noch nicht fertig, er schützt noch nicht vor PvP");
+        NamespacedKey ultra = new NamespacedKey(Pvptoggle.pvptoggle, "ultra");
+        PersistentDataContainer pdc = sender.getPersistentDataContainer();
+        if (pdc.has(ultra, PersistentDataContainer.BOOLEAN)) {
+            pdc.set(ultra, PersistentDataContainer.BOOLEAN, !pdc.get(ultra, PersistentDataContainer.BOOLEAN));
+            sender.sendMessage("PvP-Ultra ist für dich jetzt " + (pdc.get(pvptoggle, PersistentDataType.BOOLEAN)?"an":"aus"));
+        } else {
+            pdc.set(ultra, PersistentDataContainer.BOOLEAN, true);
+            sender.sendMessage("PvP-Ultra ist für dich jetzt " + (pdc.get(pvptoggle, PersistentDataType.BOOLEAN)?"an":"aus"));
+        }
     }
 
     public static void pvpTrust(Player sender, CommandArguments args, Int action) {
         //PvP Trust Command
         if (action == 1) {
             //anzeigen
+            sender.sendMessage("Du kannst dir die Trust-Liste nicht anzeigen");
         } else if (action == 2) {
             //hinzufügen
+            sender.sendMessage("Du kannst " + args[0] + " nicht zur der Trust-Liste hinzufügen");
         } else if (action == 3) {
             //entfernen
+            sender.sendMessage("Du kannst " + args[0] + " nicht aus der Trust-Liste entfernen");
+        } else {
+            sender.sendMessage("Fehler");
         }
-        sender.sendMessage("Command noch nicht verfügbar");
     }
 
     public static void pvpMisstrust(Player sender, CommandArguments args, Int action) {
         //PvP Misstrust Command
         if (action == 1) {
             //anzeigen
+            sender.sendMessage("Du kannst dir die Misstrust-Liste nicht anzeigen");
         } else if (action == 2) {
             //hinzufügen
+            sender.sendMessage("Du kannst " + args[0] + " nicht zur der Misstrust-Liste hinzufügen");
         } else if (action == 3) {
             //entfernen
+            sender.sendMessage("Du kannst " + args[0] + " nicht aus der Misstrust-Liste entfernen");
+        } else {
+            sender.sendMessage("Fehler");
         }
-        sender.sendMessage("Command noch nicht verfügbar");
     }
 }
