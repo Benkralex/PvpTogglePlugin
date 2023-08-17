@@ -33,4 +33,16 @@ public class PvpCommand {
             sender.sendMessage("Dein PvP-Schutz ist jetzt " + (pdc.get(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN)?"an":"aus"));
         }
     }
+
+    public static void pvpUltra(Player sender, CommandArguments args) {
+        //PvP Ultra Command
+    }
+
+    public static void pvpTrust(Player sender, CommandArguments args) {
+        //PvP Trust Command
+    }
+
+    public static void pvpMisstrust(Player sender, CommandArguments args) {
+        //PvP Misstrust Command
+    }
 }
