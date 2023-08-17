@@ -30,6 +30,7 @@ public class PvpCommand {
             sender.sendMessage("Dein PvP-Schutz ist jetzt " + (pdc.get(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN)?"an":"aus"));
         } else {
             pdc.set(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN, true);
+            sender.sendMessage("Dein PvP-Schutz ist jetzt " + (pdc.get(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN)?"an":"aus"));
         }
     }
 }
