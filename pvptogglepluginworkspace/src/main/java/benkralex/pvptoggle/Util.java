@@ -9,10 +9,18 @@ import java.time.Instant;
 
 public class Util {
     public static boolean canPvP(Player damager, Player victim){
-        PersistentDataContainer victimPDC=damager.getPersistentDataContainer();
-        Boolean toggle = victimPDC.get(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"),PersistentDataType.BOOLEAN);
+        PersistentDataContainer damagerPDC=damager.getPersistentDataContainer();
+        PersistentDataContainer victimPDC=victim.getPersistentDataContainer();
+        Boolean toggle = damagerPDC.get(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"),PersistentDataType.BOOLEAN);
+        if (victimPDC.has(new NamespacedKey(Pvptoggle.pvptoggle, "ultra"),PersistentDataType.BOOLEAN)) {
+            Boolean ultravictim = victimPDC.get(new NamespacedKey(Pvptoggle.pvptoggle, "ultra"),PersistentDataType.BOOLEAN);
+        } else {Boolean ultravictim = false;} 
+        if (damagerPDC.has(new NamespacedKey(Pvptoggle.pvptoggle, "ultra"),PersistentDataType.BOOLEAN)) {
+            Boolean ultradamager = damagerPDC.get(new NamespacedKey(Pvptoggle.pvptoggle, "ultra"),PersistentDataType.BOOLEAN);
+        } else {Boolean ultradamager = false;}
+        
         if(toggle!=null) {
-            return !toggle || checkPvPData(damager, victim);
+            return !toggle || checkPvPData(damager, victim) || !ultradamager || !ultravictim;
         } else {
             return true;
         }
