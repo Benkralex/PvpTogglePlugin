@@ -50,8 +50,10 @@ public class PvpEvent implements Listener {
 
     @EventHandler
     public void playerJoinListener(PlayerJoinEvent event) {
-        if (!event.getplayer().hasPersistentDataContainer(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"))) {
-            event.getPlayer().setPersistentDataContainer(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle", true));
+        if (!event.getplayer().getPersistentDataContainer().has(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN)) {
+            event.getPlayer().getPersistentDataContainer().set(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN, true);
+        } else {
+            event.getPlayer().sendMessage("Dein PvP-Schutz ist " + (pdc.get(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN)?"an":"aus"));
         }
     }
 }
