@@ -69,7 +69,6 @@ public class PvpCommand {
 
     public static void pvpUltra(Player sender, CommandArguments args) {
         //PvP Ultra Command
-        sender.sendMessage("Command noch nicht fertig, er schützt noch nicht vor PvP");
         NamespacedKey ultra = new NamespacedKey(Pvptoggle.pvptoggle, "ultra");
         PersistentDataContainer pdc = sender.getPersistentDataContainer();
         if (pdc.has(ultra, PersistentDataContainer.BOOLEAN)) {
