@@ -47,4 +47,11 @@ public class PvpEvent implements Listener {
     public void playerLeaveListener(PlayerQuitEvent event){
         event.getPlayer().getPersistentDataContainer().remove(new NamespacedKey(Pvptoggle.pvptoggle,"pvpdamagers"));
     }
+
+    @EventHandler
+    public void playerJoinListener(PlayerJoinEvent event) {
+        if (!event.getplayer().hasPersistentDataContainer(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"))) {
+            event.getPlayer().setPersistentDataContainer(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle", true));
+        }
+    }
 }
