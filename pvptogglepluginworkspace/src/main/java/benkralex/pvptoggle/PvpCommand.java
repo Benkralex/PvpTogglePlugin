@@ -82,6 +82,7 @@ public class PvpCommand {
 
     public static void pvpTrust(Player sender, CommandArguments args, Int action) {
         //PvP Trust Command
+        PersistentDataContainer pdc = sender.getPersistentDataContainer()
         if (action == 1) {
             //anzeigen
             sender.sendMessage("Du kannst dir die Trust-Liste nicht anzeigen");
@@ -98,6 +99,7 @@ public class PvpCommand {
 
     public static void pvpMisstrust(Player sender, CommandArguments args, Int action) {
         //PvP Misstrust Command
+        PersistentDataContainer pdc = sender.getPersistentDataContainer()
         if (action == 1) {
             //anzeigen
             sender.sendMessage("Du kannst dir die Misstrust-Liste nicht anzeigen");
