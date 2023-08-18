@@ -71,8 +71,8 @@ public class PvpCommand {
         //PvP Ultra Command
         NamespacedKey ultra = new NamespacedKey(Pvptoggle.pvptoggle, "ultra");
         PersistentDataContainer pdc = sender.getPersistentDataContainer();
-        if (pdc.has(ultra, PersistentDataContainer.BOOLEAN)) {
-            pdc.set(ultra, PersistentDataContainer.BOOLEAN, !pdc.get(ultra, PersistentDataContainer.BOOLEAN));
+        if (pdc.has(ultra, PersistentDataType.BOOLEAN)) {
+            pdc.set(ultra, PersistentDataType.BOOLEAN, !pdc.get(ultra, PersistentDataType.BOOLEAN));
             sender.sendMessage("PvP-Ultra ist für dich jetzt " + (pdc.get(pvptoggle, PersistentDataType.BOOLEAN)?"an":"aus"));
         } else {
             pdc.set(ultra, PersistentDataContainer.BOOLEAN, true);
@@ -82,15 +82,29 @@ public class PvpCommand {
 
     public static void pvpTrust(Player sender, CommandArguments args, Int action) {
         //PvP Trust Command
-        PersistentDataContainer pdc = sender.getPersistentDataContainer()
+        PersistentDataContainer pdc = sender.getPersistentDataContainer();
+        NamespacedKey trust = new NamespacedKey(Pvptoggle.pvptoggle, "trust");
         if (action == 1) {
             //anzeigen
+            if (pdc.has(trust, PersistentDataType.TAG_CONTAINER)) {
+                //PersistentDataContainer pdctrust = pdc.get(trust, PersistentDataType.TAG_CONTAINER);
+                //for (i = 0, i < pdctrust.length, i++) {
+                //    sender.sendMessage(pdctrust.get(i), PersistentDataType.STRING);
+                //}
+                //sender.sendMessage();
+            }
             sender.sendMessage("Du kannst dir die Trust-Liste nicht anzeigen");
         } else if (action == 2) {
             //hinzufügen
+            if (pdc.has(trust, PersistentDataType.TAG_CONTAINER)) {
+                //
+            }
             sender.sendMessage("Du kannst " + args[0] + " nicht zur der Trust-Liste hinzufügen");
         } else if (action == 3) {
             //entfernen
+            if (pdc.has(trust, PersistentDataType.TAG_CONTAINER)) {
+                //
+            }
             sender.sendMessage("Du kannst " + args[0] + " nicht aus der Trust-Liste entfernen");
         } else {
             sender.sendMessage("Fehler");
@@ -99,15 +113,25 @@ public class PvpCommand {
 
     public static void pvpMisstrust(Player sender, CommandArguments args, Int action) {
         //PvP Misstrust Command
-        PersistentDataContainer pdc = sender.getPersistentDataContainer()
+        PersistentDataContainer pdc = sender.getPersistentDataContainer();
+        NamespacedKey misstrust = new NamespacedKey(Pvptoggle.pvptoggle, "misstrust");
         if (action == 1) {
             //anzeigen
+            if (pdc.has(misstrust, PersistentDataType.TAG_CONTAINER)) {
+                //
+            }
             sender.sendMessage("Du kannst dir die Misstrust-Liste nicht anzeigen");
         } else if (action == 2) {
             //hinzufügen
+            if (pdc.has(misstrust, PersistentDataType.TAG_CONTAINER)) {
+                //
+            }
             sender.sendMessage("Du kannst " + args[0] + " nicht zur der Misstrust-Liste hinzufügen");
         } else if (action == 3) {
             //entfernen
+            if (pdc.has(misstrust, PersistentDataType.TAG_CONTAINER)) {
+                //
+            }
             sender.sendMessage("Du kannst " + args[0] + " nicht aus der Misstrust-Liste entfernen");
         } else {
             sender.sendMessage("Fehler");
