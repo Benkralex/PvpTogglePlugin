@@ -12,7 +12,6 @@ public class InventoryMenu {
 		ItemStack iwhitelist = new ItemStack(Material.WHITE_CONCRET);
 		ItemStack iblacklist = new ItemStack(Material.BLACK_CONCRET);
 		ItemStack iop = new ItemStack(Material.BEDROCK);
-		ItemStack iback = new ItemStack(Material.HOPPER);
 		ItemStack iclose = new ItemStack(Material.BARRIER);
 		//ItemMeta hohlen
 		ItemMeta mtoggle = itoggle.getItemMeta();
@@ -20,7 +19,6 @@ public class InventoryMenu {
 		ItemMeta mwhitelist = iwhitelist.getItemMeta();
 		ItemMeta mblacklist = iblacklist.getItemMeta();
 		ItemMeta mop = iop.getItemMeta();
-		ItemMeta mback = iback.getItemMeta();
 		ItemMeta mclose = iclose.getItemMeta();
 		//ItemMeta bearbeiten
 		mtoggle.setDispalyName("PvP-Schutz an/aus schalten");
@@ -30,7 +28,6 @@ public class InventoryMenu {
 		mwhitelist.setDispalyName("Whitelist");
 		mblacklist.setDispalyName("Blacklist");
 		mop.setDispalyName("Menu für Operators");
-		mback.setDispalyName("Zurück");
 		mclose.setDispalyName("Inventar schließen");
 		//ItemMeta speichern
 		itoggle.setItemMeta(mtoggle);
@@ -38,7 +35,6 @@ public class InventoryMenu {
 		iwhitelist.setItemMeta(mwhitelist);
 		iblacklist.setItemMeta(mblacklist);
 		iop.setItemMeta(mop);
-		iback.setItemMeta(mback);
 		iclose.setItemMeta(mclose);
 		//Items in das Inv machen
 		inv.setItem(10, itoggle);
@@ -46,7 +42,6 @@ public class InventoryMenu {
 		inv.setItem(14, iwhitelist);
 		inv.setItem(16, iblacklist);
 		inv.setItem(22, iop);
-		inv.setItem(26, iback);
 		inv.setItem(8, iclose);
 		return inv;
 	}
@@ -121,5 +116,9 @@ public class InventoryMenu {
 9  10 11 12 13 14 15 16 17
 18 19 20 21 22 23 24 25 26
 
-
+ItemStack iback = new ItemStack(Material.HOPPER);
+ItemMeta mback = iback.getItemMeta();
+mback.setDispalyName("Zurück");
+iback.setItemMeta(mback);
+inv.setItem(26, iback);
 */
