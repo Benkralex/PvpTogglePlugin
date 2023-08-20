@@ -12,6 +12,10 @@ public class PvpCommand {
     public static void createPvpCommand() {
         //Create PVP-Command with Command-API
         new CommandAPICommand("pvp")
+			.executesPlayer((sender, args)->{pvpInv(sender, args);})
+            .withPermission("pvp.inv.op")
+            .withUsage("/pvp")
+            .withHelp("PvP Menu", "Du kannst damit ein Menu öffnen, in dem du alles verwalten kannst.")
                 .withSubcommand(new CommandAPICommand("toggle")
                     .executesPlayer((sender, args)->{pvpToggle(sender, args);})
                     .withPermission("pvp.toggle")
@@ -21,40 +25,48 @@ public class PvpCommand {
                     .executesPlayer((sender, args)->{pvpUltra(sender, args);})
                     .withPermission("pvp.ultra")
                     .withUsage("/pvp ultra")
-                    .withHelp("Command noch nicht verfügbar", "Du kannst damit an/ausschalten, ob du geschlagen werden kannst und andere schlagen kannst."))
-            .withSubcommand(new CommandAPICommand("trust")
-                    .executesPlayer((sender, args)->{pvpTrust(sender, args, 1);})
-                    .withPermission("pvp.trust")
-                    .withUsage("/pvp trust")
-                    .withHelp("Command noch nicht verfügbar", "Damit kannst du dir die Trust-List anzeigen. Alle die in der Trustliste sind können dich immer schlagen.")
-                           .withSubcommand(new CommandAPICommand("add")
-                               .executesPlayer((sender, args)->{pvpTrust(sender, args, 2);})
-                               .withPermission("pvp.trust")
-                               .withUsage("/pvp trust add <Player>")
-                               .withHelp("Command noch nicht verfügbar", "Du kannst damit Spieler zu deiner Trust-Liste hinzufügen."))
-                           .withSubcommand(new CommandAPICommand("remove")
-                               .executesPlayer((sender, args)->{pvpTrust(sender, args, 3);})
-                               .withPermission("pvp.trust")
-                               .withUsage("/pvp trust remove <Player>")
-                               .withHelp("Command noch nicht verfügbar", "Du kannst damit Spieler aus deiner Trust-Liste entfernen.")))
-            .withSubcommand(new CommandAPICommand("misstrust")
-                    .executesPlayer((sender, args)->{pvpMisstrust(sender, args, 1);})
-                    .withPermission("pvp.misstrust")
-                    .withUsage("/pvp misstrust <Player>")
-                    .withHelp("Command noch nicht verfügbar", "Damit kannst du dir die Misstrust-List anzeigen. Alle die in der Misstrustliste sind können dich nur zurückschlagen.")
-                           .withSubcommand(new CommandAPICommand("add")
-                               .executesPlayer((sender, args)->{pvpMisstrust(sender, args, 2);})
-                               .withPermission("pvp.misstrust")
-                               .withUsage("/pvp misstrust add <Player>")
-                               .withHelp("Command noch nicht verfügbar", "Du kannst damit Spieler zu deiner Misstrust-Liste hinzufügen."))
-                           .withSubcommand(new CommandAPICommand("remove")
-                               .executesPlayer((sender, args)->{pvpMisstrust(sender, args, 3);})
-                               .withPermission("pvp.misstrust")
-                               .withUsage("/pvp misstrust remove <Player>")
-                               .withHelp("Command noch nicht verfügbar", "Du kannst damit Spieler aus deiner Misstrust-Liste entfernen.")))
-            .register();
+                    .withHelp("Schutz + Schutz gegen ausversehen angreifen", "Du kannst damit an/ausschalten, ob du geschlagen werden kannst und andere schlagen kannst."))
+            	.withSubcommand(new CommandAPICommand("whitelist")
+                    .executesPlayer((sender, args)->{pvpWhitelist(sender, args, 1);})
+                    .withPermission("pvp.whitelist")
+                    .withUsage("/pvp whitelist")
+                    .withHelp("Command noch nicht verfügbar", "Damit kannst du dir die Whitelist anzeigen. Alle die in der Whitelist sind können dich immer schlagen.")
+                    	.withSubcommand(new CommandAPICommand("add")
+                           .executesPlayer((sender, args)->{pvpWhitelist(sender, args, 2);})
+                           .withPermission("pvp.whitelist")
+                           .withUsage("/pvp whitelist add <Player>")
+                           .withHelp("Command noch nicht verfügbar", "Du kannst damit Spieler zu deiner Whitelist hinzufügen."))
+                        .withSubcommand(new CommandAPICommand("remove")
+                           .executesPlayer((sender, args)->{pvpWhitelist(sender, args, 3);})
+                           .withPermission("pvp.whitelist")
+                           .withUsage("/pvp whitelist remove <Player>")
+                           .withHelp("Command noch nicht verfügbar", "Du kannst damit Spieler aus deiner Whitelist entfernen.")))
+            	.withSubcommand(new CommandAPICommand("blacklist")
+                    .executesPlayer((sender, args)->{pvpBlacklist(sender, args, 1);})
+                    .withPermission("pvp.blacklist")
+   	                .withUsage("/pvp blacklist <Player>")
+					.withHelp("Command noch nicht verfügbar", "Damit kannst du dir die Blacklist anzeigen. Alle die in der Blacklist sind können dich nur zurückschlagen.")
+           	        	.withSubcommand(new CommandAPICommand("add")
+                            .executesPlayer((sender, args)->{pvpBlacklist(sender, args, 2);})
+                            .withPermission("pvp.blacklist")
+                            .withUsage("/pvp blacklist add <Player>")
+                            .withHelp("Command noch nicht verfügbar", "Du kannst damit Spieler zu deiner Blacklist hinzufügen."))
+                        .withSubcommand(new CommandAPICommand("remove")
+                            .executesPlayer((sender, args)->{pvpBlacklist(sender, args, 3);})
+                            .withPermission("pvp.blacklist")
+                            .withUsage("/pvp blacklist remove <Player>")
+                            .withHelp("Command noch nicht verfügbar", "Du kannst damit Spieler aus deiner Blacklist entfernen.")))
+				.register();
     }
 
+	
+	
+	public static void pvpInv(Player sender, CommandArguments args) {
+		 sender.openInventory(InventoryMenu.pvpMenu(sender));
+	}
+	
+	
+	
     public static void pvpToggle(Player sender, CommandArguments args) {
         NamespacedKey pvptoggle = new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle");
         PersistentDataContainer pdc = sender.getPersistentDataContainer();
@@ -62,11 +74,13 @@ public class PvpCommand {
             pdc.set(pvptoggle, PersistentDataType.BOOLEAN, !pdc.get(pvptoggle, PersistentDataType.BOOLEAN));
             sender.sendMessage("Dein PvP-Schutz ist jetzt " + (pdc.get(pvptoggle, PersistentDataType.BOOLEAN)?"an":"aus"));
         } else {
-            pdc.set(pvptoggle, PersistentDataType.BOOLEAN, true);
+            pdc.set(pvptoggle, PersistentDataType.BOOLEAN, Config.getPvpProt());
             sender.sendMessage("Dein PvP-Schutz ist jetzt " + (pdc.get(pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN)?"an":"aus"));
         }
     }
 
+	
+	
     public static void pvpUltra(Player sender, CommandArguments args) {
         //PvP Ultra Command
         NamespacedKey ultra = new NamespacedKey(Pvptoggle.pvptoggle, "ultra");
@@ -80,59 +94,63 @@ public class PvpCommand {
         }
     }
 
-    public static void pvpTrust(Player sender, CommandArguments args, Int action) {
-        //PvP Trust Command
+	
+	
+    public static void pvpWhitelist(Player sender, CommandArguments args, Int action) {
+        //PvP Whitelist Command
         PersistentDataContainer pdc = sender.getPersistentDataContainer();
-        NamespacedKey trust = new NamespacedKey(Pvptoggle.pvptoggle, "trust");
+        NamespacedKey whitelist = new NamespacedKey(Pvptoggle.pvptoggle, "whitelist");
         if (action == 1) {
             //anzeigen
-            if (pdc.has(trust, PersistentDataType.TAG_CONTAINER)) {
-                //PersistentDataContainer pdctrust = pdc.get(trust, PersistentDataType.TAG_CONTAINER);
-                //for (i = 0, i < pdctrust.length, i++) {
-                //    sender.sendMessage(pdctrust.get(i), PersistentDataType.STRING);
+            if (pdc.has(whitelist, PersistentDataType.TAG_CONTAINER)) {
+                //PersistentDataContainer pdcwhitelist = pdc.get(whitelist, PersistentDataType.TAG_CONTAINER);
+                //for (i = 0, i < pdcwhitelist.length, i++) {
+                //    sender.sendMessage(pdcwhitelist.get(i), PersistentDataType.STRING);
                 //}
                 //sender.sendMessage();
             }
-            sender.sendMessage("Du kannst dir die Trust-Liste nicht anzeigen");
+            sender.sendMessage("Du kannst dir die Whitelist nicht anzeigen");
         } else if (action == 2) {
             //hinzufügen
-            if (pdc.has(trust, PersistentDataType.TAG_CONTAINER)) {
+            if (pdc.has(whitelist, PersistentDataType.TAG_CONTAINER)) {
                 //
             }
-            sender.sendMessage("Du kannst " + args[0] + " nicht zur der Trust-Liste hinzufügen");
+            sender.sendMessage("Du kannst " + args[0] + " nicht zur der Whitelist hinzufügen");
         } else if (action == 3) {
             //entfernen
-            if (pdc.has(trust, PersistentDataType.TAG_CONTAINER)) {
+            if (pdc.has(whitelist, PersistentDataType.TAG_CONTAINER)) {
                 //
             }
-            sender.sendMessage("Du kannst " + args[0] + " nicht aus der Trust-Liste entfernen");
+            sender.sendMessage("Du kannst " + args[0] + " nicht aus der Whitelist entfernen");
         } else {
             sender.sendMessage("Fehler");
         }
     }
 
-    public static void pvpMisstrust(Player sender, CommandArguments args, Int action) {
-        //PvP Misstrust Command
+	
+	
+    public static void pvpBlacklist(Player sender, CommandArguments args, Int action) {
+        //PvP Blacklist Command
         PersistentDataContainer pdc = sender.getPersistentDataContainer();
-        NamespacedKey misstrust = new NamespacedKey(Pvptoggle.pvptoggle, "misstrust");
+        NamespacedKey blacklist = new NamespacedKey(Pvptoggle.pvptoggle, "blacklist");
         if (action == 1) {
             //anzeigen
-            if (pdc.has(misstrust, PersistentDataType.TAG_CONTAINER)) {
+            if (pdc.has(blacklist, PersistentDataType.TAG_CONTAINER)) {
                 //
             }
-            sender.sendMessage("Du kannst dir die Misstrust-Liste nicht anzeigen");
+            sender.sendMessage("Du kannst dir die Blacklist nicht anzeigen");
         } else if (action == 2) {
             //hinzufügen
-            if (pdc.has(misstrust, PersistentDataType.TAG_CONTAINER)) {
+            if (pdc.has(blacklist, PersistentDataType.TAG_CONTAINER)) {
                 //
             }
-            sender.sendMessage("Du kannst " + args[0] + " nicht zur der Misstrust-Liste hinzufügen");
+            sender.sendMessage("Du kannst " + args[0] + " nicht zur der Blacklist hinzufügen");
         } else if (action == 3) {
             //entfernen
-            if (pdc.has(misstrust, PersistentDataType.TAG_CONTAINER)) {
+            if (pdc.has(blacklist, PersistentDataType.TAG_CONTAINER)) {
                 //
             }
-            sender.sendMessage("Du kannst " + args[0] + " nicht aus der Misstrust-Liste entfernen");
+            sender.sendMessage("Du kannst " + args[0] + " nicht aus der Blacklist entfernen");
         } else {
             sender.sendMessage("Fehler");
         }
