@@ -1,8 +1,10 @@
 name: Pvptoggle
 version: '${project.version}'
 main: benkralex.pvptoggle.Pvptoggle
+author: [Benkralex, skippyall]
 api-version: 1.20
-depend: [CommandAPI]
+depend:
+- CommandAPI
 permissions:
   pvp.toggle:
     default: true
