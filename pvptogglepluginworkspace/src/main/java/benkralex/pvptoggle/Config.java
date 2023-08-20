@@ -6,15 +6,21 @@ import java.io.File;
 import java.time.Instant;
 
 public class Config {
+	
+	privat FileConfiguration config = Pvptoggle.pvptoggle.getConfig();
+	
     public static void createConfig() {
-        FileConfiguration config = Pvptoggle.pvptoggle.getConfig();
         config.options().copyDefaults();
         config.addDefault("pvp-time-hit-back", 60);
+		config.addDefault("default-pvp-protection", true)
         Pvptoggle.pvptoggle.saveConfig();
     }
 
-    public static int getpvptime() {
-        FileConfiguration config = Pvptoggle.pvptoggle.getConfig();
+    public static int getPvpTime() {
         return config.getInt("pvp-time-hit-back");
     }
+	
+	public static int getPvpProt() {
+		return config.getBoolean("default-pvp-protection");
+	}
 }
