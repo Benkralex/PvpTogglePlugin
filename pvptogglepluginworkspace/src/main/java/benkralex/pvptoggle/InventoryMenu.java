@@ -41,7 +41,9 @@ public class InventoryMenu {
 		inv.setItem(12, iultra);
 		inv.setItem(14, iwhitelist);
 		inv.setItem(16, iblacklist);
-		inv.setItem(22, iop);
+		if (p.hasPermission("pvp.inv.op")) {
+		    inv.setItem(22, iop);
+		}
 		inv.setItem(8, iclose);
 		return inv;
 	}
