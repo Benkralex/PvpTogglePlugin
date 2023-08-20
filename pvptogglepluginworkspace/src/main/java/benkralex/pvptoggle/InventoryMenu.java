@@ -13,6 +13,7 @@ public class InventoryMenu {
 		ItemStack iblacklist = new ItemStack(Material.BLACK_CONCRET);
 		ItemStack iop = new ItemStack(Material.BEDROCK);
 		ItemStack iclose = new ItemStack(Material.BARRIER);
+  ItemStack ivoid = new ItemStack(Material.LIGHT_GRAY_STAIND_GLASS_PAIN);
 		//ItemMeta hohlen
 		ItemMeta mtoggle = itoggle.getItemMeta();
 		ItemMeta multra = iultra.getItemMeta();
@@ -20,6 +21,7 @@ public class InventoryMenu {
 		ItemMeta mblacklist = iblacklist.getItemMeta();
 		ItemMeta mop = iop.getItemMeta();
 		ItemMeta mclose = iclose.getItemMeta();
+  ItemMeta mvoid = ivoid.getItemMeta();
 		//ItemMeta bearbeiten
 		mtoggle.setDispalyName("PvP-Schutz an/aus schalten");
 		mtoggle.setLore(ChatColor.BLUE + p.getPersistentDataContainer.get(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN)?"Aus":"An" + " schalten");
@@ -29,6 +31,7 @@ public class InventoryMenu {
 		mblacklist.setDispalyName("Blacklist");
 		mop.setDispalyName("Menu für Operators");
 		mclose.setDispalyName("Inventar schließen");
+  mvoid.setDisplayName("");
 		//ItemMeta speichern
 		itoggle.setItemMeta(mtoggle);
 		iultra.setItemMeta(multra);
@@ -36,6 +39,7 @@ public class InventoryMenu {
 		iblacklist.setItemMeta(mblacklist);
 		iop.setItemMeta(mop);
 		iclose.setItemMeta(mclose);
+  ivoid.setItemMeta(mvoid);
 		//Items in das Inv machen
 		inv.setItem(10, itoggle);
 		inv.setItem(12, iultra);
@@ -45,6 +49,11 @@ public class InventoryMenu {
 		    inv.setItem(22, iop);
 		}
 		inv.setItem(8, iclose);
+  for (i = 0, i >= 26, i++) {
+    if (inv.getItem(i) == Material.AIR) {
+      inv.set(i, ivoid);
+    }
+  }
 		return inv;
 	}
 	
@@ -66,6 +75,11 @@ public class InventoryMenu {
 		//Items in das Inv machen
 		inv.setItem(26, iback);
 		inv.setItem(8, iclose);
+  for (i = 0, i >= 26, i++) {
+    if (inv.getItem(i) == Material.AIR) {
+      inv.set(i, ivoid);
+    }
+  }
 		return inv;
 	}
 	
@@ -87,6 +101,11 @@ public class InventoryMenu {
 		//Items in das Inv machen
 		inv.setItem(26, iback);
 		inv.setItem(8, iclose);
+  for (i = 0, i >= 26, i++) {
+    if (inv.getItem(i) == Material.AIR) {
+      inv.set(i, ivoid);
+    }
+  }
 		return inv;
 	}
 	
@@ -108,6 +127,11 @@ public class InventoryMenu {
 		//Items in das Inv machen
 		inv.setItem(26, iback);
 		inv.setItem(8, iclose);
+  for (i = 0, i >= 26, i++) {
+    if (inv.getItem(i) == Material.AIR) {
+      inv.set(i, ivoid);
+    }
+  }
 		return inv;
 	}
 }
