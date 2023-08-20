@@ -7,9 +7,10 @@ import org.bukkit.entity.Player;
 public class InventoryListener implements Listener{
     @EventHandler
     public void onPvpMenuInteract(InventoryInteractEvent e) {
-        if (e.getView().getTitle().equals("PvP-Menu")) {
+        Player p = e.getWhoClicked();
+        String invtitle = e.getView().getTitle();
+        if (invtitle.equals("PvP-Menu")) {
             event.setCancled(true);
-            Player p = e.getWhoClicked();
             if (event.getCurrendItem != null) {
                 switch (e.getCurrendItem().getItemMeta().getDiplayName()) {
                     case "Inventar schließen":
@@ -52,12 +53,51 @@ public class InventoryListener implements Listener{
                         }
                         break;
                     case "Whitelist":
+                        p.openInventory(InventoryMenu.pvpWhitelistMenu(p));
                         break;
                     case "Blacklist":
+                        p.openInventory(InventoryMenu.pvpBlacklistMenu(p));
                         break;
                     case "Menu für Operators":
+                        p.openInventory(InventoryMenu.pvpOpSettingsMenu(p));
                         break;
                     default:
+                        break;
+                }
+            }
+        } else if (invtitle.equals("Whitelist-Menu")) {
+            if (event.getCurrendItem != null) {
+                switch (e.getCurrendItem().getItemMeta().getDiplayName()) {
+                case "Inventar schließen":
+                        p.closeInventory;
+                        break;
+                case "Zurück":
+                        p.closeInventory;
+                        p.openInventory(InventoryMenu.pvpMenu(p));
+                        break;
+                }
+            }
+        } else if (invtitle.equals("Blacklist-Menu")) {
+            if (event.getCurrendItem != null) {
+                switch (e.getCurrendItem().getItemMeta().getDiplayName()) {
+                case "Inventar schließen":
+                        p.closeInventory;
+                        break;
+                case "Zurück":
+                        p.closeInventory;
+                        p.openInventory(InventoryMenu.pvpMenu(p));
+                        break;
+                }
+            }
+        } else if (invtitle.equals("Operator-Menu")) {
+            if (event.getCurrendItem != null) {
+                switch (e.getCurrendItem().getItemMeta().getDiplayName()) {
+                case "Inventar schließen":
+                        p.closeInventory;
+                        break;
+                case "Zurück":
+                        p.closeInventory;
+                        p.openInventory(InventoryMenu.pvpMenu(p));
                         break;
                 }
             }
