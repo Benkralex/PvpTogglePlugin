@@ -8,9 +8,9 @@ permissions:
     default: true
   pvp.ultra:
     default: true
-  pvp.trust:
+  pvp.whitelist:
     default: true
-  pvp.misstrust:
+  pvp.blacklist:
     default: true
   pvp.inv.normal:
     default: true
