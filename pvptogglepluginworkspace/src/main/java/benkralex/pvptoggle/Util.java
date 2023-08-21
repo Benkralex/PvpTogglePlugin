@@ -54,4 +54,14 @@ public class Util {
         damagersOfVictim.set(new NamespacedKey(Pvptoggle.pvptoggle, damagerUUID), PersistentDataType.LONG, Instant.now().getEpochSecond());
         victimPDC.set(new NamespacedKey(Pvptoggle.pvptoggle,"pvpdamagers"), PersistentDataType.TAG_CONTAINER,damagersOfVictim);
     }
+
+    public static void pdcTagContaineradd(Player p, NamespacedKey key, String s, Boolean value) {
+        PersistentDataContainer pdc = p.getPersistentDataContainer();
+        PersistentDataContainer pdctagcontainer = pdc.get(key, PersitentDataType.TAG_CONTAINER);
+        if(pdctagcontainer == null) {
+            pdc.tagcontainer = pdc.getAdapterContext().newPersistentDataContainer();
+        }
+        pdctagcontainer.set(new NamespacedKey(Pvptoggle.pvptoggle, s), PersistentDataType.BOOLEAN, value);
+        pdc.set(key,PersistentDataType.TAG_CONTAINER, pdctagcontainer);
+    }
 }
