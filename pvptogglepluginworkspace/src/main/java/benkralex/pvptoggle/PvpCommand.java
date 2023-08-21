@@ -124,9 +124,16 @@ public class PvpCommand {
             sender.sendMessage("Du kannst " + args[0] + " nicht zur der Whitelist hinzufügen");
         } else if (action == 3) {
             //entfernen
-            if (pdc.has(whitelist, PersistentDataType.TAG_CONTAINER)) {
-                //
-            }
+            /*if (pdc.has(whitelist, PersistentDataType.TAG_CONTAINER)) {
+				
+            } else {
+				
+			}*/
+			if (args[0] instanceof player) {
+                	Util.pdcTagContaineradd(sender, whitelist, args[0], true);
+				} else {
+					sender.sendMessage("'" + args[0] + "' ist kein Spieler")
+				}
             sender.sendMessage("Du kannst " + args[0] + " nicht aus der Whitelist entfernen");
         } else {
             sender.sendMessage("Fehler");
