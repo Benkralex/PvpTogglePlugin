@@ -49,7 +49,7 @@ public class InventoryMenu {
 		    inv.setItem(22, iop);
 		}
 		inv.setItem(8, iclose);
-  for (int i = 0, i >= 26, i++) {
+  for (int i = 0, i <= 26, i++) {
     if (inv.getItem(i) == Material.AIR) {
       inv.set(i, ivoid.clone());
     }
@@ -75,7 +75,7 @@ public class InventoryMenu {
 		//Items in das Inv machen
 		inv.setItem(26, iback);
 		inv.setItem(8, iclose);
-  for (int i = 0, i >= 26, i++) {
+  for (int i = 0, i <= 26, i++) {
     if (inv.getItem(i) == Material.AIR) {
       inv.set(i, ivoid.clone());
     }
@@ -101,7 +101,7 @@ public class InventoryMenu {
 		//Items in das Inv machen
 		inv.setItem(26, iback);
 		inv.setItem(8, iclose);
-  for (int i = 0, i >= 26, i++) {
+  for (int i = 0, i <= 26, i++) {
     if (inv.getItem(i) == Material.AIR) {
       inv.set(i, ivoid.clone());
     }
@@ -127,7 +127,7 @@ public class InventoryMenu {
 		//Items in das Inv machen
 		inv.setItem(26, iback);
 		inv.setItem(8, iclose);
-  for (int i = 0, i >= 26, i++) {
+  for (int i = 0, i <= 26, i++) {
     if (inv.getItem(i) == Material.AIR) {
       inv.set(i, ivoid.clone());
     }
