@@ -103,12 +103,19 @@ public class PvpCommand {
         if (action == 1) {
             //anzeigen
             if (pdc.has(whitelist, PersistentDataType.TAG_CONTAINER)) {
-                PersistentDataContainer pdcwhitelist = pdc.get(whitelist, PersistentDataType.TAG_CONTAINER);
-                //for () {
-                //    sender.sendMessage();
-                //}
-            }
-            sender.sendMessage("Du kannst dir die Whitelist nicht anzeigen");
+				PersistentDataContainer pdcwhitelist = pdc.get(whitelist, PersistentDataType.TAG_CONTAINER);
+				if(pdcwhitelist != null) {
+					int i = 0;
+        	        for (NamespacedKey whitelistkey:pdcwhitelist.getKeys()) {
+    	                sender.sendMessage(ChatColor.LIGHT_GREEN + i + ". " + ChatColor.GREEN + pdcwhitelist.get(whitelistkey, PersistentDataType.STRING));
+	                }
+				} else {
+					sender.sendMessage("Deine Whitelist ist leer");
+				}
+            } else {
+		    	sender.sendMessage("Deine Whitelist ist leer");
+	    	}
+            //sender.sendMessage("Du kannst dir die Whitelist nicht anzeigen");
         } else if (action == 2) {
             //hinzufügen
             if (pdc.has(whitelist, PersistentDataType.TAG_CONTAINER)) {
