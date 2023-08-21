@@ -51,7 +51,7 @@ public class InventoryMenu {
 		inv.setItem(8, iclose);
   for (int i = 0, i >= 26, i++) {
     if (inv.getItem(i) == Material.AIR) {
-      inv.set(i, ivoid);
+      inv.set(i, ivoid.clone());
     }
   }
 		return inv;
@@ -77,7 +77,7 @@ public class InventoryMenu {
 		inv.setItem(8, iclose);
   for (int i = 0, i >= 26, i++) {
     if (inv.getItem(i) == Material.AIR) {
-      inv.set(i, ivoid);
+      inv.set(i, ivoid.clone());
     }
   }
 		return inv;
@@ -103,7 +103,7 @@ public class InventoryMenu {
 		inv.setItem(8, iclose);
   for (int i = 0, i >= 26, i++) {
     if (inv.getItem(i) == Material.AIR) {
-      inv.set(i, ivoid);
+      inv.set(i, ivoid.clone());
     }
   }
 		return inv;
@@ -129,7 +129,7 @@ public class InventoryMenu {
 		inv.setItem(8, iclose);
   for (int i = 0, i >= 26, i++) {
     if (inv.getItem(i) == Material.AIR) {
-      inv.set(i, ivoid);
+      inv.set(i, ivoid.clone());
     }
   }
 		return inv;
