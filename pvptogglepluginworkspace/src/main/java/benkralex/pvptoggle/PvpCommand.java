@@ -103,11 +103,10 @@ public class PvpCommand {
         if (action == 1) {
             //anzeigen
             if (pdc.has(whitelist, PersistentDataType.TAG_CONTAINER)) {
-                //PersistentDataContainer pdcwhitelist = pdc.get(whitelist, PersistentDataType.TAG_CONTAINER);
-                //for (i = 0, i < pdcwhitelist.length, i++) {
-                //    sender.sendMessage(pdcwhitelist.get(i), PersistentDataType.STRING);
+                PersistentDataContainer pdcwhitelist = pdc.get(whitelist, PersistentDataType.TAG_CONTAINER);
+                //for () {
+                //    sender.sendMessage();
                 //}
-                //sender.sendMessage();
             }
             sender.sendMessage("Du kannst dir die Whitelist nicht anzeigen");
         } else if (action == 2) {
