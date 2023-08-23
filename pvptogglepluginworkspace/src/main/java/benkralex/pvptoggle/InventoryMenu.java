@@ -9,7 +9,7 @@ public class InventoryMenu {
 				ItemStack itoggle = new ItemStack(Material.IRON_SWORD);
 				ItemMeta mtoggle = itoggle.getItemMeta();
 				mtoggle.setDispalyName("PvP-Schutz an/aus schalten");
-				mtoggle.setLore(ChatColor.BLUE + (p.getPersistentDataContainer.get(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN)?"Aus":"An" +) " schalten");
+				mtoggle.setLore(ChatColor.BLUE + (p.getPersistentDataContainer().get(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN)?"Aus":"An" +) " schalten");
 				itoggle.setItemMeta(mtoggle);
 				return itoggle;
 				break;
@@ -17,7 +17,7 @@ public class InventoryMenu {
 				ItemStack iultra = new ItemStack(Material.DIAMOND_SWORD);
 				ItemMeta multra = iultra.getItemMeta();
 				multra.setDispalyName("Ultra an/aus schalten");
-				multra.setLore(ChatColor.BLUE + (p.getPersistentDataContainer.get(new NamespacedKey(Pvptoggle.pvptoggle, "pvpultra"), PersistentDataType.BOOLEAN)?"Aus":"An") + " schalten");
+				multra.setLore(ChatColor.BLUE + (p.getPersistentDataContainer().get(new NamespacedKey(Pvptoggle.pvptoggle, "pvpultra"), PersistentDataType.BOOLEAN)?"Aus":"An") + " schalten");
 				iultra.setItemMeta(multra);
 				return iultra;
 				break;
@@ -101,7 +101,7 @@ public class InventoryMenu {
 			case 11:
 				ItemStack ipvptimeminus = new ItemStack(Material.RED_WOOL);
 				ItemMeta mpvptimeminus = ipvptimeminus.getItemMeta();
-				mpvptimeminus.setDisplayName("Zeit um zurückzuschlagen erniedrigen");
+				mpvptimeminus.setDisplayName("Zeit um zurückzuschlagen verringern");
 				mpvptimeminus.setLore(ChatColor.BLUE + "Rechtsklick:" + ChatColor.RED + " -1");
 				mpvptimeminus.setLore(ChatColor.BLUE + "Linksklick:" + ChatColor.RED + " -10" + ChatColor.RED + " !!!Noch nicht verfügbar!!!");
 				ipvptimeminus.setItemMeta(mpvptimeminus);
