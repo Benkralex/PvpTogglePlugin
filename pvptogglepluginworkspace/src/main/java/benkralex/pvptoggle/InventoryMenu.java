@@ -93,8 +93,7 @@ public class InventoryMenu {
 				ItemStack ipvptimeplus = new ItemStack(Material.GREEN_WOOL);
 				ItemMeta mpvptimeplus = ipvptimeplus.getItemMeta();
 				mpvptimeplus.setDisplayName("Zeit um zurückzuschlagen erhöhen");
-				mpvptimeplus.setLore(ChatColor.BLUE + "Rechtsklick:" + ChatColor.GREEN + " +1");
-				mpvptimeplus.setLore(ChatColor.BLUE + "Linksklick:" + ChatColor.GREEN + " +10" + ChatColor.RED + " !!!Noch nicht verfügbar!!!");
+				mpvptimeplus.setLore(ChatColor.BLUE + "Rechtsklick:" + ChatColor.GREEN + " +1\n" + ChatColor.BLUE + "Linksklick:" + ChatColor.GREEN + " +10");
 				ipvptimeplus.setItemMeta(mpvptimeplus);
 				return ipvptimeplus;
 				break;
@@ -102,8 +101,7 @@ public class InventoryMenu {
 				ItemStack ipvptimeminus = new ItemStack(Material.RED_WOOL);
 				ItemMeta mpvptimeminus = ipvptimeminus.getItemMeta();
 				mpvptimeminus.setDisplayName("Zeit um zurückzuschlagen verringern");
-				mpvptimeminus.setLore(ChatColor.BLUE + "Rechtsklick:" + ChatColor.RED + " -1");
-				mpvptimeminus.setLore(ChatColor.BLUE + "Linksklick:" + ChatColor.RED + " -10" + ChatColor.RED + " !!!Noch nicht verfügbar!!!");
+				mpvptimeminus.setLore(ChatColor.BLUE + "Rechtsklick:" + ChatColor.RED + " -1\n" + ChatColor.BLUE + "Linksklick:" + ChatColor.RED + " -10");
 				ipvptimeminus.setItemMeta(mpvptimeminus);
 				return ipvptimeminus;
 				break;
