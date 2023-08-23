@@ -25,12 +25,12 @@ public class Config {
 	}
 	
 	public static void setPvpTime(int i) {
-		config.setDefault("pvp-time-hit-back", i);
+		config.set("pvp-time-hit-back", i);
         Pvptoggle.pvptoggle.saveConfig();
 	}
 	
 	public static void setPvpProt(Boolean b) {
-		config.setDefault("default-pvp-protection", b);
+		config.set("default-pvp-protection", b);
         Pvptoggle.pvptoggle.saveConfig();
 	}
 }
