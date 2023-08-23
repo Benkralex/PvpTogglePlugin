@@ -3,7 +3,7 @@
 
 
 public class InventoryMenu {
-	public ItemStack getMenuItem(int i) {
+	public static ItemStack getMenuItem(int i, Player p) {
 		switch i {
 			case 0:
 				ItemStack itoggle = new ItemStack(Material.IRON_SWORD);
@@ -110,10 +110,10 @@ public class InventoryMenu {
 		}
 	}
 	
-	public static Inventory pvpMenuFillEmpty(Inventory inv) {
+	public static Inventory pvpMenuFillEmpty(Inventory inv, Player p) {
 		for (int i = 0, i <= (inv.getSize-1), i++) {
     		if (inv.getItem(i) == Material.AIR) {
-    			inv.set(i, getMenuItem(7));
+    			inv.set(i, getMenuItem(7, p));
     		}
   		}
 		return inv;
@@ -122,47 +122,47 @@ public class InventoryMenu {
 	public static Inventory pvpMenu(Player p) {
 		Inventory inv = new Bukkit.createInventory(null, 3*9, "PvP-Menu");
 		
-		inv.setItem(10, getMenuItem(0));
-		inv.setItem(12, getMenuItem(1));
-		inv.setItem(14, getMenuItem(2));
-		inv.setItem(16, getMenuItem(3));
+		inv.setItem(10, getMenuItem(0, p));
+		inv.setItem(12, getMenuItem(1, p));
+		inv.setItem(14, getMenuItem(2, p));
+		inv.setItem(16, getMenuItem(3, p));
 		if (p.hasPermission("pvp.inv.op")) {
-			inv.setItem(22, getMenuItem(4));
+			inv.setItem(22, getMenuItem(4, p));
 		}
-		inv.setItem(8, getMenuItem(5));
+		inv.setItem(8, getMenuItem(5, p));
 		
-		return pvpMenuFillEmpty(inv);
+		return pvpMenuFillEmpty(inv, p);
 	}
 	
 	
 	public static Inventory pvpBlacklistMenu(Player p) {
 		Inventory inv = new Bukkit.createInventory(null, 3*9, "Blacklist-Menu");
-		inv.setItem(8, getMenuItem(5));
-		inv.setItem(26, getMenuItem(6));
+		inv.setItem(8, getMenuItem(5, p));
+		inv.setItem(26, getMenuItem(6, p));
 		
-		return pvpMenuFillEmpty(inv);
+		return pvpMenuFillEmpty(inv, p);
 	}
 	
 	
 	public static Inventory pvpWhitelistMenu(Player p) {
 		Inventory inv = new Bukkit.createInventory(null, 3*9, "Whitelist-Menu");
-		inv.setItem(8, getMenuItem(5));
-		inv.setItem(26, getMenuItem(6));
+		inv.setItem(8, getMenuItem(5, p));
+		inv.setItem(26, getMenuItem(6, p));
 		
-		return pvpMenuFillEmpty(inv);
+		return pvpMenuFillEmpty(inv, p);
 	}
 	
 	
 	public static Inventory pvpOpSettingsMenu(Player p) {
 		Inventory inv = new Bukkit.createInventory(null, 3*9, "Operator-Menu");
-		inv.setItem(8, getMenuItem(5));
-		inv.setItem(26, getMenuItem(6));
-		inv.setItem(11, getMenuItem(8));
-		inv.setItem(14, getMenuItem(11));
-		inv.setItem(15, getMenuItem(9));
-		inv.setItem(16, getMenuItem(10));
+		inv.setItem(8, getMenuItem(5, p));
+		inv.setItem(26, getMenuItem(6, p));
+		inv.setItem(11, getMenuItem(8, p));
+		inv.setItem(14, getMenuItem(11, p));
+		inv.setItem(15, getMenuItem(9, p));
+		inv.setItem(16, getMenuItem(10, p));
 		
-		return pvpMenuFillEmpty(inv);
+		return pvpMenuFillEmpty(inv, p);
 	}
 }
 
