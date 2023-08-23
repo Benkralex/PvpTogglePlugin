@@ -22,11 +22,11 @@ public class InventoryListener implements Listener{
                         if (pdc.has(ultra, PersistentDataType.BOOLEAN)) {
                             pdc.set(ultra, PersistentDataType.BOOLEAN, !pdc.get(ultra, PersistentDataType.BOOLEAN));
                             sender.sendMessage("PvP-Ultra ist für dich jetzt " + (pdc.get(pvptoggle, PersistentDataType.BOOLEAN)?"an":"aus"));
-                            inv.setItem(12, InventoryMenu.getMenuItem(1));
+                            inv.setItem(12, InventoryMenu.getMenuItem(1, p));
                         } else {
                             pdc.set(ultra, PersistentDataContainer.BOOLEAN, true);
                             sender.sendMessage("PvP-Ultra ist für dich jetzt " + (pdc.get(pvptoggle, PersistentDataType.BOOLEAN)?"an":"aus"));
-                            inv.setItem(12, InventoryMenu.getMenuItem(1));
+                            inv.setItem(12, InventoryMenu.getMenuItem(1, p));
                         }
                         break;
                     case "PvP-Schutz an/aus schalten":
@@ -34,11 +34,11 @@ public class InventoryListener implements Listener{
                         if (pdc.has(pvptoggle, PersistentDataType.BOOLEAN)) {
                             pdc.set(pvptoggle, PersistentDataType.BOOLEAN, !pdc.get(pvptoggle, PersistentDataType.BOOLEAN));
                             sender.sendMessage("Dein PvP-Schutz ist jetzt " + (pdc.get(pvptoggle, PersistentDataType.BOOLEAN)?"an":"aus"));
-                            inv.setItem(10, InventoryMenu.getMenuItem(0));
+                            inv.setItem(10, InventoryMenu.getMenuItem(0, p));
                         } else {
                             pdc.set(pvptoggle, PersistentDataType.BOOLEAN, Config.getPvpProt());
                             sender.sendMessage("Dein PvP-Schutz ist jetzt " + (pdc.get(pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN)?"an":"aus"));
-                            inv.setItem(10, InventoryMenu.getMenuItem(0));
+                            inv.setItem(10, InventoryMenu.getMenuItem(0, p));
                         }
                         break;
                     case "Whitelist":
@@ -106,7 +106,7 @@ public class InventoryListener implements Listener{
 					} else if (true) {
 						Config.setPvpTime(getPvpTime() - 10);
 					}
-					inv.setItem(15, InventoryMenu.getMenuItem(9));
+					inv.setItem(15, InventoryMenu.getMenuItem(9, p));
                 	break;
 				}
             }
