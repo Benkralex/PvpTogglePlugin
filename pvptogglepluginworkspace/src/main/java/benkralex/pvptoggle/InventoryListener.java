@@ -11,14 +11,14 @@ public class InventoryListener implements Listener{
 		Inventory inv = e.getInventory();
         String invtitle = e.getView().getTitle();
         if (invtitle.equals("PvP-Menu")) {
-            event.setCancled(true);
-            if (event.getCurrendItem != null) {
-                switch (e.getCurrendItem().getItemMeta().getDiplayName()) {
+            event.setCancelled(true);
+            if (event.getCurrendItem() != null) {
+                switch (e.getCurrentItem().getItemMeta().getDisplayName()) {
                     case "Inventar schließen":
-                        p.closeInventory;
+                        p.closeInventory();
                         break;
                     case "Ultra an/aus schalten":
-                        multra.setDispalyName("Ultra an/aus schalten");
+                        multra.setDisplayName("Ultra an/aus schalten");
                         if (pdc.has(ultra, PersistentDataType.BOOLEAN)) {
                             pdc.set(ultra, PersistentDataType.BOOLEAN, !pdc.get(ultra, PersistentDataType.BOOLEAN));
                             sender.sendMessage("PvP-Ultra ist für dich jetzt " + (pdc.get(pvptoggle, PersistentDataType.BOOLEAN)?"an":"aus"));
@@ -30,7 +30,7 @@ public class InventoryListener implements Listener{
                         }
                         break;
                     case "PvP-Schutz an/aus schalten":
-                        mtoggle.setDispalyName("PvP-Schutz an/aus schalten");
+                        mtoggle.setDisplayName("PvP-Schutz an/aus schalten");
                         if (pdc.has(pvptoggle, PersistentDataType.BOOLEAN)) {
                             pdc.set(pvptoggle, PersistentDataType.BOOLEAN, !pdc.get(pvptoggle, PersistentDataType.BOOLEAN));
                             sender.sendMessage("Dein PvP-Schutz ist jetzt " + (pdc.get(pvptoggle, PersistentDataType.BOOLEAN)?"an":"aus"));
