@@ -12,7 +12,7 @@ public class Config {
     public static void createConfig() {
         config.options().copyDefaults(true);
         config.addDefault("pvp-time-hit-back", 60);
-	config.addDefault("default-pvp-protection", true);
+	    config.addDefault("default-pvp-protection", true);
         Pvptoggle.pvptoggle.saveConfig();
     }
 
