@@ -56,36 +56,36 @@ public class InventoryListener implements Listener{
             }
         } else if (invtitle.equals("Whitelist-Menu")) {
             if (event.getCurrendItem != null) {
-                switch (e.getCurrendItem().getItemMeta().getDiplayName()) {
+                switch (e.getCurrentItem().getItemMeta().getDisplayName()) {
                 case "Inventar schließen":
-                        p.closeInventory;
+                        p.closeInventory();
                         break;
                 case "Zurück":
-                        p.closeInventory;
+                        p.closeInventory;()
                         p.openInventory(InventoryMenu.pvpMenu(p));
                         break;
                 }
             }
         } else if (invtitle.equals("Blacklist-Menu")) {
             if (event.getCurrendItem != null) {
-                switch (e.getCurrendItem().getItemMeta().getDiplayName()) {
+                switch (e.getCurrentItem().getItemMeta().getDisplayName()) {
                 case "Inventar schließen":
-                        p.closeInventory;
+                        p.closeInventory();
                         break;
                 case "Zurück":
-                        p.closeInventory;
+                        p.closeInventory();
                         p.openInventory(InventoryMenu.pvpMenu(p));
                         break;
                 }
             }
         } else if (invtitle.equals("Operator-Menu")) {
             if (event.getCurrendItem != null) {
-                switch (e.getCurrendItem().getItemMeta().getDiplayName()) {
+                switch (e.getCurrentItem().getItemMeta().getDisplayName()) {
                 case "Inventar schließen":
-                    p.closeInventory;
+                    p.closeInventory();
                     break;
                 case "Zurück":
-                    p.closeInventory;
+                    p.closeInventory();
                     p.openInventory(InventoryMenu.pvpMenu(p));
                     break;
 				case "Standard PvP-Schutz an/aus schalten":
