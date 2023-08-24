@@ -8,7 +8,7 @@ public class InventoryListener implements Listener{
     @EventHandler
     public void onPvpMenuInteract(InventoryClickEvent e) {
         Player p = e.getWhoClicked();
-		Inventory inv = e.getClickedInventory();
+	Inventory inv = e.getClickedInventory();
         String invtitle = e.getView().getTitle();
         if (invtitle.equals("PvP-Menu")) {
             event.setCancelled(true);
