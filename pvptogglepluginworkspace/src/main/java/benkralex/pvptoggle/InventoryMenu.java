@@ -3,6 +3,19 @@
 
 
 public class InventoryMenu {
+	public static final int PVP_TOGGLE=0;
+	public static final int ULTRA_TOGGLE=1;
+	public static final int WHITELIST=2;
+	public static final int BLACKLIST=3;
+	public static final int OP=4;
+	public static final int CLOSE=5;
+	public static final int BACK=6;
+	public static final int VOID=7;
+	public static final int DEFAULT_PROTECTION=8;
+	public static final int PVP_TIME=9;
+	public static final int PVP_TIME_PLUS=10;
+	public static final int PVP_TIME_MINUS=11;
+	
 	public static ItemStack getMenuItem(int i, Player p) {
 		switch i {
 			case 0:
