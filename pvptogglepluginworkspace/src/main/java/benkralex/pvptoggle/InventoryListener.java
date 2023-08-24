@@ -12,7 +12,7 @@ public class InventoryListener implements Listener{
         String invtitle = e.getView().getTitle();
         if (invtitle.equals("PvP-Menu")) {
             event.setCancelled(true);
-            if (event.getCurrendItem() != null) {
+            if (event.getCurrentItem() != null) {
                 switch (e.getCurrentItem().getItemMeta().getDisplayName()) {
                     case "Inventar schließen":
                         p.closeInventory();
@@ -55,13 +55,13 @@ public class InventoryListener implements Listener{
                 }
             }
         } else if (invtitle.equals("Whitelist-Menu")) {
-            if (event.getCurrendItem != null) {
+            if (event.getCurrentItem() != null) {
                 switch (e.getCurrentItem().getItemMeta().getDisplayName()) {
                 case "Inventar schließen":
                         p.closeInventory();
                         break;
                 case "Zurück":
-                        p.closeInventory;()
+                        p.closeInventory();
                         p.openInventory(InventoryMenu.pvpMenu(p));
                         break;
                 }
@@ -79,7 +79,7 @@ public class InventoryListener implements Listener{
                 }
             }
         } else if (invtitle.equals("Operator-Menu")) {
-            if (event.getCurrendItem != null) {
+            if (event.getCurrentItem() != null) {
                 switch (e.getCurrentItem().getItemMeta().getDisplayName()) {
                 case "Inventar schließen":
                     p.closeInventory();
