@@ -30,32 +30,36 @@ public class PvpCommand {
                     .executesPlayer((sender, args)->{pvpWhitelist(sender, args, 1);})
                     .withPermission("pvp.whitelist")
                     .withUsage("/pvp whitelist")
-                    .withHelp("Command noch nicht verfügbar", "Damit kannst du dir die Whitelist anzeigen. Alle die in der Whitelist sind können dich immer schlagen.")
+                    .withHelp("Whitelist zeigen", "Damit kannst du dir die Whitelist anzeigen. Alle die in der Whitelist sind können dich immer schlagen.")
                     	.withSubcommand(new CommandAPICommand("add")
                            .executesPlayer((sender, args)->{pvpWhitelist(sender, args, 2);})
                            .withPermission("pvp.whitelist")
                            .withUsage("/pvp whitelist add <Player>")
-                           .withHelp("Command noch nicht verfügbar", "Du kannst damit Spieler zu deiner Whitelist hinzufügen."))
+						   .withArguments(new PlayerArgument("Player"))
+                           .withHelp("Spieler zu Whitelist hinzufügen", "Du kannst damit Spieler zu deiner Whitelist hinzufügen."))
                         .withSubcommand(new CommandAPICommand("remove")
                            .executesPlayer((sender, args)->{pvpWhitelist(sender, args, 3);})
                            .withPermission("pvp.whitelist")
                            .withUsage("/pvp whitelist remove <Player>")
-                           .withHelp("Command noch nicht verfügbar", "Du kannst damit Spieler aus deiner Whitelist entfernen.")))
+						   .withArguments(new PlayerArgument("Player"))
+                           .withHelp("Spieler aus Whitelist entfernen", "Du kannst damit Spieler aus deiner Whitelist entfernen.")))
             	.withSubcommand(new CommandAPICommand("blacklist")
                     .executesPlayer((sender, args)->{pvpBlacklist(sender, args, 1);})
                     .withPermission("pvp.blacklist")
    	                .withUsage("/pvp blacklist <Player>")
-					.withHelp("Command noch nicht verfügbar", "Damit kannst du dir die Blacklist anzeigen. Alle die in der Blacklist sind können dich nur zurückschlagen.")
+					.withHelp("Blacklist anzeigen", "Damit kannst du dir die Blacklist anzeigen. Alle die in der Blacklist sind können dich nur zurückschlagen.")
            	        	.withSubcommand(new CommandAPICommand("add")
                             .executesPlayer((sender, args)->{pvpBlacklist(sender, args, 2);})
                             .withPermission("pvp.blacklist")
                             .withUsage("/pvp blacklist add <Player>")
-                            .withHelp("Command noch nicht verfügbar", "Du kannst damit Spieler zu deiner Blacklist hinzufügen."))
+						    .withArguments(new PlayerArgument("Player"))
+                            .withHelp("Spieler zu Blacklist hinzufügen", "Du kannst damit Spieler zu deiner Blacklist hinzufügen."))
                         .withSubcommand(new CommandAPICommand("remove")
                             .executesPlayer((sender, args)->{pvpBlacklist(sender, args, 3);})
                             .withPermission("pvp.blacklist")
                             .withUsage("/pvp blacklist remove <Player>")
-                            .withHelp("Command noch nicht verfügbar", "Du kannst damit Spieler aus deiner Blacklist entfernen.")))
+						    .withArguments(new PlayerArgument("Player"))
+                            .withHelp("Spieler aus Blacklist entfernen", "Du kannst damit Spieler aus deiner Blacklist entfernen.")))
 				.register();
     }
 
@@ -121,7 +125,7 @@ public class PvpCommand {
             if (pdc.has(whitelist, PersistentDataType.TAG_CONTAINER)) {
                 //
             }
-            sender.sendMessage("Du kannst " + args[0] + " nicht zur der Whitelist hinzufügen");
+            sender.sendMessage("Du kannst " + args.get("Player") + " nicht zur der Whitelist hinzufügen");
         } else if (action == 3) {
             //entfernen
             /*if (pdc.has(whitelist, PersistentDataType.TAG_CONTAINER)) {
@@ -132,9 +136,9 @@ public class PvpCommand {
 			if (args[0] instanceof player) {
                 	Util.pdcTagContaineradd(sender, whitelist, args[0], true);
 				} else {
-					sender.sendMessage("'" + args[0] + "' ist kein Spieler")
+					sender.sendMessage("'" + args.get("Player").getName() + "' ist kein Spieler")
 				}
-            sender.sendMessage("Du kannst " + args[0] + " nicht aus der Whitelist entfernen");
+            sender.sendMessage("Du kannst " + args.get("Player").getName() + " nicht aus der Whitelist entfernen");
         } else {
             sender.sendMessage("Fehler");
         }
@@ -157,13 +161,13 @@ public class PvpCommand {
             if (pdc.has(blacklist, PersistentDataType.TAG_CONTAINER)) {
                 //
             }
-            sender.sendMessage("Du kannst " + args[0] + " nicht zur der Blacklist hinzufügen");
+            sender.sendMessage("Du kannst " + args.get("Player").getName() + " nicht zur der Blacklist hinzufügen");
         } else if (action == 3) {
             //entfernen
             if (pdc.has(blacklist, PersistentDataType.TAG_CONTAINER)) {
                 //
             }
-            sender.sendMessage("Du kannst " + args[0] + " nicht aus der Blacklist entfernen");
+            sender.sendMessage("Du kannst " + args.get("Player").getName() + " nicht aus der Blacklist entfernen");
         } else {
             sender.sendMessage("Fehler");
         }
