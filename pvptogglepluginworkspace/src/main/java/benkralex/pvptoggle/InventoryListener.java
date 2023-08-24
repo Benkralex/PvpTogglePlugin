@@ -67,7 +67,7 @@ public class InventoryListener implements Listener{
                 }
             }
         } else if (invtitle.equals("Blacklist-Menu")) {
-            if (event.getCurrendItem != null) {
+            if (event.getCurrentItem() != null) {
                 switch (e.getCurrentItem().getItemMeta().getDisplayName()) {
                 case "Inventar schließen":
                         p.closeInventory();
