@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 
 public class InventoryListener implements Listener{
     @EventHandler
-    public void onPvpMenuInteract(InventoryInteractEvent e) {
+    public void onPvpMenuInteract(InventoryClickEvent e) {
         Player p = e.getWhoClicked();
 		Inventory inv = e.getInventory();
         String invtitle = e.getView().getTitle();
