@@ -112,15 +112,4 @@ public class InventoryListener implements Listener{
             }
         }
     }
-    
-    public void onPvpMenuItemMove(InventoryMoveItemEvent e) {
-		String invtitle = e.getView().getTitle();
-        if (invtitle.equals("PvP-Menu") || 
-				invtitle.equals("Operator-Menu") || 
-				invtitle.equals("Blacklist-Menu") || 
-				invtitle.equals("Whitelist-Menu")) {
-			
-            event.setCancled(true);
-        }
-    }
 }
