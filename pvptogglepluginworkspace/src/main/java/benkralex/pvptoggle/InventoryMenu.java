@@ -22,6 +22,7 @@ public class InventoryMenu {
 				ItemStack itoggle = new ItemStack(Material.IRON_SWORD);
 				ItemMeta mtoggle = itoggle.getItemMeta();
 				mtoggle.setDispalyName("PvP-Schutz an/aus schalten");
+				mtoggle.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 				mtoggle.setLore(ChatColor.BLUE + (p.getPersistentDataContainer().get(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN)?"Aus":"An" +) " schalten");
 				itoggle.setItemMeta(mtoggle);
 				return itoggle;
@@ -30,6 +31,7 @@ public class InventoryMenu {
 				ItemStack iultra = new ItemStack(Material.DIAMOND_SWORD);
 				ItemMeta multra = iultra.getItemMeta();
 				multra.setDispalyName("Ultra an/aus schalten");
+				multra.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 				multra.setLore(ChatColor.BLUE + (p.getPersistentDataContainer().get(new NamespacedKey(Pvptoggle.pvptoggle, "pvpultra"), PersistentDataType.BOOLEAN)?"Aus":"An") + " schalten");
 				iultra.setItemMeta(multra);
 				return iultra;
@@ -38,6 +40,7 @@ public class InventoryMenu {
 				ItemStack iwhitelist = new ItemStack(Material.WHITE_CONCRET);
 				ItemMeta mwhitelist = iwhitelist.getItemMeta();
 				mwhitelist.setDispalyName("Whitelist");
+				mwhitelist.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 				iwhitelist.setItemMeta(mwhitelist);
 				return iwhitelist;
 				break;
@@ -45,6 +48,7 @@ public class InventoryMenu {
 				ItemStack iblacklist = new ItemStack(Material.BLACK_CONCRET);
 				ItemMeta mblacklist = iblacklist.getItemMeta();
 				mblacklist.setDispalyName("Blacklist");
+				mblacklist.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 				iblacklist.setItemMeta(mblacklist);
 				return iblacklist;
 				break;
@@ -52,6 +56,7 @@ public class InventoryMenu {
 				ItemStack iop = new ItemStack(Material.BEDROCK);
 				ItemMeta mop = iop.getItemMeta();
 				mop.setDispalyName("Menu für Operators");
+				mop.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 				iop.setItemMeta(mop);
 				/*if (p.hasPermission("pvp.inv.op")) {
 				    inv.setItem(22, getMenuItem(4));
@@ -62,6 +67,7 @@ public class InventoryMenu {
 				ItemStack iclose = new ItemStack(Material.BARRIER);
 				ItemMeta mclose = iclose.getItemMeta();
 				mclose.setDispalyName("Inventar schließen");
+				mclose.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 				iclose.setItemMeta(mclose);
 				//inv.setItem(8, getMenuItem(5));
 				return iclose;
@@ -70,6 +76,7 @@ public class InventoryMenu {
 				ItemStack iback = new ItemStack(Material.HOPPER);
 				ItemMeta mback = iback.getItemMeta();
 				mback.setDispalyName("Zurück");
+				mback.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 				iback.setItemMeta(mback);
 				//inv.setItem(26, getMenuItem(6));
 				return iback;
@@ -78,6 +85,7 @@ public class InventoryMenu {
 				ItemStack ivoid = new ItemStack(Material.LIGHT_GRAY_STAIND_GLASS_PAIN);
   				ItemMeta mvoid = ivoid.getItemMeta();
 		  		mvoid.setDisplayName("");
+				mvoid.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
  				ivoid.setItemMeta(mvoid);
  		 		/*for (int i = 0, i <= 26, i++) {
     				if (inv.getItem(i) == Material.AIR) {
@@ -91,6 +99,7 @@ public class InventoryMenu {
 				ItemMeta mdefaultprot = idefaultprot.getItemMeta();
 				mdefaultprot.setDisplayName("Standard PvP-Schutz an/aus schalten");
 				mdefaultprot.setLore(ChatColor.BLUE + (Config.getPvpProt()?"Aus":"An") + " schalten");
+				mdefaultprot.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 				idefaultprot.setItemMeta(mdefaultprot);
 				return idefaultprot;
 				break;
@@ -99,6 +108,7 @@ public class InventoryMenu {
 				ItemMeta mpvptime = ipvptime.getItemMeta();
 				mpvptime.setDisplayName("Zeit um zurückzuschlagen");
 				mpvptime.setLore(ChatColor.BLUE + Config.getPvpTime() + " Sekunden um zurückzuschlagen");
+				mpvptime.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 				ipvptime.setItemMeta(mpvptime);
 				return ipvptime;
 				break;
@@ -106,6 +116,7 @@ public class InventoryMenu {
 				ItemStack ipvptimeplus = new ItemStack(Material.GREEN_WOOL);
 				ItemMeta mpvptimeplus = ipvptimeplus.getItemMeta();
 				mpvptimeplus.setDisplayName("Zeit um zurückzuschlagen erhöhen");
+				mpvptimeplus.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 				mpvptimeplus.setLore(ChatColor.BLUE + "Rechtsklick:" + ChatColor.GREEN + " +1\n" + ChatColor.BLUE + "Linksklick:" + ChatColor.GREEN + " +10");
 				ipvptimeplus.setItemMeta(mpvptimeplus);
 				return ipvptimeplus;
@@ -114,6 +125,7 @@ public class InventoryMenu {
 				ItemStack ipvptimeminus = new ItemStack(Material.RED_WOOL);
 				ItemMeta mpvptimeminus = ipvptimeminus.getItemMeta();
 				mpvptimeminus.setDisplayName("Zeit um zurückzuschlagen verringern");
+				mpvptimeminus.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 				mpvptimeminus.setLore(ChatColor.BLUE + "Rechtsklick:" + ChatColor.RED + " -1\n" + ChatColor.BLUE + "Linksklick:" + ChatColor.RED + " -10");
 				ipvptimeminus.setItemMeta(mpvptimeminus);
 				return ipvptimeminus;
