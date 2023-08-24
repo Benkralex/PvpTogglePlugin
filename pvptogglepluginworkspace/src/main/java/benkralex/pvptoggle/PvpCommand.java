@@ -111,36 +111,41 @@ public class PvpCommand {
 				if(pdcwhitelist != null) {
 					int i = 0;
         	        for (NamespacedKey whitelistkey:pdcwhitelist.getKeys()) {
-    	                sender.sendMessage(ChatColor.LIGHT_GREEN + i + ". " + ChatColor.GREEN + pdcwhitelist.get(whitelistkey, PersistentDataType.STRING));
-	                }
+                        i++;
+    	                sender.sendMessage(ChatColor.LIGHT_BLUE + i + ". " + ChatColor.BLUE + Bukkit.getPlayer(UUID.fromString(pdcwhitelist.get(whitelistkey, PersistentDataType.STRING))).getDisplayName());
+                    }
 				} else {
 					sender.sendMessage("Deine Whitelist ist leer");
 				}
             } else {
 		    	sender.sendMessage("Deine Whitelist ist leer");
 	    	}
-            //sender.sendMessage("Du kannst dir die Whitelist nicht anzeigen");
+            sender.sendMessage(ChatColor.RED + "Die Whitelist funktioniert aktuell nicht");
         } else if (action == 2) {
             //hinzufügen
-            if (pdc.has(whitelist, PersistentDataType.TAG_CONTAINER)) {
-                PersistentDataContainer pdcwhitelist = pdc.get(whitelist, PersistentDataType.TAG_CONTAINER);
-                pdcwhitelist.add(new NamespacedKey(Pvptoggle.pvptoggle, "abc"),  PersistentDataType.STRING, args.get("Player").getUniqueId().toString()));
-
+            if (!pdc.has(whitelist, PersistentDataType.TAG_CONTAINER)) {
+                //pdc erstellen
             }
-            sender.sendMessage("Du kannst " + args.get("Player") + " nicht zur der Whitelist hinzufügen");
+            PersistentDataContainer pdcwhitelist = pdc.get(whitelist, PersistentDataType.TAG_CONTAINER);
+            pdcwhitelist.add(new NamespacedKey(Pvptoggle.pvptoggle, args.get("Player").getUniqueId().toString()),  PersistentDataType.STRING, args.get("Player").getUniqueId().toString()));
+            sender.sendMessage(ChatColor.LIGHT_GREEN + args.get("Player").getDisplayName() + "wurde zu deiner Whitelist hinzugefügt");
+            
+            sender.sendMessage(ChatColor.RED + "Die Whitelist funktioniert aktuell nicht");
         } else if (action == 3) {
             //entfernen
-            /*if (pdc.has(whitelist, PersistentDataType.TAG_CONTAINER)) {
-				
+            if (!pdc.has(whitelist, PersistentDataType.TAG_CONTAINER)) {
+                sender.sendMessage(ChatColor.RED + "Der Spieler" + args.get("Player") + "ist nicht in deiner Whitelist");
+				return;
+            }
+            PersistentDataContainer whitelistpdc = pdc.get(whitelist, PersistentDataType.TAG_CONTAINER); 
+            if (whitelistpdc.has(new NamespacedKey(Pvptoggle.pvptoggle, args.get("Player").getUniqueId()))) {
+                whitelistpdc.remove(new NamespacedKey(Pvptoggle.pvptoggle, args.get("Player").getUniqueId().toString()), PersistentDataType.STRING);
+                sender.sendMessage(ChatColor.LIGHT_GREEN + args.get("Player").getDispalyName() + "wurde aus deiner Whitelist entfernt");
             } else {
-				
-			}*/
-			if (args[0] instanceof player) {
-                	Util.pdcTagContaineradd(sender, whitelist, args[0], true);
-				} else {
-					sender.sendMessage("'" + args.get("Player").getName() + "' ist kein Spieler")
-				}
-            sender.sendMessage("Du kannst " + args.get("Player").getName() + " nicht aus der Whitelist entfernen");
+                sender.sendMessage(ChatColor.RED + args.get("Player").getDisplayName() + "ist nicht in deiner Whitelist");
+            }
+            
+            sender.sendMessage(ChatColor.RED + "Die Whitelist funktioniert aktuell nicht");
         } else {
             sender.sendMessage("Fehler");
         }
@@ -155,21 +160,45 @@ public class PvpCommand {
         if (action == 1) {
             //anzeigen
             if (pdc.has(blacklist, PersistentDataType.TAG_CONTAINER)) {
-                //
-            }
-            sender.sendMessage("Du kannst dir die Blacklist nicht anzeigen");
+				PersistentDataContainer pdcblacklist = pdc.get(blacklist, PersistentDataType.TAG_CONTAINER);
+				if(pdcblacklist != null) {
+					int i = 0;
+        	        for (NamespacedKey blacklistkey:pdcblacklist.getKeys()) {
+                        i++;
+    	                sender.sendMessage(ChatColor.LIGHT_BLUE + i + ". " + ChatColor.BLUE + Bukkit.getPlayer(UUID.fromString(pdcblacklist.get(blacklistkey, PersistentDataType.STRING))).getDisplayName());
+                    }
+				} else {
+					sender.sendMessage("Deine Blacklist ist leer");
+				}
+            } else {
+		    	sender.sendMessage("Deine Blacklist ist leer");
+	    	}
+            sender.sendMessage(ChatColor.RED + "Die Blacklist funktioniert aktuell nicht");
         } else if (action == 2) {
             //hinzufügen
-            if (pdc.has(blacklist, PersistentDataType.TAG_CONTAINER)) {
-                //
+            if (!pdc.has(blacklist, PersistentDataType.TAG_CONTAINER)) {
+                //pdc erstellen
             }
-            sender.sendMessage("Du kannst " + args.get("Player").getName() + " nicht zur der Blacklist hinzufügen");
+            PersistentDataContainer pdcblacklist = pdc.get(blacklistlist, PersistentDataType.TAG_CONTAINER);
+            pdcblacklist.add(new NamespacedKey(Pvptoggle.pvptoggle, args.get("Player").getUniqueId().toString()),  PersistentDataType.STRING, args.get("Player").getUniqueId().toString()));
+            sender.sendMessage(ChatColor.LIGHT_GREEN + args.get("Player").getDisplayName() + "wurde zu deiner Blacklist hinzugefügt");
+            
+            sender.sendMessage(ChatColor.RED + "Die Blacklist funktioniert aktuell nicht");
         } else if (action == 3) {
             //entfernen
-            if (pdc.has(blacklist, PersistentDataType.TAG_CONTAINER)) {
-                //
+            if (!pdc.has(blacklistlist, PersistentDataType.TAG_CONTAINER)) {
+                sender.sendMessage(ChatColor.RED + "Der Spieler" + args.get("Player") + "ist nicht in deiner Blacklist");
+				return;
             }
-            sender.sendMessage("Du kannst " + args.get("Player").getName() + " nicht aus der Blacklist entfernen");
+            PersistentDataContainer blacklistpdc = pdc.get(blacklist, PersistentDataType.TAG_CONTAINER); 
+            if (blacklistpdc.has(new NamespacedKey(Pvptoggle.pvptoggle, args.get("Player").getUniqueId()))) {
+                whitelistpdc.remove(new NamespacedKey(Pvptoggle.pvptoggle, args.get("Player").getUniqueId().toString()), PersistentDataType.STRING);
+                sender.sendMessage(ChatColor.LIGHT_GREEN + args.get("Player").getDispalyName() + "wurde aus deiner Blacklist entfernt");
+            } else {
+                sender.sendMessage(ChatColor.RED + args.get("Player").getDisplayName() + "ist nicht in deiner Blacklist");
+            }
+            
+            sender.sendMessage(ChatColor.RED + "Die Blacklist funktioniert aktuell nicht");
         } else {
             sender.sendMessage("Fehler");
         }
