@@ -124,6 +124,7 @@ public class PvpCommand {
             //hinzufügen
             if (pdc.has(whitelist, PersistentDataType.TAG_CONTAINER)) {
                 PersistentDataContainer pdcwhitelist = pdc.get(whitelist, PersistentDataType.TAG_CONTAINER);
+                pdcwhitelist.add(new NamespacedKey(Pvptoggle.pvptoggle, "abc"),  PersistentDataType.STRING, args.get("Player").getUniqueId().toString()));
 
             }
             sender.sendMessage("Du kannst " + args.get("Player") + " nicht zur der Whitelist hinzufügen");
