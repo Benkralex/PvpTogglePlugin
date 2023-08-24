@@ -123,7 +123,8 @@ public class PvpCommand {
         } else if (action == 2) {
             //hinzufügen
             if (pdc.has(whitelist, PersistentDataType.TAG_CONTAINER)) {
-                //
+                PersistentDataContainer pdcwhitelist = pdc.get(whitelist, PersistentDataType.TAG_CONTAINER);
+
             }
             sender.sendMessage("Du kannst " + args.get("Player") + " nicht zur der Whitelist hinzufügen");
         } else if (action == 3) {
