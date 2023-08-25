@@ -61,11 +61,21 @@ public class PvpCommand {
 						    .withArguments(new PlayerArgument("Player"))
                             .withHelp("Spieler aus Blacklist entfernen", "Du kannst damit Spieler aus deiner Blacklist entfernen.")))
 						.withSubcommand(new ConmmandAPICommand("fight")
-							.executesPlayer((sender, args)->{pvpFight(sender, args);})
+							.executesPlayer((sender, args)->{pvpFight(sender, args, 0);})
 							.withPermission("pvp.fight")
 							.withUsage("/pvp fight <Player>")
 							.withArguments(new PlayerArgument("Player"))
-							.withHelp("Spieler zu einem Kampf herrausfordern", "Man kann sich schlagen bis einer stirbt, der der stirbt verliert nichts."))
+							.withHelp("Spieler zu einem Kampf herrausfordern", "Man kann sich schlagen bis einer stirbt, der der stirbt verliert nichts.")
+							.withSubcommand(new CommandAPICommand("accept")
+								.executesPlayer((sender, args)->{pvpFight(sender, args, 1);})
+								.withPermission("pvp.fight")
+								.withUsage("/pvp fight accept")
+								.withHelp("Herrausforderung annehmen", "Letzte Herrausforderung annehmen"))
+							.withSubcommand(new CommandAPICommand("deny")
+								.executesPlayer((sender, args)->{pvpFight(sender, args, 2);})
+								.withPermission("pvp.fight")
+								.withUsage("/pvp fight deny")
+								.withHelp("Herrausforderung ablehnen", "Letzte Herrausforderung ablehnen")))
 				.register();
     }
 
@@ -210,14 +220,26 @@ public class PvpCommand {
         }
     }
 
-	public static void pvpFight(Player sender, Commandarguments args) {
+	public static void pvpFight(Player sender, Commandarguments args, int action) {
 		//PvP Fight Command
-		Player pargs = args.get("Player");
-		Boolean fight;
-		TextComponent accept = new TextComponent(ChatColor.LIGHT_GREEN + "Annehmen");
-		TextComponent deny = new TextComponent(ChatColor.RED + "Ablehnen");
-		pargs.sendMessage("Du wurdest von " + sender.getDisplayName() + " zu einem Kampf herrausgefordert.");
-		pargs.sendMessage(accept + ChatColor.WHITE + " | " + deny);
-		
+		if (action == 0) {
+			//Kampf herrausgefordert
+			Player pargs = args.get("Player");
+			TextComponent accept = new TextComponent(ChatColor.LIGHT_GREEN + "Annehmen");
+			TextComponent deny = new TextComponent(ChatColor.RED + "Ablehnen");
+			accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/pvp fight accept"));
+			deny.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/pvp fight deny"));
+			pargs.sendMessage("Du wurdest von " + sender.getDisplayName() + " zu einem Kampf herrausgefordert.");
+			pargs.sendMessage(accept + ChatColor.WHITE + " | " + deny);
+			sender.sendMessage("Der Command funktioniert noch nicht");
+		} else if (action == 1) {
+			//Kampf angenommen
+			String s = "Kampf angenomen, der Command funktioniert noch nicht";
+			sender.sendMessage(s);
+		} else if (action == 2) {
+			//Kampf abgelehnt
+			String s = "Kampf abgelehnt, der Command funktioniert noch nicht";
+			sender.sendMessage(s);
+		}
 	}
 }
