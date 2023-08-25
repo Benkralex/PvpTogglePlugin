@@ -12,7 +12,7 @@ public class PvpCommand {
     public static void createPvpCommand() {
         //Create PVP-Command with Command-API
         new CommandAPICommand("pvp")
-			.executesPlayer((sender, args)->{pvpInv(sender, args);})
+	        .executesPlayer((sender, args)->{pvpInv(sender, args);})
             .withPermission("pvp.inv.op")
             .withUsage("/pvp")
             .withHelp("PvP Menu", "Du kannst damit ein Menu öffnen, in dem du alles verwalten kannst.")
@@ -60,6 +60,12 @@ public class PvpCommand {
                             .withUsage("/pvp blacklist remove <Player>")
 						    .withArguments(new PlayerArgument("Player"))
                             .withHelp("Spieler aus Blacklist entfernen", "Du kannst damit Spieler aus deiner Blacklist entfernen.")))
+						.withSubcommand(new ConmmandAPICommand("fight")
+							.executesPlayer((sender, args)->{pvpFight(sender, args);})
+							.withPermission("pvp.fight")
+							.withUsage("/pvp fight <Player>")
+							.withArguments(new PlayerArgument("Player"))
+							.withHelp("Spieler zu einem Kampf herrausfordern", "Man kann sich schlagen bis einer stirbt, der der stirbt verliert nichts."))
 				.register();
     }
 
@@ -203,4 +209,15 @@ public class PvpCommand {
             sender.sendMessage("Fehler");
         }
     }
+
+	public static void pvpFight(Player sender, Commandarguments args) {
+		//PvP Fight Command
+		Player pargs = args.get("Player");
+		Boolean fight;
+		TextComponent accept = new TextComponent(ChatColor.LIGHT_GREEN + "Annehmen");
+		TextComponent deny = new TextComponent(ChatColor.RED + "Ablehnen");
+		pargs.sendMessage("Du wurdest von " + sender.getDisplayName() + " zu einem Kampf herrausgefordert.");
+		pargs.sendMessage(accept + ChatColor.WHITE + " | " + deny);
+		
+	}
 }
