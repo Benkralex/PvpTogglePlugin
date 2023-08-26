@@ -10,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.projectiles.ProjectileSource;
 
 public class PvpEvent implements Listener {
@@ -50,10 +51,10 @@ public class PvpEvent implements Listener {
 
     @EventHandler
     public void playerJoinListener(PlayerJoinEvent event) {
-        if (!event.getplayer().getPersistentDataContainer().has(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN)) {
+        if (!event.getPlayer().getPersistentDataContainer().has(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN)) {
             event.getPlayer().getPersistentDataContainer().set(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN, Config.getPvpProt());
         } else {
-            event.getPlayer().sendMessage("Dein PvP-Schutz ist " + (pdc.get(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN)?"an":"aus"));
+            event.getPlayer().sendMessage("Dein PvP-Schutz ist " + (event.getPlayer().getPersistentDataContainer().get(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN)?"an":"aus"));
         }
     }
 }

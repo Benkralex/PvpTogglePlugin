@@ -1,6 +1,20 @@
+package benkralex.pvptoggle;
 
+import benkralex.pvptoggle.Config;
+import benkralex.pvptoggle.Pvptoggle;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class InventoryMenu {
 	public static final int PVP_TOGGLE=0;
@@ -17,37 +31,41 @@ public class InventoryMenu {
 	public static final int PVP_TIME_MINUS=11;
 	
 	public static ItemStack getMenuItem(int i, Player p) {
-		switch i {
+		List<String> lore = new ArrayList<String >();
+		switch (i) {
 			case 0:
 				ItemStack itoggle = new ItemStack(Material.IRON_SWORD);
 				ItemMeta mtoggle = itoggle.getItemMeta();
-				mtoggle.setDispalyName("PvP-Schutz an/aus schalten");
+				mtoggle.setDisplayName("PvP-Schutz an/aus schalten");
 				mtoggle.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-				mtoggle.setLore(ChatColor.BLUE + (p.getPersistentDataContainer().get(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN)?"Aus":"An" +) " schalten");
+				String s = p.getPersistentDataContainer().get(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN)?"Aus":"An";
+				lore.add(ChatColor.BLUE + s + " schalten");
+				mtoggle.setLore(lore);
 				itoggle.setItemMeta(mtoggle);
 				return itoggle;
 				break;
 			case 1:
 				ItemStack iultra = new ItemStack(Material.DIAMOND_SWORD);
 				ItemMeta multra = iultra.getItemMeta();
-				multra.setDispalyName("Ultra an/aus schalten");
+				multra.setDisplayName("Ultra an/aus schalten");
 				multra.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-				multra.setLore(ChatColor.BLUE + (p.getPersistentDataContainer().get(new NamespacedKey(Pvptoggle.pvptoggle, "pvpultra"), PersistentDataType.BOOLEAN)?"Aus":"An") + " schalten");
+				lore.add(ChatColor.BLUE + (p.getPersistentDataContainer().get(new NamespacedKey(Pvptoggle.pvptoggle, "pvpultra"), PersistentDataType.BOOLEAN)?"Aus":"An") + " schalten");
+				multra.setLore(lore);
 				iultra.setItemMeta(multra);
 				return iultra;
 				break;
 			case 2:
-				ItemStack iwhitelist = new ItemStack(Material.WHITE_CONCRET);
+				ItemStack iwhitelist = new ItemStack(Material.WHITE_CONCRETE);
 				ItemMeta mwhitelist = iwhitelist.getItemMeta();
-				mwhitelist.setDispalyName("Whitelist");
+				mwhitelist.setDisplayName("Whitelist");
 				mwhitelist.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 				iwhitelist.setItemMeta(mwhitelist);
 				return iwhitelist;
 				break;
 			case 3:
-				ItemStack iblacklist = new ItemStack(Material.BLACK_CONCRET);
+				ItemStack iblacklist = new ItemStack(Material.BLACK_CONCRETE);
 				ItemMeta mblacklist = iblacklist.getItemMeta();
-				mblacklist.setDispalyName("Blacklist");
+				mblacklist.setDisplayName("Blacklist");
 				mblacklist.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 				iblacklist.setItemMeta(mblacklist);
 				return iblacklist;
@@ -55,7 +73,7 @@ public class InventoryMenu {
 			case 4:
 				ItemStack iop = new ItemStack(Material.BEDROCK);
 				ItemMeta mop = iop.getItemMeta();
-				mop.setDispalyName("Menu für Operators");
+				mop.setDisplayName("Menu für Operators");
 				mop.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 				iop.setItemMeta(mop);
 				/*if (p.hasPermission("pvp.inv.op")) {
@@ -66,7 +84,7 @@ public class InventoryMenu {
 			case 5:
 				ItemStack iclose = new ItemStack(Material.BARRIER);
 				ItemMeta mclose = iclose.getItemMeta();
-				mclose.setDispalyName("Inventar schließen");
+				mclose.setDisplayName("Inventar schließen");
 				mclose.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 				iclose.setItemMeta(mclose);
 				//inv.setItem(8, getMenuItem(5));
@@ -75,14 +93,14 @@ public class InventoryMenu {
 			case 6:
 				ItemStack iback = new ItemStack(Material.HOPPER);
 				ItemMeta mback = iback.getItemMeta();
-				mback.setDispalyName("Zurück");
+				mback.setDisplayName("Zurück");
 				mback.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 				iback.setItemMeta(mback);
 				//inv.setItem(26, getMenuItem(6));
 				return iback;
 				break;
 			case 7:
-				ItemStack ivoid = new ItemStack(Material.LIGHT_GRAY_STAIND_GLASS_PAIN);
+				ItemStack ivoid = new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE);
   				ItemMeta mvoid = ivoid.getItemMeta();
 		  		mvoid.setDisplayName("");
 				mvoid.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -98,7 +116,8 @@ public class InventoryMenu {
 				ItemStack idefaultprot = new ItemStack(Material.GOLDEN_SWORD);
 				ItemMeta mdefaultprot = idefaultprot.getItemMeta();
 				mdefaultprot.setDisplayName("Standard PvP-Schutz an/aus schalten");
-				mdefaultprot.setLore(ChatColor.BLUE + (Config.getPvpProt()?"Aus":"An") + " schalten");
+				lore.add(ChatColor.BLUE + (Config.getPvpProt()?"Aus":"An") + " schalten");
+				mdefaultprot.setLore(lore);
 				mdefaultprot.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 				idefaultprot.setItemMeta(mdefaultprot);
 				return idefaultprot;
@@ -107,7 +126,8 @@ public class InventoryMenu {
 				ItemStack ipvptime = new ItemStack(Material.CLOCK);
 				ItemMeta mpvptime = ipvptime.getItemMeta();
 				mpvptime.setDisplayName("Zeit um zurückzuschlagen");
-				mpvptime.setLore(ChatColor.BLUE + Config.getPvpTime() + " Sekunden um zurückzuschlagen");
+				lore.add(ChatColor.BLUE + "" + Config.getPvpTime() + " Sekunden um zurückzuschlagen");
+				mpvptime.setLore(lore);
 				mpvptime.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 				ipvptime.setItemMeta(mpvptime);
 				return ipvptime;
@@ -117,7 +137,9 @@ public class InventoryMenu {
 				ItemMeta mpvptimeplus = ipvptimeplus.getItemMeta();
 				mpvptimeplus.setDisplayName("Zeit um zurückzuschlagen erhöhen");
 				mpvptimeplus.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-				mpvptimeplus.setLore(ChatColor.BLUE + "Rechtsklick:" + ChatColor.GREEN + " +1\n" + ChatColor.BLUE + "Linksklick:" + ChatColor.GREEN + " +10");
+				lore.add(ChatColor.BLUE + "Rechtsklick:" + ChatColor.GREEN + " +1");
+				lore.add(ChatColor.BLUE + "Linksklick:" + ChatColor.GREEN + " +10");
+				mpvptimeplus.setLore(lore);
 				ipvptimeplus.setItemMeta(mpvptimeplus);
 				return ipvptimeplus;
 				break;
@@ -126,24 +148,29 @@ public class InventoryMenu {
 				ItemMeta mpvptimeminus = ipvptimeminus.getItemMeta();
 				mpvptimeminus.setDisplayName("Zeit um zurückzuschlagen verringern");
 				mpvptimeminus.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-				mpvptimeminus.setLore(ChatColor.BLUE + "Rechtsklick:" + ChatColor.RED + " -1\n" + ChatColor.BLUE + "Linksklick:" + ChatColor.RED + " -10");
+				lore.add(ChatColor.BLUE + "Rechtsklick:" + ChatColor.RED + " -1");
+				lore.add(ChatColor.BLUE + "Linksklick:" + ChatColor.RED + " -10");
+				mpvptimeminus.setLore(lore);
 				ipvptimeminus.setItemMeta(mpvptimeminus);
 				return ipvptimeminus;
 				break;
+			default:
+				break;
 		}
+		return null;
 	}
 	
 	public static Inventory pvpMenuFillEmpty(Inventory inv, Player p) {
-		for (int i = 0, i <= (inv.getSize-1), i++) {
-    		if (inv.getItem(i) == Material.AIR) {
-    			inv.set(i, getMenuItem(7, p));
+		for (int i = 0; i <= inv.getSize()-1; i++) {
+    		if (inv.getItem(i).equals(Material.AIR)) {
+    			inv.setItem(i, getMenuItem(7, p));
     		}
   		}
 		return inv;
 	}
 	
 	public static Inventory pvpMenu(Player p) {
-		Inventory inv = new Bukkit.createInventory(null, 3*9, "PvP-Menu");
+		Inventory inv = Bukkit.createInventory(null, 3 * 9, "PvP-Menu");
 		
 		inv.setItem(10, getMenuItem(0, p));
 		inv.setItem(12, getMenuItem(1, p));
@@ -159,7 +186,7 @@ public class InventoryMenu {
 	
 	
 	public static Inventory pvpBlacklistMenu(Player p) {
-		Inventory inv = new Bukkit.createInventory(null, 3*9, "Blacklist-Menu");
+		Inventory inv = Bukkit.createInventory(null, 3*9, "Blacklist-Menu");
 		inv.setItem(8, getMenuItem(5, p));
 		inv.setItem(26, getMenuItem(6, p));
 		
@@ -168,7 +195,7 @@ public class InventoryMenu {
 	
 	
 	public static Inventory pvpWhitelistMenu(Player p) {
-		Inventory inv = new Bukkit.createInventory(null, 3*9, "Whitelist-Menu");
+		Inventory inv = Bukkit.createInventory(null, 3*9, "Whitelist-Menu");
 		inv.setItem(8, getMenuItem(5, p));
 		inv.setItem(26, getMenuItem(6, p));
 		
@@ -177,7 +204,7 @@ public class InventoryMenu {
 	
 	
 	public static Inventory pvpOpSettingsMenu(Player p) {
-		Inventory inv = new Bukkit.createInventory(null, 3*9, "Operator-Menu");
+		Inventory inv = Bukkit.createInventory(null, 3*9, "Operator-Menu");
 		inv.setItem(8, getMenuItem(5, p));
 		inv.setItem(26, getMenuItem(6, p));
 		inv.setItem(11, getMenuItem(8, p));

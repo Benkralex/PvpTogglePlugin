@@ -11,13 +11,15 @@ public class Util {
     public static boolean canPvP(Player damager, Player victim){
         PersistentDataContainer damagerPDC=damager.getPersistentDataContainer();
         PersistentDataContainer victimPDC=victim.getPersistentDataContainer();
+        Boolean ultradamager;
+        Boolean ultravictim;
         Boolean toggle = damagerPDC.get(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"),PersistentDataType.BOOLEAN);
         if (victimPDC.has(new NamespacedKey(Pvptoggle.pvptoggle, "ultra"),PersistentDataType.BOOLEAN)) {
-            Boolean ultravictim = victimPDC.get(new NamespacedKey(Pvptoggle.pvptoggle, "ultra"),PersistentDataType.BOOLEAN);
-        } else {Boolean ultravictim = false;} 
+            ultravictim = victimPDC.get(new NamespacedKey(Pvptoggle.pvptoggle, "ultra"),PersistentDataType.BOOLEAN);
+        } else {ultravictim = false;}
         if (damagerPDC.has(new NamespacedKey(Pvptoggle.pvptoggle, "ultra"),PersistentDataType.BOOLEAN)) {
-            Boolean ultradamager = damagerPDC.get(new NamespacedKey(Pvptoggle.pvptoggle, "ultra"),PersistentDataType.BOOLEAN);
-        } else {Boolean ultradamager = false;}
+            ultradamager = damagerPDC.get(new NamespacedKey(Pvptoggle.pvptoggle, "ultra"),PersistentDataType.BOOLEAN);
+        } else {ultradamager = false;}
         
         if(toggle!=null) {
             return !toggle || checkPvPData(damager, victim) || !ultradamager || !ultravictim;
@@ -38,7 +40,7 @@ public class Util {
     }
     public static void delOldData(PersistentDataContainer pvpdamagers){
         for(NamespacedKey damagerKey:pvpdamagers.getKeys()){
-            if(pvpdamagers.get(damagerKey,PersistentDataType.LONG)>= Instant.now().getEpochSecond() + Config.getpvptime()){
+            if(pvpdamagers.get(damagerKey,PersistentDataType.LONG)>= Instant.now().getEpochSecond() + Config.getPvpTime()){
                 pvpdamagers.remove(damagerKey);
             }
         }
@@ -53,15 +55,5 @@ public class Util {
         }
         damagersOfVictim.set(new NamespacedKey(Pvptoggle.pvptoggle, damagerUUID), PersistentDataType.LONG, Instant.now().getEpochSecond());
         victimPDC.set(new NamespacedKey(Pvptoggle.pvptoggle,"pvpdamagers"), PersistentDataType.TAG_CONTAINER,damagersOfVictim);
-    }
-
-    public static void pdcTagContaineradd(Player p, NamespacedKey key, String s, Boolean value) {
-        PersistentDataContainer pdc = p.getPersistentDataContainer();
-        PersistentDataContainer pdctagcontainer = pdc.get(key, PersitentDataType.TAG_CONTAINER);
-        if(pdctagcontainer == null) {
-            pdc.tagcontainer = pdc.getAdapterContext().newPersistentDataContainer();
-        }
-        pdctagcontainer.set(new NamespacedKey(Pvptoggle.pvptoggle, s), PersistentDataType.BOOLEAN, value);
-        pdc.set(key,PersistentDataType.TAG_CONTAINER, pdctagcontainer);
     }
 }
