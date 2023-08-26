@@ -2,12 +2,9 @@ package benkralex.pvptoggle;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
-import java.io.File;
-import java.time.Instant;
-
 public class Config {
 	
-	private static FileConfiguration config = Pvptoggle.pvptoggle.getConfig();
+	private static final FileConfiguration config = Pvptoggle.pvptoggle.getConfig();
 	
     public static void createConfig() {
 		config.options().copyDefaults(true);

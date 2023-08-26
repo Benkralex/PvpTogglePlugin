@@ -31,7 +31,7 @@ public class InventoryMenu {
 	public static final int PVP_TIME_MINUS=11;
 	
 	public static ItemStack getMenuItem(int i, Player p) {
-		List<String> lore = new ArrayList<String >();
+		List<String> lore = new ArrayList<>();
 		switch (i) {
 			case 0:
 				ItemStack itoggle = new ItemStack(Material.IRON_SWORD);
@@ -43,17 +43,15 @@ public class InventoryMenu {
 				mtoggle.setLore(lore);
 				itoggle.setItemMeta(mtoggle);
 				return itoggle;
-				break;
 			case 1:
 				ItemStack iultra = new ItemStack(Material.DIAMOND_SWORD);
 				ItemMeta multra = iultra.getItemMeta();
 				multra.setDisplayName("Ultra an/aus schalten");
 				multra.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-				lore.add(ChatColor.BLUE + (p.getPersistentDataContainer().get(new NamespacedKey(Pvptoggle.pvptoggle, "pvpultra"), PersistentDataType.BOOLEAN)?"Aus":"An") + " schalten");
+				lore.add(ChatColor.BLUE + (p.getPersistentDataContainer().get(new NamespacedKey(Pvptoggle.pvptoggle, "ultra"), PersistentDataType.BOOLEAN)?"Aus":"An") + " schalten");
 				multra.setLore(lore);
 				iultra.setItemMeta(multra);
 				return iultra;
-				break;
 			case 2:
 				ItemStack iwhitelist = new ItemStack(Material.WHITE_CONCRETE);
 				ItemMeta mwhitelist = iwhitelist.getItemMeta();
@@ -61,7 +59,6 @@ public class InventoryMenu {
 				mwhitelist.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 				iwhitelist.setItemMeta(mwhitelist);
 				return iwhitelist;
-				break;
 			case 3:
 				ItemStack iblacklist = new ItemStack(Material.BLACK_CONCRETE);
 				ItemMeta mblacklist = iblacklist.getItemMeta();
@@ -69,7 +66,6 @@ public class InventoryMenu {
 				mblacklist.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 				iblacklist.setItemMeta(mblacklist);
 				return iblacklist;
-				break;
 			case 4:
 				ItemStack iop = new ItemStack(Material.BEDROCK);
 				ItemMeta mop = iop.getItemMeta();
@@ -80,7 +76,6 @@ public class InventoryMenu {
 				    inv.setItem(22, getMenuItem(4));
 				}*/
 				return iop;
-				break;
 			case 5:
 				ItemStack iclose = new ItemStack(Material.BARRIER);
 				ItemMeta mclose = iclose.getItemMeta();
@@ -89,7 +84,6 @@ public class InventoryMenu {
 				iclose.setItemMeta(mclose);
 				//inv.setItem(8, getMenuItem(5));
 				return iclose;
-				break;
 			case 6:
 				ItemStack iback = new ItemStack(Material.HOPPER);
 				ItemMeta mback = iback.getItemMeta();
@@ -98,11 +92,10 @@ public class InventoryMenu {
 				iback.setItemMeta(mback);
 				//inv.setItem(26, getMenuItem(6));
 				return iback;
-				break;
 			case 7:
 				ItemStack ivoid = new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE);
   				ItemMeta mvoid = ivoid.getItemMeta();
-		  		mvoid.setDisplayName("");
+		  		mvoid.setDisplayName("X");
 				mvoid.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
  				ivoid.setItemMeta(mvoid);
  		 		/*for (int i = 0, i <= 26, i++) {
@@ -111,7 +104,6 @@ public class InventoryMenu {
     				}
   				}*/
 				return ivoid;
-				break;
 			case 8:
 				ItemStack idefaultprot = new ItemStack(Material.GOLDEN_SWORD);
 				ItemMeta mdefaultprot = idefaultprot.getItemMeta();
@@ -121,7 +113,6 @@ public class InventoryMenu {
 				mdefaultprot.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 				idefaultprot.setItemMeta(mdefaultprot);
 				return idefaultprot;
-				break;
 			case 9:
 				ItemStack ipvptime = new ItemStack(Material.CLOCK);
 				ItemMeta mpvptime = ipvptime.getItemMeta();
@@ -131,7 +122,6 @@ public class InventoryMenu {
 				mpvptime.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 				ipvptime.setItemMeta(mpvptime);
 				return ipvptime;
-				break;
 			case 10:
 				ItemStack ipvptimeplus = new ItemStack(Material.GREEN_WOOL);
 				ItemMeta mpvptimeplus = ipvptimeplus.getItemMeta();
@@ -142,7 +132,6 @@ public class InventoryMenu {
 				mpvptimeplus.setLore(lore);
 				ipvptimeplus.setItemMeta(mpvptimeplus);
 				return ipvptimeplus;
-				break;
 			case 11:
 				ItemStack ipvptimeminus = new ItemStack(Material.RED_WOOL);
 				ItemMeta mpvptimeminus = ipvptimeminus.getItemMeta();
@@ -153,24 +142,27 @@ public class InventoryMenu {
 				mpvptimeminus.setLore(lore);
 				ipvptimeminus.setItemMeta(mpvptimeminus);
 				return ipvptimeminus;
-				break;
 			default:
-				break;
+				return null;
 		}
-		return null;
 	}
 	
 	public static Inventory pvpMenuFillEmpty(Inventory inv, Player p) {
 		for (int i = 0; i <= inv.getSize()-1; i++) {
-    		if (inv.getItem(i).equals(Material.AIR)) {
-    			inv.setItem(i, getMenuItem(7, p));
-    		}
+			try {
+				if (inv.getItem(i) == null || inv.getItem(i).equals(Material.AIR)) {
+					inv.setItem(i, getMenuItem(VOID, p));
+				}
+			} catch (Exception e) {
+				Pvptoggle.pvptoggle.getLogger().warning(ChatColor.RED + "ERROR IN pvpMenuFillEmpty(): " + e.toString());
+			}
   		}
 		return inv;
 	}
 	
 	public static Inventory pvpMenu(Player p) {
 		Inventory inv = Bukkit.createInventory(null, 3 * 9, "PvP-Menu");
+		Inventory inv2;
 		
 		inv.setItem(10, getMenuItem(0, p));
 		inv.setItem(12, getMenuItem(1, p));
@@ -180,8 +172,9 @@ public class InventoryMenu {
 			inv.setItem(22, getMenuItem(4, p));
 		}
 		inv.setItem(8, getMenuItem(5, p));
-		
-		return pvpMenuFillEmpty(inv, p);
+
+		inv2 =  pvpMenuFillEmpty(inv, p);
+		return inv2;
 	}
 	
 	

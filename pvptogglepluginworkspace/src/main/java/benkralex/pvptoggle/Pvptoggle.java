@@ -1,10 +1,6 @@
 package benkralex.pvptoggle;
 
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Pvptoggle extends JavaPlugin {
@@ -14,6 +10,7 @@ public final class Pvptoggle extends JavaPlugin {
     @Override
     public void onEnable() {
         Bukkit.getPluginManager().registerEvents(new PvpEvent(), this);
+        Bukkit.getPluginManager().registerEvents(new InventoryListener(), this);
         Config.createConfig();
     }
 
