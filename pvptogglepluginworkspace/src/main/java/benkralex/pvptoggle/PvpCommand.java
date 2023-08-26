@@ -14,75 +14,81 @@ import org.bukkit.persistence.PersistentDataType;
 
 import java.util.UUID;
 
-
 public class PvpCommand {
+    private static final int SHOW_ACTION=1;
+    private static final int ADD_ACTION=2;
+    private static final int REMOVE_ACTION=3;
+    private static final int CHALLENGE_ACTION=0;
+    private static final int ACCEPT_ACTION=1;
+    private static final int DENY_ACTION=2;
+
     public static void createPvpCommand() {
         //Create PVP-Command with Command-API
         new CommandAPICommand("pvp")
-	        .executesPlayer((sender, args)->{pvpInv(sender, args);})
+	        .executesPlayer(PvpCommand::pvpInv)
             .withPermission("pvp.inv.op")
             .withUsage("/pvp")
             .withHelp("PvP Menu", "Du kannst damit ein Menu öffnen, in dem du alles verwalten kannst.")
                 .withSubcommand(new CommandAPICommand("toggle")
-                    .executesPlayer((sender, args)->{pvpToggle(sender, args);})
+                    .executesPlayer(PvpCommand::pvpToggle)
                     .withPermission("pvp.toggle")
                     .withUsage("/pvp toggle")
                     .withHelp("PvP damage für sich an/auschalten.", "Du kannst damit an/ausschalten, ob du geschlagen werden kannst."))
                 .withSubcommand(new CommandAPICommand("ultra")
-                    .executesPlayer((sender, args)->{pvpUltra(sender, args);})
+                    .executesPlayer(PvpCommand::pvpUltra)
                     .withPermission("pvp.ultra")
                     .withUsage("/pvp ultra")
                     .withHelp("Schutz + Schutz gegen ausversehen angreifen", "Du kannst damit an/ausschalten, ob du geschlagen werden kannst und andere schlagen kannst."))
             	.withSubcommand(new CommandAPICommand("whitelist")
-                    .executesPlayer((sender, args)->{pvpWhitelist(sender, args, 1);})
+                    .executesPlayer((sender, args)->{pvpList(sender, args,"whitelist","Whitelist", SHOW_ACTION);})
                     .withPermission("pvp.whitelist")
                     .withUsage("/pvp whitelist")
                     .withHelp("Whitelist zeigen", "Damit kannst du dir die Whitelist anzeigen. Alle die in der Whitelist sind können dich immer schlagen.")
                     	.withSubcommand(new CommandAPICommand("add")
-                           .executesPlayer((sender, args)->{pvpWhitelist(sender, args, 2);})
+                           .executesPlayer((sender, args)->{pvpList(sender, args,"whitelist","Whitelist", ADD_ACTION);})
                            .withPermission("pvp.whitelist")
                            .withUsage("/pvp whitelist add <Player>")
 						   .withArguments(new PlayerArgument("Player"))
                            .withHelp("Spieler zu Whitelist hinzufügen", "Du kannst damit Spieler zu deiner Whitelist hinzufügen."))
                         .withSubcommand(new CommandAPICommand("remove")
-                           .executesPlayer((sender, args)->{pvpWhitelist(sender, args, 3);})
+                           .executesPlayer((sender, args)->{pvpList(sender, args,"whitelist","Whitelist", REMOVE_ACTION);})
                            .withPermission("pvp.whitelist")
                            .withUsage("/pvp whitelist remove <Player>")
 						   .withArguments(new PlayerArgument("Player"))
                            .withHelp("Spieler aus Whitelist entfernen", "Du kannst damit Spieler aus deiner Whitelist entfernen.")))
             	.withSubcommand(new CommandAPICommand("blacklist")
-                    .executesPlayer((sender, args)->{pvpBlacklist(sender, args, 1);})
+                    .executesPlayer((sender, args)->{pvpList(sender, args,"blacklist","Blacklist", SHOW_ACTION);})
                     .withPermission("pvp.blacklist")
    	                .withUsage("/pvp blacklist <Player>")
 					.withHelp("Blacklist anzeigen", "Damit kannst du dir die Blacklist anzeigen. Alle die in der Blacklist sind können dich nur zurückschlagen.")
            	        	.withSubcommand(new CommandAPICommand("add")
-                            .executesPlayer((sender, args)->{pvpBlacklist(sender, args, 2);})
+                            .executesPlayer((sender, args)->{pvpList(sender, args,"blacklist","Blacklist", ADD_ACTION);})
                             .withPermission("pvp.blacklist")
                             .withUsage("/pvp blacklist add <Player>")
 						    .withArguments(new PlayerArgument("Player"))
                             .withHelp("Spieler zu Blacklist hinzufügen", "Du kannst damit Spieler zu deiner Blacklist hinzufügen."))
                         .withSubcommand(new CommandAPICommand("remove")
-                            .executesPlayer((sender, args)->{pvpBlacklist(sender, args, 3);})
+                            .executesPlayer((sender, args)->{pvpList(sender, args,"blacklist","Blacklist", REMOVE_ACTION);})
                             .withPermission("pvp.blacklist")
                             .withUsage("/pvp blacklist remove <Player>")
 						    .withArguments(new PlayerArgument("Player"))
                             .withHelp("Spieler aus Blacklist entfernen", "Du kannst damit Spieler aus deiner Blacklist entfernen.")))
-						.withSubcommand(new CommandAPICommand("fight")
-							.executesPlayer((sender, args)->{pvpFight(sender, args, 0);})
-							.withPermission("pvp.fight")
-							.withUsage("/pvp fight <Player>")
-							.withArguments(new PlayerArgument("Player"))
-							.withHelp("Spieler zu einem Kampf herrausfordern", "Man kann sich schlagen bis einer stirbt, der der stirbt verliert nichts.")
-							.withSubcommand(new CommandAPICommand("accept")
-								.executesPlayer((sender, args)->{pvpFight(sender, args, 1);})
-								.withPermission("pvp.fight")
-								.withUsage("/pvp fight accept")
-								.withHelp("Herrausforderung annehmen", "Letzte Herrausforderung annehmen"))
-							.withSubcommand(new CommandAPICommand("deny")
-								.executesPlayer((sender, args)->{pvpFight(sender, args, 2);})
-								.withPermission("pvp.fight")
-								.withUsage("/pvp fight deny")
-								.withHelp("Herrausforderung ablehnen", "Letzte Herrausforderung ablehnen")))
+				.withSubcommand(new CommandAPICommand("fight")
+					.executesPlayer((sender, args)->{pvpFight(sender, args, CHALLENGE_ACTION);})
+					.withPermission("pvp.fight")
+					.withUsage("/pvp fight <Player>")
+					.withArguments(new PlayerArgument("Player"))
+					.withHelp("Spieler zu einem Kampf herausfordern", "Man kann sich schlagen bis einer stirbt, der der stirbt verliert nichts.")
+					.withSubcommand(new CommandAPICommand("accept")
+						.executesPlayer((sender, args)->{pvpFight(sender, args, ACCEPT_ACTION);})
+						.withPermission("pvp.fight")
+						.withUsage("/pvp fight accept")
+						.withHelp("Herausforderung annehmen", "Letzte Herrausforderung annehmen"))
+					.withSubcommand(new CommandAPICommand("deny")
+						.executesPlayer((sender, args)->{pvpFight(sender, args, DENY_ACTION);})
+						.withPermission("pvp.fight")
+						.withUsage("/pvp fight deny")
+						.withHelp("Herausforderung ablehnen", "Letzte Herrausforderung ablehnen")))
 				.register();
     }
 
@@ -121,115 +127,46 @@ public class PvpCommand {
         }
     }
 
-	
-	
-    public static void pvpWhitelist(Player sender, CommandArguments args, int action) {
+
+    public static void pvpList(Player sender, CommandArguments args, String key,String listName, int action) {
         //PvP Whitelist Command
-        Player pargs = (Player) args.get("Player");
         PersistentDataContainer pdc = sender.getPersistentDataContainer();
-        NamespacedKey whitelist = new NamespacedKey(Pvptoggle.pvptoggle, "whitelist");
+        PersistentDataContainer pdcList = pdc.getOrDefault(new NamespacedKey(Pvptoggle.pvptoggle,key),PersistentDataType.TAG_CONTAINER,pdc.getAdapterContext().newPersistentDataContainer());
         if (action == 1) {
             //anzeigen
-            if (pdc.has(whitelist, PersistentDataType.TAG_CONTAINER)) {
-				PersistentDataContainer pdcwhitelist = pdc.get(whitelist, PersistentDataType.TAG_CONTAINER);
-				if(pdcwhitelist != null) {
-					int i = 0;
-        	        for (NamespacedKey whitelistkey:pdcwhitelist.getKeys()) {
-                        i++;
-    	                sender.sendMessage(ChatColor.BLUE + "" + i + ". " + ChatColor.DARK_BLUE + "" + Bukkit.getPlayer(UUID.fromString(pdcwhitelist.get(whitelistkey, PersistentDataType.STRING))).getDisplayName());
-                    }
-				} else {
-					sender.sendMessage("Deine Whitelist ist leer");
-				}
+            if(!pdcList.isEmpty()){
+                int i = 0;
+                for (NamespacedKey uuid:pdcList.getKeys()) {
+                    i++;
+                    sender.sendMessage(""+ChatColor.DARK_BLUE + i + ". " + ChatColor.BLUE +Bukkit.getPlayer(UUID.fromString(uuid.getKey())).getName());
+                }
             } else {
-		    	sender.sendMessage("Deine Whitelist ist leer");
-	    	}
-            sender.sendMessage(ChatColor.RED + "Die Whitelist funktioniert aktuell nicht");
+                sender.sendMessage("Deine "+listName+ "ist leer");
+            }
         } else if (action == 2) {
             //hinzufügen
-            if (!pdc.has(whitelist, PersistentDataType.TAG_CONTAINER)) {
-                //pdc erstellen
+            if (pdcList.has(new NamespacedKey(Pvptoggle.pvptoggle,((Player)args.get("Player")).getUniqueId().toString()),PersistentDataType.TAG_CONTAINER)) {
+                sender.sendMessage(ChatColor.RED + "Der Spieler" + args.get("Player") + "ist schon in deiner "+listName);
+            }else{
+                pdcList.set(new NamespacedKey(Pvptoggle.pvptoggle,((Player)args.get("Player")).getUniqueId().toString()),PersistentDataType.TAG_CONTAINER,pdcList.getAdapterContext().newPersistentDataContainer());
+                sender.sendMessage(ChatColor.GREEN + ((Player)args.get("Player")).getDisplayName() + "wurde zu deiner "+listName+" hinzugefügt");
             }
-            PersistentDataContainer pdcwhitelist = pdc.get(whitelist, PersistentDataType.TAG_CONTAINER);
-            pdcwhitelist.set(new NamespacedKey(Pvptoggle.pvptoggle, pargs.getUniqueId().toString()),  PersistentDataType.STRING, pargs.getUniqueId().toString());
-            sender.sendMessage(ChatColor.GREEN + pargs.getDisplayName() + "wurde zu deiner Whitelist hinzugefügt");
-            
-            sender.sendMessage(ChatColor.RED + "Die Whitelist funktioniert aktuell nicht");
         } else if (action == 3) {
             //entfernen
-            if (!pdc.has(whitelist, PersistentDataType.TAG_CONTAINER)) {
-                sender.sendMessage(ChatColor.RED + "Der Spieler" + args.get("Player") + "ist nicht in deiner Whitelist");
-				return;
+            if (!pdcList.has(new NamespacedKey(Pvptoggle.pvptoggle,((Player)args.get("Player")).getUniqueId().toString()),PersistentDataType.TAG_CONTAINER)) {
+                sender.sendMessage(ChatColor.RED + "Der Spieler" + args.get("Player") + "ist nicht in deiner "+listName);
+            }else{
+                pdcList.remove(new NamespacedKey(Pvptoggle.pvptoggle,((Player)args.get("Player")).getUniqueId().toString()));
+                sender.sendMessage(ChatColor.GREEN + ((Player)args.get("Player")).getDisplayName() + "wurde aus deiner "+listName+" entfernt");
             }
-            PersistentDataContainer whitelistpdc = pdc.get(whitelist, PersistentDataType.TAG_CONTAINER); 
-            if (whitelistpdc.has(new NamespacedKey(Pvptoggle.pvptoggle, pargs.getUniqueId().toString()), PersistentDataType.STRING)) {
-                whitelistpdc.remove(new NamespacedKey(Pvptoggle.pvptoggle, pargs.getUniqueId().toString()));
-                sender.sendMessage(ChatColor.GREEN + pargs.getDisplayName() + "wurde aus deiner Whitelist entfernt");
-            } else {
-                sender.sendMessage(ChatColor.RED + pargs.getDisplayName() + "ist nicht in deiner Whitelist");
-            }
-            
-            sender.sendMessage(ChatColor.RED + "Die Whitelist funktioniert aktuell nicht");
         } else {
             sender.sendMessage("Fehler");
         }
+        pdc.set(new NamespacedKey(Pvptoggle.pvptoggle,key),PersistentDataType.TAG_CONTAINER,pdcList);
     }
 
-	
-	
-    public static void pvpBlacklist(Player sender, CommandArguments args, int action) {
-        //PvP Blacklist Command
-        Player pargs = (Player) args.get("Player");
-        PersistentDataContainer pdc = sender.getPersistentDataContainer();
-        NamespacedKey blacklist = new NamespacedKey(Pvptoggle.pvptoggle, "blacklist");
-        if (action == 1) {
-            //anzeigen
-            if (pdc.has(blacklist, PersistentDataType.TAG_CONTAINER)) {
-				PersistentDataContainer pdcblacklist = pdc.get(blacklist, PersistentDataType.TAG_CONTAINER);
-				if(pdcblacklist != null) {
-					int i = 0;
-        	        for (NamespacedKey blacklistkey:pdcblacklist.getKeys()) {
-                        i++;
-    	                sender.sendMessage(ChatColor.BLUE + "" + i + ". " + ChatColor.BLUE + "" + Bukkit.getPlayer(UUID.fromString(pdcblacklist.get(blacklistkey, PersistentDataType.STRING))).getDisplayName());
-                    }
-				} else {
-					sender.sendMessage("Deine Blacklist ist leer");
-				}
-            } else {
-		    	sender.sendMessage("Deine Blacklist ist leer");
-	    	}
-            sender.sendMessage(ChatColor.RED + "Die Blacklist funktioniert aktuell nicht");
-        } else if (action == 2) {
-            //hinzufügen
-            if (!pdc.has(blacklist, PersistentDataType.TAG_CONTAINER)) {
-                //pdc erstellen
-            }
-            PersistentDataContainer pdcblacklist = pdc.get(blacklist, PersistentDataType.TAG_CONTAINER);
-            pdcblacklist.set(new NamespacedKey(Pvptoggle.pvptoggle, pargs.getUniqueId().toString()),  PersistentDataType.STRING, pargs.getUniqueId().toString());
-            sender.sendMessage(ChatColor.GREEN + pargs.getDisplayName() + "wurde zu deiner Blacklist hinzugefügt");
-            
-            sender.sendMessage(ChatColor.RED + "Die Blacklist funktioniert aktuell nicht");
-        } else if (action == 3) {
-            //entfernen
-            if (!pdc.has(blacklist, PersistentDataType.TAG_CONTAINER)) {
-                sender.sendMessage(ChatColor.RED + "Der Spieler" + args.get("Player") + "ist nicht in deiner Blacklist");
-				return;
-            }
-            PersistentDataContainer blacklistpdc = pdc.get(blacklist, PersistentDataType.TAG_CONTAINER); 
-            if (blacklistpdc.has(new NamespacedKey(Pvptoggle.pvptoggle, pargs.getUniqueId().toString()), PersistentDataType.STRING)) {
-                blacklistpdc.remove(new NamespacedKey(Pvptoggle.pvptoggle, pargs.getUniqueId().toString()));
-                sender.sendMessage(ChatColor.GREEN + pargs.getDisplayName() + "wurde aus deiner Blacklist entfernt");
-            } else {
-                sender.sendMessage(ChatColor.RED + pargs.getDisplayName() + "ist nicht in deiner Blacklist");
-            }
-            
-            sender.sendMessage(ChatColor.RED + "Die Blacklist funktioniert aktuell nicht");
-        } else {
-            sender.sendMessage("Fehler");
-        }
-    }
 
-	public static void pvpFight(Player sender, CommandArguments args, int action) {
+    public static void pvpFight(Player sender, CommandArguments args, int action) {
 		//PvP Fight Command
 		if (action == 0) {
 			//Kampf herrausgefordert
