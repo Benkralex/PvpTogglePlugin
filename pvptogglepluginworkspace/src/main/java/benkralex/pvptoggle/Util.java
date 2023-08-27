@@ -15,7 +15,7 @@ public class Util {
         boolean ultravictim = victimPDC.getOrDefault(new NamespacedKey(Pvptoggle.pvptoggle, "ultra"),PersistentDataType.BOOLEAN, false);
         boolean toggle = damagerPDC.getOrDefault(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"),PersistentDataType.BOOLEAN, false);
 
-        return !toggle || checkPvPData(damager, victim) || !ultradamager || !ultravictim;
+        return !((toggle||ultravictim)||checkPvPData(damager,victim))&&!ultradamager;
     }
     public static boolean checkPvPData(Player damager, Player victim){
         String victimUUID=victim.getUniqueId().toString();
