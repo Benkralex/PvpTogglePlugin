@@ -123,6 +123,7 @@ public class InventoryListener implements Listener{
                     } else if (e.isLeftClick()) {
                         Config.setPvpTime(Config.getPvpTime() - 10);
                     }
+if (Config.getPvpTime() <= 0) Config.setPvpTime(0);
                     inv.setItem(15, InventoryMenu.getMenuItem(9, p));
                     return;
                 } else {
