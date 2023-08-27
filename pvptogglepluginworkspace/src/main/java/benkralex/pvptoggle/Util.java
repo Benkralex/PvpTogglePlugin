@@ -25,7 +25,7 @@ PersistentDataContainer victimBlacklist = victimPDC.get(new NamespacedKey(Pvptog
         }
 
         //return (!(toggle||ultravictim)||checkPvPData(damager,victim))&&!ultradamager;
-        return checkPvPData(damager,victim) || whitelisted || (((!toggle||!ultravictim) && ! blacklisted && !ultradamager)
+        return checkPvPData(damager,victim) || (whitelisted && !ultradamager) || (((!toggle||!ultravictim) && ! blacklisted && !ultradamager)
     }
     public static boolean checkPvPData(Player damager, Player victim){
         String victimUUID=victim.getUniqueId().toString();
