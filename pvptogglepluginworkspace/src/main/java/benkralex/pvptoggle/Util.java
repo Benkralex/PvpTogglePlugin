@@ -14,8 +14,18 @@ public class Util {
         boolean ultradamager = damagerPDC.getOrDefault(new NamespacedKey(Pvptoggle.pvptoggle, "ultra"),PersistentDataType.BOOLEAN, false);
         boolean ultravictim = victimPDC.getOrDefault(new NamespacedKey(Pvptoggle.pvptoggle, "ultra"),PersistentDataType.BOOLEAN, false);
         boolean toggle = damagerPDC.getOrDefault(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"),PersistentDataType.BOOLEAN, false);
+        PersistentDataContainer victimWithelist = victimPDC.get(new NamespacedKey(Pvptoggle.pvptoggle, "whitelist"), PersistentDataType.TAG_CONTAINER);
+        if (victimWithelist != null) {
+            boolean whitelisted = victimWithelist.has(new NamespacedKey(Pvptoggle.pvptoggle, damager.getUniqueId().toString(), PersistentDataType.STRING))
+        }
 
-        return (!(toggle||ultravictim)||checkPvPData(damager,victim))&&!ultradamager;
+PersistentDataContainer victimBlacklist = victimPDC.get(new NamespacedKey(Pvptoggle.pvptoggle, "blacklist"), PersistentDataType.TAG_CONTAINER);
+        if (victimBlacklist != null) {
+            boolean blacklisted = victimBlacklist.has(new NamespacedKey(Pvptoggle.pvptoggle, damager.getUniqueId().toString(), PersistentDataType.STRING))
+        }
+
+        //return (!(toggle||ultravictim)||checkPvPData(damager,victim))&&!ultradamager;
+        return checkPvPData(damager,victim) || whitelisted || (((!toggle||!ultravictim) && ! blacklisted && !ultradamager)
     }
     public static boolean checkPvPData(Player damager, Player victim){
         String victimUUID=victim.getUniqueId().toString();
