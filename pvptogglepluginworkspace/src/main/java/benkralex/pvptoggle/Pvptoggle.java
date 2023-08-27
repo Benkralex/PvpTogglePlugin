@@ -18,7 +18,7 @@ public final class Pvptoggle extends JavaPlugin {
     public void onLoad(){
         pvptoggle = this;
         PvpCommand.createPvpCommand();        
-        if (Config.getPvpTime() <= 0) {
+        if (Config.getPvpTime() < 0) {
             Config.setPvpTime(0);
         }
     }
