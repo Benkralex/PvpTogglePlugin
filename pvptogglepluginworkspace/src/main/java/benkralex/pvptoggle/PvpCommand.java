@@ -171,12 +171,15 @@ public class PvpCommand {
 		if (action == 0) {
 			//Kampf herrausgefordert
 			Player pargs = (Player) args.get("Player");
+            TextComponent tc1 = new TextComponent("" + ChatColor.WHITE + " | ");
 			TextComponent accept = new TextComponent(ChatColor.GREEN + "Annehmen");
 			TextComponent deny = new TextComponent(ChatColor.RED + "Ablehnen");
 			accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/pvp fight accept"));
 			deny.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/pvp fight deny"));
 			pargs.sendMessage("Du wurdest von " + sender.getDisplayName() + " zu einem Kampf herrausgefordert.");
-			pargs.sendMessage(accept + "" + ChatColor.WHITE + " | " + deny);
+            accept.addExtra(tc1);
+            accept.addExtra(deny);
+			pargs.spigot().sendMessage(accept);
 			sender.sendMessage("Der Command funktioniert noch nicht");
 		} else if (action == 1) {
 			//Kampf angenommen

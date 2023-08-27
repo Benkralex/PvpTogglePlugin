@@ -38,7 +38,7 @@ public class InventoryMenu {
 				ItemMeta mtoggle = itoggle.getItemMeta();
 				mtoggle.setDisplayName("PvP-Schutz an/aus schalten");
 				mtoggle.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-				String s = p.getPersistentDataContainer().get(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN)?"Aus":"An";
+				String s = p.getPersistentDataContainer().getOrDefault(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"), PersistentDataType.BOOLEAN, false)?"Aus":"An";
 				lore.add(ChatColor.BLUE + s + " schalten");
 				mtoggle.setLore(lore);
 				itoggle.setItemMeta(mtoggle);
@@ -48,7 +48,7 @@ public class InventoryMenu {
 				ItemMeta multra = iultra.getItemMeta();
 				multra.setDisplayName("Ultra an/aus schalten");
 				multra.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-				lore.add(ChatColor.BLUE + (p.getPersistentDataContainer().get(new NamespacedKey(Pvptoggle.pvptoggle, "ultra"), PersistentDataType.BOOLEAN)?"Aus":"An") + " schalten");
+				lore.add(ChatColor.BLUE + (p.getPersistentDataContainer().getOrDefault(new NamespacedKey(Pvptoggle.pvptoggle, "ultra"), PersistentDataType.BOOLEAN, false)?"Aus":"An") + " schalten");
 				multra.setLore(lore);
 				iultra.setItemMeta(multra);
 				return iultra;

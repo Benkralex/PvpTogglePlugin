@@ -11,21 +11,11 @@ public class Util {
     public static boolean canPvP(Player damager, Player victim){
         PersistentDataContainer damagerPDC=damager.getPersistentDataContainer();
         PersistentDataContainer victimPDC=victim.getPersistentDataContainer();
-        Boolean ultradamager;
-        Boolean ultravictim;
-        Boolean toggle = damagerPDC.get(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"),PersistentDataType.BOOLEAN);
-        if (victimPDC.has(new NamespacedKey(Pvptoggle.pvptoggle, "ultra"),PersistentDataType.BOOLEAN)) {
-            ultravictim = victimPDC.get(new NamespacedKey(Pvptoggle.pvptoggle, "ultra"),PersistentDataType.BOOLEAN);
-        } else {ultravictim = false;}
-        if (damagerPDC.has(new NamespacedKey(Pvptoggle.pvptoggle, "ultra"),PersistentDataType.BOOLEAN)) {
-            ultradamager = damagerPDC.get(new NamespacedKey(Pvptoggle.pvptoggle, "ultra"),PersistentDataType.BOOLEAN);
-        } else {ultradamager = false;}
-        
-        if(toggle!=null) {
-            return !toggle || checkPvPData(damager, victim) || !ultradamager || !ultravictim;
-        } else {
-            return true;
-        }
+        boolean ultradamager = damagerPDC.getOrDefault(new NamespacedKey(Pvptoggle.pvptoggle, "ultra"),PersistentDataType.BOOLEAN, false);
+        boolean ultravictim = victimPDC.getOrDefault(new NamespacedKey(Pvptoggle.pvptoggle, "ultra"),PersistentDataType.BOOLEAN, false);
+        boolean toggle = damagerPDC.getOrDefault(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"),PersistentDataType.BOOLEAN, false);
+
+        return !toggle || checkPvPData(damager, victim) || !ultradamager || !ultravictim;
     }
     public static boolean checkPvPData(Player damager, Player victim){
         String victimUUID=victim.getUniqueId().toString();
