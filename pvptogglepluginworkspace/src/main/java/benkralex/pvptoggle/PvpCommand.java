@@ -26,7 +26,6 @@ public class PvpCommand {
         //Create PVP-Command with Command-API
         new CommandAPICommand("pvp")
 	        .executesPlayer(PvpCommand::pvpInv)
-            .withPermission("pvp.inv.op")
             .withUsage("/pvp")
             .withHelp("PvP Menu", "Du kannst damit ein Menu öffnen, in dem du alles verwalten kannst.")
                 .withSubcommand(new CommandAPICommand("toggle")
@@ -95,7 +94,9 @@ public class PvpCommand {
 	
 	
 	public static void pvpInv(Player sender, CommandArguments args) {
-		 sender.openInventory(InventoryMenu.pvpMenu(sender));
+        if (sender.hasPermission("pvp.inv.normal")) {
+            sender.openInventory(InventoryMenu.pvpMenu(sender));
+        }
 	}
 	
 	
@@ -138,26 +139,26 @@ public class PvpCommand {
                 int i = 0;
                 for (NamespacedKey uuid:pdcList.getKeys()) {
                     i++;
-                    sender.sendMessage("" + ChatColor.DARK_BLUE + i + ". " + ChatColor.BLUE + Bukkit.getPlayer(UUID.fromString(uuid.getKey())).getName());
+                    sender.sendMessage("" + ChatColor.BLUE + i + ". " + Bukkit.getPlayer(UUID.fromString(uuid.getKey())).getDisplayName());
                 }
             } else {
-                sender.sendMessage("Deine "+listName+ "ist leer");
+                sender.sendMessage("Deine "+listName+ " ist leer");
             }
         } else if (action == 2) {
             //hinzufügen
             if (pdcList.has(new NamespacedKey(Pvptoggle.pvptoggle,((Player)args.get("Player")).getUniqueId().toString()),PersistentDataType.TAG_CONTAINER)) {
-                sender.sendMessage(ChatColor.RED + "Der Spieler" + args.get("Player") + "ist schon in deiner " + listName);
+                sender.sendMessage(ChatColor.RED + "Der Spieler " + ((Player) args.get("Player")).getDisplayName() + ChatColor.RED + " ist schon in deiner " + listName);
             }else{
                 pdcList.set(new NamespacedKey(Pvptoggle.pvptoggle,((Player)args.get("Player")).getUniqueId().toString()),PersistentDataType.TAG_CONTAINER,pdcList.getAdapterContext().newPersistentDataContainer());
-                sender.sendMessage(ChatColor.GREEN + ((Player)args.get("Player")).getDisplayName() + "wurde zu deiner "+listName+" hinzugefügt");
+                sender.sendMessage(ChatColor.GREEN + ((Player)args.get("Player")).getDisplayName() + ChatColor.GREEN + " wurde zu deiner "+listName+" hinzugefügt");
             }
         } else if (action == 3) {
             //entfernen
             if (!pdcList.has(new NamespacedKey(Pvptoggle.pvptoggle,((Player)args.get("Player")).getUniqueId().toString()),PersistentDataType.TAG_CONTAINER)) {
-                sender.sendMessage(ChatColor.RED + "Der Spieler" + args.get("Player") + "ist nicht in deiner "+listName);
+                sender.sendMessage(ChatColor.RED + "Der Spieler " + ((Player) args.get("Player")).getDisplayName() + ChatColor.RED + " ist nicht in deiner "+listName);
             }else{
                 pdcList.remove(new NamespacedKey(Pvptoggle.pvptoggle,((Player)args.get("Player")).getUniqueId().toString()));
-                sender.sendMessage(ChatColor.GREEN + ((Player)args.get("Player")).getDisplayName() + "wurde aus deiner "+listName+" entfernt");
+                sender.sendMessage(ChatColor.GREEN + ((Player)args.get("Player")).getDisplayName() + ChatColor.GREEN + " wurde aus deiner "+listName+" entfernt");
             }
         } else {
             sender.sendMessage("Fehler");

@@ -29,11 +29,11 @@ public class InventoryListener implements Listener{
                 } else if (iname.equals("Ultra an/aus schalten")) {
                     if (pdc.has(ultra, PersistentDataType.BOOLEAN)) {
                         pdc.set(ultra, PersistentDataType.BOOLEAN, !pdc.get(ultra, PersistentDataType.BOOLEAN));
-                        p.sendMessage("PvP-Ultra ist für dich jetzt " + (pdc.get(pvptoggle, PersistentDataType.BOOLEAN)?"an":"aus"));
+                        p.sendMessage("PvP-Ultra ist für dich jetzt " + (pdc.get(ultra, PersistentDataType.BOOLEAN)?"an":"aus"));
                         inv.setItem(12, InventoryMenu.getMenuItem(1, p));
                     } else {
                         pdc.set(ultra, PersistentDataType.BOOLEAN, true);
-                        p.sendMessage("PvP-Ultra ist für dich jetzt " + (pdc.get(pvptoggle, PersistentDataType.BOOLEAN)?"an":"aus"));
+                        p.sendMessage("PvP-Ultra ist für dich jetzt " + (pdc.get(ultra, PersistentDataType.BOOLEAN)?"an":"aus"));
                         inv.setItem(12, InventoryMenu.getMenuItem(1, p));
                     }
                     return;
@@ -49,15 +49,12 @@ public class InventoryListener implements Listener{
                     }
                     return;
                 } else if (iname.equals("Whitelist")) {
-                    p.closeInventory();
                     p.openInventory(InventoryMenu.pvpWhitelistMenu(p));
                     return;
                 } else if (iname.equals("Blacklist")) {
-                    p.closeInventory();
                     p.openInventory(InventoryMenu.pvpBlacklistMenu(p));
                     return;
                 } else if (iname.equals("Menu für Operators")) {
-                    p.closeInventory();
                     p.openInventory(InventoryMenu.pvpOpSettingsMenu(p));
                     return;
                 } else {
@@ -72,7 +69,6 @@ public class InventoryListener implements Listener{
                     p.closeInventory();
                     return;
                 } else if (iname.equals("Zurück")) {
-                    p.closeInventory();
                     p.openInventory(InventoryMenu.pvpMenu(p));
                     return;
                 } else {
@@ -87,7 +83,6 @@ public class InventoryListener implements Listener{
                     p.closeInventory();
                     return;
                 } else if (iname.equals("Zurück")) {
-                    p.closeInventory();
                     p.openInventory(InventoryMenu.pvpMenu(p));
                     return;
                 } else {
@@ -101,7 +96,6 @@ public class InventoryListener implements Listener{
                 if (iname.equals("Inventar schließen")) {
                     p.closeInventory();
                 } else if (iname.equals("Zurück")) {
-                    p.closeInventory();
                     p.openInventory(InventoryMenu.pvpMenu(p));
                 } else if (iname.equals("Standard PvP-Schutz an/aus schalten")){
                     Config.setPvpProt(!Config.getPvpProt());
@@ -112,7 +106,7 @@ public class InventoryListener implements Listener{
                     } else if (e.isLeftClick()) {
                         Config.setPvpTime(Config.getPvpTime() + 10);
                     }
-                    inv.setItem(15, InventoryMenu.getMenuItem(9, p));
+                    inv.setItem(14, InventoryMenu.getMenuItem(InventoryMenu.PVP_TIME, p));
                 } else if (iname.equals("Zeit um zurückzuschlagen verringern")) {
                     if (e.isRightClick()) {
                         if (!(Config.getPvpTime() < 1)) {
@@ -123,7 +117,7 @@ public class InventoryListener implements Listener{
                             Config.setPvpTime(Config.getPvpTime() - 10);
                         }
                     }
-                    inv.setItem(15, InventoryMenu.getMenuItem(9, p));
+                    inv.setItem(14, InventoryMenu.getMenuItem(InventoryMenu.PVP_TIME, p));
                 }
             }
         }

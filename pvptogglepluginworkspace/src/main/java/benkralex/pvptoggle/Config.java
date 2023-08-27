@@ -22,8 +22,8 @@ public class Config {
 	}
 	
 	public static void setPvpTime(int i) {
-		config.set("pvp-time-hit-back", i);
-        Pvptoggle.pvptoggle.saveConfig();
+			config.set("pvp-time-hit-back", i);
+			Pvptoggle.pvptoggle.saveConfig();
 	}
 	
 	public static void setPvpProt(Boolean b) {
