@@ -115,12 +115,13 @@ public class InventoryListener implements Listener{
                     inv.setItem(15, InventoryMenu.getMenuItem(9, p));
                 } else if (iname.equals("Zeit um zurückzuschlagen verringern")) {
                     if (e.isRightClick()) {
-                        Config.setPvpTime(Config.getPvpTime() - 1);
+                        if (!(Config.getPvpTime() < 1)) {
+                            Config.setPvpTime(Config.getPvpTime() - 1);
+                        }
                     } else if (e.isLeftClick()) {
-                        Config.setPvpTime(Config.getPvpTime() - 10);
-                    }
-                    if (Config.getPvpTime() < 0) {
-                        Config.setPvpTime(0);
+                        if (!(Config.getPvpTime() < 10)) {
+                            Config.setPvpTime(Config.getPvpTime() - 10);
+                        }
                     }
                     inv.setItem(15, InventoryMenu.getMenuItem(9, p));
                 }

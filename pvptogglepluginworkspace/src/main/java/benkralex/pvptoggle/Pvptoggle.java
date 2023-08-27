@@ -12,14 +12,14 @@ public final class Pvptoggle extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PvpEvent(), this);
         Bukkit.getPluginManager().registerEvents(new InventoryListener(), this);
         Config.createConfig();
+        if (Config.getPvpTime() < 0) {
+            Config.setPvpTime(0);
+        }
     }
 
     @Override
     public void onLoad(){
         pvptoggle = this;
-        PvpCommand.createPvpCommand();        
-        if (Config.getPvpTime() < 0) {
-            Config.setPvpTime(0);
-        }
+        PvpCommand.createPvpCommand();
     }
 }
