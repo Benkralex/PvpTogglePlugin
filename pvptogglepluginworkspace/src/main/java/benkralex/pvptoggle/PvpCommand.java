@@ -138,7 +138,7 @@ public class PvpCommand {
                 int i = 0;
                 for (NamespacedKey uuid:pdcList.getKeys()) {
                     i++;
-                    sender.sendMessage(""+ChatColor.DARK_BLUE + i + ". " + ChatColor.BLUE +Bukkit.getPlayer(UUID.fromString(uuid.getKey())).getName());
+                    sender.sendMessage("" + ChatColor.DARK_BLUE + i + ". " + ChatColor.BLUE + Bukkit.getPlayer(UUID.fromString(uuid.getKey())).getName());
                 }
             } else {
                 sender.sendMessage("Deine "+listName+ "ist leer");
@@ -146,7 +146,7 @@ public class PvpCommand {
         } else if (action == 2) {
             //hinzufügen
             if (pdcList.has(new NamespacedKey(Pvptoggle.pvptoggle,((Player)args.get("Player")).getUniqueId().toString()),PersistentDataType.TAG_CONTAINER)) {
-                sender.sendMessage(ChatColor.RED + "Der Spieler" + args.get("Player") + "ist schon in deiner "+listName);
+                sender.sendMessage(ChatColor.RED + "Der Spieler" + args.get("Player") + "ist schon in deiner " + listName);
             }else{
                 pdcList.set(new NamespacedKey(Pvptoggle.pvptoggle,((Player)args.get("Player")).getUniqueId().toString()),PersistentDataType.TAG_CONTAINER,pdcList.getAdapterContext().newPersistentDataContainer());
                 sender.sendMessage(ChatColor.GREEN + ((Player)args.get("Player")).getDisplayName() + "wurde zu deiner "+listName+" hinzugefügt");

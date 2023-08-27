@@ -100,15 +100,12 @@ public class InventoryListener implements Listener{
                 String iname = e.getCurrentItem().getItemMeta().getDisplayName();
                 if (iname.equals("Inventar schließen")) {
                     p.closeInventory();
-                    return;
                 } else if (iname.equals("Zurück")) {
                     p.closeInventory();
                     p.openInventory(InventoryMenu.pvpMenu(p));
-                    return;
                 } else if (iname.equals("Standard PvP-Schutz an/aus schalten")){
                     Config.setPvpProt(!Config.getPvpProt());
                     inv.setItem(11, InventoryMenu.getMenuItem(8, p));
-                    return;
                 } else if (iname.equals("Zeit um zurückzuschlagen erhöhen")) {
                     if (e.isRightClick()) {
                         Config.setPvpTime(Config.getPvpTime() + 1);
@@ -116,18 +113,16 @@ public class InventoryListener implements Listener{
                         Config.setPvpTime(Config.getPvpTime() + 10);
                     }
                     inv.setItem(15, InventoryMenu.getMenuItem(9, p));
-                    return;
                 } else if (iname.equals("Zeit um zurückzuschlagen verringern")) {
                     if (e.isRightClick()) {
                         Config.setPvpTime(Config.getPvpTime() - 1);
                     } else if (e.isLeftClick()) {
                         Config.setPvpTime(Config.getPvpTime() - 10);
                     }
-if (Config.getPvpTime() <= 0) Config.setPvpTime(0);
+                    if (Config.getPvpTime() < 0) {
+                        Config.setPvpTime(0);
+                    }
                     inv.setItem(15, InventoryMenu.getMenuItem(9, p));
-                    return;
-                } else {
-                    return;
                 }
             }
         }
