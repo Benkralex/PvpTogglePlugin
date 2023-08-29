@@ -116,7 +116,7 @@ public class InventoryMenu {
 				ItemStack idefaultprot = new ItemStack(Material.GOLDEN_SWORD);
 				ItemMeta mdefaultprot = idefaultprot.getItemMeta();
 				mdefaultprot.setDisplayName("Standard PvP-Schutz an/aus schalten");
-				lore.add(ChatColor.LIGHT_PURPLE + "Standart ist PvP-Schutz" + (Config.getPvpProt()?"an":"aus"));
+				lore.add(ChatColor.LIGHT_PURPLE + "Standart ist PvP-Schutz " + (Config.getPvpProt()?"an":"aus"));
 				lore.add(ChatColor.BLUE + "");
 				lore.add(ChatColor.DARK_PURPLE + (Config.getPvpProt()?"Aus":"An") + " schalten");
 				mdefaultprot.setLore(lore);

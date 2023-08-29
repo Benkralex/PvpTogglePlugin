@@ -6,7 +6,7 @@
 
     <groupId>benkralex</groupId>
     <artifactId>Pvptoggle</artifactId>
-    <version>1.7.7-SNAPSHOT</version>
+    <version>1.7.9-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Pvptoggle</name>
