@@ -12,10 +12,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class InventoryMenu {
 	public static final int PVP_TOGGLE=0;
@@ -194,6 +197,23 @@ public class InventoryMenu {
 	
 	public static Inventory pvpBlacklistMenu(Player p) {
 		Inventory inv = Bukkit.createInventory(null, 3*9, "Blacklist-Menu");
+		PersistentDataContainer pdc = p.getPersistentDataContainer();
+		PersistentDataContainer pBlacklist = pdc.get(new NamespacedKey(Pvptoggle.pvptoggle, "blacklist"), PersistentDataType.TAG_CONTAINER);
+		int i = 0;
+		for (NamespacedKey blacklistedPlayerUuid:pBlacklist.getKeys()) {
+			ItemStack item = new ItemStack(Material.PLAYER_HEAD);
+			SkullMeta m = (SkullMeta) item.getItemMeta();
+			m.setDisplayName(ChatColor.GREEN + Bukkit.getPlayer(UUID.fromString(blacklistedPlayerUuid.getKey())).getDisplayName());
+			m.setOwningPlayer(Bukkit.getPlayer(UUID.fromString(blacklistedPlayerUuid.getKey())));
+			item.setItemMeta(m);
+			if (!((i == 8) || (i == 26))) {
+				inv.setItem(i, item);
+			} else {
+				i++;
+				inv.setItem(i, item);
+			}
+			i++;
+		}
 		inv.setItem(8, getMenuItem(CLOSE, p));
 		inv.setItem(26, getMenuItem(BACK, p));
 		
@@ -203,6 +223,23 @@ public class InventoryMenu {
 	
 	public static Inventory pvpWhitelistMenu(Player p) {
 		Inventory inv = Bukkit.createInventory(null, 3*9, "Whitelist-Menu");
+		PersistentDataContainer pdc = p.getPersistentDataContainer();
+		PersistentDataContainer pWhitelist = pdc.get(new NamespacedKey(Pvptoggle.pvptoggle, "whitelist"), PersistentDataType.TAG_CONTAINER);
+		int i = 0;
+		for (NamespacedKey whitelistedPlayerUuid:pWhitelist.getKeys()) {
+			ItemStack item = new ItemStack(Material.PLAYER_HEAD);
+			SkullMeta m = (SkullMeta) item.getItemMeta();
+			m.setDisplayName(ChatColor.GREEN + Bukkit.getPlayer(UUID.fromString(whitelistedPlayerUuid.getKey())).getDisplayName());
+			m.setOwningPlayer(Bukkit.getPlayer(UUID.fromString(whitelistedPlayerUuid.getKey())));
+			item.setItemMeta(m);
+			if (!((i == 8) || (i == 26))) {
+				inv.setItem(i, item);
+			} else {
+				i++;
+				inv.setItem(i, item);
+			}
+			i++;
+		}
 		inv.setItem(8, getMenuItem(CLOSE, p));
 		inv.setItem(26, getMenuItem(BACK, p));
 		

@@ -30,38 +30,8 @@ public class Util {
             blacklisted = false;
         }
 
-        //return (!(toggle||ultravictim)||checkPvPData(damager,victim))&&!ultradamager;
-        //debug
-        victim.sendMessage(ChatColor.RED + "DEBUG:");
-        victim.sendMessage("Rückschlag: " + checkPvPData(damager,victim));
-        victim.sendMessage("Damager in Whitelist: " + whitelisted);
-        victim.sendMessage("Damager in Blacklist: " + blacklisted);
-        victim.sendMessage("PvP-Schutz (Toggle): " + toggle);
-        victim.sendMessage("PvP-Schutz (Ultra): " + ultravictim);
-        victim.sendMessage("Ultra bei Damager: " + ultradamager);
-        victim.sendMessage("Schutz: " + (toggle||ultravictim));
-        victim.sendMessage(" ");
-        victim.sendMessage("2.Oder: " + (whitelisted && !ultradamager));
-        victim.sendMessage("3.Oder: " + ((!toggle||!ultravictim) && !blacklisted && !ultradamager));
-
-        damager.sendMessage(ChatColor.RED + "DEBUG:");
-        damager.sendMessage("Rückschlag: " + checkPvPData(damager,victim));
-        damager.sendMessage("Damager in Whitelist: " + whitelisted);
-        damager.sendMessage("Damager in Blacklist: " + blacklisted);
-        damager.sendMessage("Victim PvP-Schutz (Toggle): " + toggle);
-        damager.sendMessage("Victim PvP-Schutz (Ultra): " + ultravictim);
-        damager.sendMessage("Ultra bei Damager: " + ultradamager);
-        damager.sendMessage("Victim Schutz: " + (toggle||ultravictim));
-        damager.sendMessage(" ");
-        damager.sendMessage("2.Oder: " + (whitelisted && !ultradamager));
-        damager.sendMessage("3.Oder: " + ((!toggle||!ultravictim) && !blacklisted && !ultradamager));
-
-        Pvptoggle.pvptoggle.getLogger().info("1.Oder: " + checkPvPData(damager,victim));
-        Pvptoggle.pvptoggle.getLogger().info("2.Oder: " + (whitelisted && !ultradamager));
-        Pvptoggle.pvptoggle.getLogger().info("3.Oder: " + (((!toggle||!ultravictim) && !blacklisted && !ultradamager)?"true":"false"));
-        //debug ende
-
-        return  checkPvPData(damager,victim) || (whitelisted && !ultradamager) || ((!toggle && !ultravictim) && !blacklisted && !ultradamager);
+        //einstellung ob ultradamager an kein rückschlag
+        return  (checkPvPData(damager,victim) && !ultradamager) || (whitelisted && !ultradamager) || ((!toggle && !ultravictim) && !blacklisted && !ultradamager);
     }
     public static boolean checkPvPData(Player damager, Player victim){
         String victimUUID = victim.getUniqueId().toString();
@@ -76,7 +46,7 @@ public class Util {
     }
     public static void delOldData(PersistentDataContainer pvpdamagers){
         for(NamespacedKey damagerKey:pvpdamagers.getKeys()){
-            if(pvpdamagers.get(damagerKey, PersistentDataType.LONG) >= Instant.now().getEpochSecond() - Config.getPvpTime()){
+            if(pvpdamagers.get(damagerKey, PersistentDataType.LONG) <= Instant.now().getEpochSecond() - Config.getPvpTime()){
                 pvpdamagers.remove(damagerKey);
             }
         }
