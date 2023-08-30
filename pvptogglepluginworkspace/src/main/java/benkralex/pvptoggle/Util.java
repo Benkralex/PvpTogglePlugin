@@ -19,13 +19,13 @@ public class Util {
         boolean whitelisted;
         PersistentDataContainer victimWithelist = victimPDC.get(new NamespacedKey(Pvptoggle.pvptoggle, "whitelist"), PersistentDataType.TAG_CONTAINER);
         if (victimWithelist != null) {
-            whitelisted = victimWithelist.has(new NamespacedKey(Pvptoggle.pvptoggle, damager.getUniqueId().toString()), PersistentDataType.STRING);
+            whitelisted = victimWithelist.has(new NamespacedKey(Pvptoggle.pvptoggle, damager.getUniqueId().toString()), PersistentDataType.TAG_CONTAINER);
         } else {
             whitelisted = false;
         }
         PersistentDataContainer victimBlacklist = victimPDC.get(new NamespacedKey(Pvptoggle.pvptoggle, "blacklist"), PersistentDataType.TAG_CONTAINER);
         if (victimBlacklist != null) {
-            blacklisted = victimBlacklist.has(new NamespacedKey(Pvptoggle.pvptoggle, damager.getUniqueId().toString()), PersistentDataType.STRING);
+            blacklisted = victimBlacklist.has(new NamespacedKey(Pvptoggle.pvptoggle, damager.getUniqueId().toString()), PersistentDataType.TAG_CONTAINER);
         } else {
             blacklisted = false;
         }
