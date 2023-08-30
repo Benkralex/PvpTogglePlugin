@@ -5,7 +5,7 @@ Every Player can Custormize PvP for himself. Minecraft-Plugin for Version 1.20
 
 -/pvp toggle
 
--/pvp ultra (needs to be tested)
+-/pvp ultra
 
 -PvP-Protection onJoin
 
@@ -13,10 +13,12 @@ Every Player can Custormize PvP for himself. Minecraft-Plugin for Version 1.20
 
 -/pvp (PvP-Menu) (needs to be tested)
 
--/pvp blacklist (old name misstrust) (needs to be tested)
+-/pvp blacklist (old name misstrust)
 
--/pvp whitelist (old name trust) (needs to be tested)
+-/pvp whitelist (old name trust)
 
 # In Progress:
 
--Plugin rename to "Customize PvP"
+-Menu White-/Blacklist add and remove Player
+
+-/pvp fight
