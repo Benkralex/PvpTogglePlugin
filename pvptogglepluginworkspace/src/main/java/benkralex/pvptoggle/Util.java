@@ -61,7 +61,7 @@ public class Util {
         Pvptoggle.pvptoggle.getLogger().info("3.Oder: " + (((!toggle||!ultravictim) && !blacklisted && !ultradamager)?"true":"false"));
         //debug ende
 
-        return  checkPvPData(damager,victim) || (whitelisted && !ultradamager) || ((!toggle||!ultravictim) && !blacklisted && !ultradamager);
+        return  checkPvPData(damager,victim) || (whitelisted && !ultradamager) || ((!toggle && !ultravictim) && !blacklisted && !ultradamager);
     }
     public static boolean checkPvPData(Player damager, Player victim){
         String victimUUID = victim.getUniqueId().toString();
