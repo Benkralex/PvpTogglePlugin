@@ -64,7 +64,7 @@ public class Util {
         return  checkPvPData(damager,victim) || (whitelisted && !ultradamager) || ((!toggle||!ultravictim) && !blacklisted && !ultradamager);
     }
     public static boolean checkPvPData(Player damager, Player victim){
-        String victimUUID=victim.getUniqueId().toString();
+        String victimUUID = victim.getUniqueId().toString();
         PersistentDataContainer damagerPDC = damager.getPersistentDataContainer();
         PersistentDataContainer damagersOfDamager = damagerPDC.get(new NamespacedKey(Pvptoggle.pvptoggle,"pvpdamagers"), PersistentDataType.TAG_CONTAINER);
         if (damagersOfDamager != null) {
@@ -76,7 +76,7 @@ public class Util {
     }
     public static void delOldData(PersistentDataContainer pvpdamagers){
         for(NamespacedKey damagerKey:pvpdamagers.getKeys()){
-            if(pvpdamagers.get(damagerKey,PersistentDataType.LONG)>= Instant.now().getEpochSecond() + Config.getPvpTime()){
+            if(pvpdamagers.get(damagerKey, PersistentDataType.LONG) >= Instant.now().getEpochSecond() - Config.getPvpTime()){
                 pvpdamagers.remove(damagerKey);
             }
         }
