@@ -14,7 +14,7 @@ public class Util {
         PersistentDataContainer victimPDC=victim.getPersistentDataContainer();
         boolean ultradamager = damagerPDC.getOrDefault(new NamespacedKey(Pvptoggle.pvptoggle, "ultra"),PersistentDataType.BOOLEAN, false);
         boolean ultravictim = victimPDC.getOrDefault(new NamespacedKey(Pvptoggle.pvptoggle, "ultra"),PersistentDataType.BOOLEAN, false);
-        boolean toggle = damagerPDC.getOrDefault(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"),PersistentDataType.BOOLEAN, false);
+        boolean toggle = victimPDC.getOrDefault(new NamespacedKey(Pvptoggle.pvptoggle, "pvptoggle"),PersistentDataType.BOOLEAN, false);
         boolean blacklisted;
         boolean whitelisted;
         PersistentDataContainer victimWithelist = victimPDC.get(new NamespacedKey(Pvptoggle.pvptoggle, "whitelist"), PersistentDataType.TAG_CONTAINER);
@@ -39,7 +39,7 @@ public class Util {
         victim.sendMessage("PvP-Schutz (Toggle): " + toggle);
         victim.sendMessage("PvP-Schutz (Ultra): " + ultravictim);
         victim.sendMessage("Ultra bei Damager: " + ultradamager);
-        victim.sendMessage("Schutz: " + (!toggle||!ultravictim));
+        victim.sendMessage("Schutz: " + (toggle||ultravictim));
         victim.sendMessage(" ");
         victim.sendMessage("2.Oder: " + (whitelisted && !ultradamager));
         victim.sendMessage("3.Oder: " + ((!toggle||!ultravictim) && !blacklisted && !ultradamager));
@@ -51,7 +51,7 @@ public class Util {
         damager.sendMessage("Victim PvP-Schutz (Toggle): " + toggle);
         damager.sendMessage("Victim PvP-Schutz (Ultra): " + ultravictim);
         damager.sendMessage("Ultra bei Damager: " + ultradamager);
-        damager.sendMessage("Victim Schutz: " + (!toggle||!ultravictim));
+        damager.sendMessage("Victim Schutz: " + (toggle||ultravictim));
         damager.sendMessage(" ");
         damager.sendMessage("2.Oder: " + (whitelisted && !ultradamager));
         damager.sendMessage("3.Oder: " + ((!toggle||!ultravictim) && !blacklisted && !ultradamager));
