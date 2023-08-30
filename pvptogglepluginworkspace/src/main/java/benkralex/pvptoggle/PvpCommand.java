@@ -137,12 +137,13 @@ public class PvpCommand {
             //anzeigen
             if(!pdcList.isEmpty()){
                 int i = 0;
+                sender.sendMessage(ChatColor.DARK_GREEN + "Deine " + listName + ":");
                 for (NamespacedKey uuid:pdcList.getKeys()) {
                     i++;
-                    sender.sendMessage("" + ChatColor.BLUE + i + ". " + Bukkit.getPlayer(UUID.fromString(uuid.getKey())).getDisplayName());
+                    sender.sendMessage("" + ChatColor.BLUE + i + ". " + Bukkit.getOfflinePlayer(UUID.fromString(uuid.getKey())).getName());
                 }
             } else {
-                sender.sendMessage("Deine "+listName+ " ist leer");
+                sender.sendMessage("Deine " + listName + " ist leer");
             }
         } else if (action == 2) {
             //hinzufügen

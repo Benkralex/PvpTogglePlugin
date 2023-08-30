@@ -2,10 +2,7 @@ package benkralex.pvptoggle;
 
 import benkralex.pvptoggle.Config;
 import benkralex.pvptoggle.Pvptoggle;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.entity.Blaze;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -229,8 +226,8 @@ public class InventoryMenu {
 		for (NamespacedKey whitelistedPlayerUuid:pWhitelist.getKeys()) {
 			ItemStack item = new ItemStack(Material.PLAYER_HEAD);
 			SkullMeta m = (SkullMeta) item.getItemMeta();
-			m.setDisplayName(ChatColor.GREEN + Bukkit.getPlayer(UUID.fromString(whitelistedPlayerUuid.getKey())).getDisplayName());
-			m.setOwningPlayer(Bukkit.getPlayer(UUID.fromString(whitelistedPlayerUuid.getKey())));
+			m.setDisplayName(ChatColor.GREEN + Bukkit.getOfflinePlayer(UUID.fromString(whitelistedPlayerUuid.getKey())).getName());
+			m.setOwningPlayer(Bukkit.getOfflinePlayer(UUID.fromString(whitelistedPlayerUuid.getKey())));
 			item.setItemMeta(m);
 			if (!((i == 8) || (i == 26))) {
 				inv.setItem(i, item);
