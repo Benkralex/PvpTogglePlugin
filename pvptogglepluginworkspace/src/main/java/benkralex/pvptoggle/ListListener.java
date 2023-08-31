@@ -3,6 +3,7 @@ package benkralex.pvptoggle;
 import dev.jorel.commandapi.executors.CommandArguments;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,7 +20,7 @@ public class ListListener implements Listener {
         Player p = (Player) e.getWhoClicked();
 
         if (item.getType() == Material.PLAYER_HEAD && e.isRightClick()) {
-            Player ptarget = (Player) ((SkullMeta) item.getItemMeta()).getOwningPlayer();
+            OfflinePlayer ptarget = ((SkullMeta) item.getItemMeta()).getOwningPlayer();
             if (invtitle.equals("Whitelist-Menu")) {
                 PvpCommand.pvpList(p, ptarget, "whitelist", "Whitelist", 3);
                 p.openInventory(InventoryMenu.pvpWhitelistMenu(p));

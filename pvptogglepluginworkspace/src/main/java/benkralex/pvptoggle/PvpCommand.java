@@ -1,6 +1,7 @@
 package benkralex.pvptoggle;
 
 import dev.jorel.commandapi.CommandAPICommand;
+import dev.jorel.commandapi.arguments.OfflinePlayerArgument;
 import dev.jorel.commandapi.arguments.PlayerArgument;
 import dev.jorel.commandapi.executors.CommandArguments;
 import net.md_5.bungee.api.ChatColor;
@@ -8,6 +9,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -44,16 +46,16 @@ public class PvpCommand {
                     .withUsage("/pvp whitelist")
                     .withHelp("Whitelist zeigen", "Damit kannst du dir die Whitelist anzeigen. Alle die in der Whitelist sind können dich immer schlagen.")
                     	.withSubcommand(new CommandAPICommand("add")
-                           .executesPlayer((sender, args)->{pvpList(sender, (Player) args.get("Player"),"whitelist","Whitelist", ADD_ACTION);})
+                           .executesPlayer((sender, args)->{pvpList(sender, (OfflinePlayer)  args.get("Player"),"whitelist","Whitelist", ADD_ACTION);})
                            .withPermission("pvp.whitelist")
                            .withUsage("/pvp whitelist add <Player>")
-						   .withArguments(new PlayerArgument("Player"))
+						   .withArguments(new OfflinePlayerArgument("Player"))
                            .withHelp("Spieler zu Whitelist hinzufügen", "Du kannst damit Spieler zu deiner Whitelist hinzufügen."))
                         .withSubcommand(new CommandAPICommand("remove")
-                           .executesPlayer((sender, args)->{pvpList(sender, (Player) args.get("Player"),"whitelist","Whitelist", REMOVE_ACTION);})
+                           .executesPlayer((sender, args)->{pvpList(sender, (OfflinePlayer) args.get("Player"),"whitelist","Whitelist", REMOVE_ACTION);})
                            .withPermission("pvp.whitelist")
                            .withUsage("/pvp whitelist remove <Player>")
-						   .withArguments(new PlayerArgument("Player"))
+						   .withArguments(new OfflinePlayerArgument("Player"))
                            .withHelp("Spieler aus Whitelist entfernen", "Du kannst damit Spieler aus deiner Whitelist entfernen.")))
             	.withSubcommand(new CommandAPICommand("blacklist")
                     .executesPlayer((sender, args)->{pvpList(sender, null,"blacklist","Blacklist", SHOW_ACTION);})
@@ -61,16 +63,16 @@ public class PvpCommand {
    	                .withUsage("/pvp blacklist <Player>")
 					.withHelp("Blacklist anzeigen", "Damit kannst du dir die Blacklist anzeigen. Alle die in der Blacklist sind können dich nur zurückschlagen.")
            	        	.withSubcommand(new CommandAPICommand("add")
-                            .executesPlayer((sender, args)->{pvpList(sender, (Player) args.get("Player"),"blacklist","Blacklist", ADD_ACTION);})
+                            .executesPlayer((sender, args)->{pvpList(sender, (OfflinePlayer) args.get("Player"),"blacklist","Blacklist", ADD_ACTION);})
                             .withPermission("pvp.blacklist")
                             .withUsage("/pvp blacklist add <Player>")
-						    .withArguments(new PlayerArgument("Player"))
+						    .withArguments(new OfflinePlayerArgument("Player"))
                             .withHelp("Spieler zu Blacklist hinzufügen", "Du kannst damit Spieler zu deiner Blacklist hinzufügen."))
                         .withSubcommand(new CommandAPICommand("remove")
-                            .executesPlayer((sender, args)->{pvpList(sender, (Player) args.get("Player"),"blacklist","Blacklist", REMOVE_ACTION);})
+                            .executesPlayer((sender, args)->{pvpList(sender, (OfflinePlayer) args.get("Player"),"blacklist","Blacklist", REMOVE_ACTION);})
                             .withPermission("pvp.blacklist")
                             .withUsage("/pvp blacklist remove <Player>")
-						    .withArguments(new PlayerArgument("Player"))
+						    .withArguments(new OfflinePlayerArgument("Player"))
                             .withHelp("Spieler aus Blacklist entfernen", "Du kannst damit Spieler aus deiner Blacklist entfernen.")))
 				.withSubcommand(new CommandAPICommand("fight")
 					.executesPlayer((sender, args)->{pvpFight(sender, args, CHALLENGE_ACTION);})
@@ -129,7 +131,7 @@ public class PvpCommand {
     }
 
 
-    public static void pvpList(Player sender, Player ptarget, String key,String listName, int action) {
+    public static void pvpList(Player sender, OfflinePlayer ptarget, String key, String listName, int action) {
         //PvP Whitelist Command
         PersistentDataContainer pdc = sender.getPersistentDataContainer();
         PersistentDataContainer pdcList = pdc.getOrDefault(new NamespacedKey(Pvptoggle.pvptoggle,key),PersistentDataType.TAG_CONTAINER,pdc.getAdapterContext().newPersistentDataContainer());
@@ -148,18 +150,18 @@ public class PvpCommand {
         } else if (action == 2) {
             //hinzufügen
             if (pdcList.has(new NamespacedKey(Pvptoggle.pvptoggle,ptarget.getUniqueId().toString()),PersistentDataType.TAG_CONTAINER)) {
-                sender.sendMessage(ChatColor.RED + "Der Spieler " + ptarget.getDisplayName() + ChatColor.RED + " ist schon in deiner " + listName);
+                sender.sendMessage(ChatColor.RED + "Der Spieler " + ptarget.getName() + ChatColor.RED + " ist schon in deiner " + listName);
             }else{
                 pdcList.set(new NamespacedKey(Pvptoggle.pvptoggle,ptarget.getUniqueId().toString()),PersistentDataType.TAG_CONTAINER,pdcList.getAdapterContext().newPersistentDataContainer());
-                sender.sendMessage(ChatColor.GREEN + ptarget.getDisplayName() + ChatColor.GREEN + " wurde zu deiner "+listName+" hinzugefügt");
+                sender.sendMessage(ChatColor.GREEN + ptarget.getName() + ChatColor.GREEN + " wurde zu deiner "+listName+" hinzugefügt");
             }
         } else if (action == 3) {
             //entfernen
             if (!pdcList.has(new NamespacedKey(Pvptoggle.pvptoggle,ptarget.getUniqueId().toString()),PersistentDataType.TAG_CONTAINER)) {
-                sender.sendMessage(ChatColor.RED + "Der Spieler " + ptarget.getDisplayName() + ChatColor.RED + " ist nicht in deiner "+listName);
+                sender.sendMessage(ChatColor.RED + "Der Spieler " + ptarget.getName() + ChatColor.RED + " ist nicht in deiner "+listName);
             }else{
                 pdcList.remove(new NamespacedKey(Pvptoggle.pvptoggle,ptarget.getUniqueId().toString()));
-                sender.sendMessage(ChatColor.GREEN + ptarget.getDisplayName() + ChatColor.GREEN + " wurde aus deiner "+listName+" entfernt");
+                sender.sendMessage(ChatColor.GREEN + ptarget.getName() + ChatColor.GREEN + " wurde aus deiner "+listName+" entfernt");
             }
         } else {
             sender.sendMessage("Fehler");
