@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.profile.PlayerProfile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -200,8 +201,10 @@ public class InventoryMenu {
 		for (NamespacedKey blacklistedPlayerUuid:pBlacklist.getKeys()) {
 			ItemStack item = new ItemStack(Material.PLAYER_HEAD);
 			SkullMeta m = (SkullMeta) item.getItemMeta();
-			m.setDisplayName(ChatColor.GREEN + Bukkit.getPlayer(UUID.fromString(blacklistedPlayerUuid.getKey())).getDisplayName());
-			m.setOwningPlayer(Bukkit.getPlayer(UUID.fromString(blacklistedPlayerUuid.getKey())));
+			OfflinePlayer target=Bukkit.getOfflinePlayer(UUID.fromString(blacklistedPlayerUuid.getKey()));
+			PlayerProfile profile=target.getPlayerProfile().update().join();
+			m.setDisplayName(ChatColor.GREEN + profile.getName());
+			m.setOwningPlayer(target);
 			List<String> lore = new ArrayList<>();
 			lore.add(ChatColor.BLUE + "Rechtsklick:" + ChatColor.RED + " Spieler entfernen");
 			m.setLore(lore);
@@ -229,8 +232,10 @@ public class InventoryMenu {
 		for (NamespacedKey whitelistedPlayerUuid:pWhitelist.getKeys()) {
 			ItemStack item = new ItemStack(Material.PLAYER_HEAD);
 			SkullMeta m = (SkullMeta) item.getItemMeta();
-			m.setDisplayName(ChatColor.GREEN + Bukkit.getOfflinePlayer(UUID.fromString(whitelistedPlayerUuid.getKey())).getName());
-			m.setOwningPlayer(Bukkit.getOfflinePlayer(UUID.fromString(whitelistedPlayerUuid.getKey())));
+			OfflinePlayer target=Bukkit.getOfflinePlayer(UUID.fromString(whitelistedPlayerUuid.getKey()));
+			PlayerProfile profile=target.getPlayerProfile().update().join();
+			m.setDisplayName(ChatColor.GREEN + profile.getName());
+			m.setOwningPlayer(target);
 			List<String> lore = new ArrayList<>();
 			lore.add(ChatColor.BLUE + "Rechtsklick:" + ChatColor.RED + " Spieler entfernen");
 			m.setLore(lore);

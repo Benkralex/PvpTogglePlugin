@@ -13,6 +13,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.profile.PlayerProfile;
 
 import java.util.UUID;
 
@@ -46,7 +47,7 @@ public class PvpCommand {
                     .withUsage("/pvp whitelist")
                     .withHelp("Whitelist zeigen", "Damit kannst du dir die Whitelist anzeigen. Alle die in der Whitelist sind können dich immer schlagen.")
                     	.withSubcommand(new CommandAPICommand("add")
-                           .executesPlayer((sender, args)->{pvpList(sender, (OfflinePlayer)  args.get("Player"),"whitelist","Whitelist", ADD_ACTION);})
+                           .executesPlayer((sender, args)->{pvpList(sender, (OfflinePlayer)args.get("Player"),"whitelist","Whitelist", ADD_ACTION);})
                            .withPermission("pvp.whitelist")
                            .withUsage("/pvp whitelist add <Player>")
 						   .withArguments(new OfflinePlayerArgument("Player"))
@@ -135,6 +136,7 @@ public class PvpCommand {
         //PvP Whitelist Command
         PersistentDataContainer pdc = sender.getPersistentDataContainer();
         PersistentDataContainer pdcList = pdc.getOrDefault(new NamespacedKey(Pvptoggle.pvptoggle,key),PersistentDataType.TAG_CONTAINER,pdc.getAdapterContext().newPersistentDataContainer());
+        PlayerProfile targetProfile=ptarget.getPlayerProfile().update().join();
         if (action == 1) {
             //anzeigen
             if(!pdcList.isEmpty()){
@@ -149,19 +151,19 @@ public class PvpCommand {
             }
         } else if (action == 2) {
             //hinzufügen
-            if (pdcList.has(new NamespacedKey(Pvptoggle.pvptoggle,ptarget.getUniqueId().toString()),PersistentDataType.TAG_CONTAINER)) {
-                sender.sendMessage(ChatColor.RED + "Der Spieler " + ptarget.getName() + ChatColor.RED + " ist schon in deiner " + listName);
+            if (pdcList.has(new NamespacedKey(Pvptoggle.pvptoggle,targetProfile.getUniqueId().toString()),PersistentDataType.TAG_CONTAINER)) {
+                sender.sendMessage(ChatColor.RED + "Der Spieler " + targetProfile.getName() + ChatColor.RED + " ist schon in deiner " + listName);
             }else{
-                pdcList.set(new NamespacedKey(Pvptoggle.pvptoggle,ptarget.getUniqueId().toString()),PersistentDataType.TAG_CONTAINER,pdcList.getAdapterContext().newPersistentDataContainer());
-                sender.sendMessage(ChatColor.GREEN + ptarget.getName() + ChatColor.GREEN + " wurde zu deiner "+listName+" hinzugefügt");
+                pdcList.set(new NamespacedKey(Pvptoggle.pvptoggle,targetProfile.getUniqueId().toString()),PersistentDataType.TAG_CONTAINER,pdcList.getAdapterContext().newPersistentDataContainer());
+                sender.sendMessage(ChatColor.GREEN + targetProfile.getName() + ChatColor.GREEN + " wurde zu deiner "+listName+" hinzugefügt");
             }
         } else if (action == 3) {
             //entfernen
-            if (!pdcList.has(new NamespacedKey(Pvptoggle.pvptoggle,ptarget.getUniqueId().toString()),PersistentDataType.TAG_CONTAINER)) {
-                sender.sendMessage(ChatColor.RED + "Der Spieler " + ptarget.getName() + ChatColor.RED + " ist nicht in deiner "+listName);
+            if (!pdcList.has(new NamespacedKey(Pvptoggle.pvptoggle,targetProfile.getUniqueId().toString()),PersistentDataType.TAG_CONTAINER)) {
+                sender.sendMessage(ChatColor.RED + "Der Spieler " + targetProfile.getName() + ChatColor.RED + " ist nicht in deiner "+listName);
             }else{
-                pdcList.remove(new NamespacedKey(Pvptoggle.pvptoggle,ptarget.getUniqueId().toString()));
-                sender.sendMessage(ChatColor.GREEN + ptarget.getName() + ChatColor.GREEN + " wurde aus deiner "+listName+" entfernt");
+                pdcList.remove(new NamespacedKey(Pvptoggle.pvptoggle,targetProfile.getUniqueId().toString()));
+                sender.sendMessage(ChatColor.GREEN + targetProfile.getName() + ChatColor.GREEN + " wurde aus deiner "+listName+" entfernt");
             }
         } else {
             sender.sendMessage("Fehler");
