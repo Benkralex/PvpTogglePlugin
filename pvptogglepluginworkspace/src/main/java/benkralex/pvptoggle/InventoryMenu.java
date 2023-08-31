@@ -5,6 +5,8 @@ import benkralex.pvptoggle.Pvptoggle;
 import org.bukkit.*;
 import org.bukkit.entity.Blaze;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -15,6 +17,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.profile.PlayerProfile;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,6 +34,8 @@ public class InventoryMenu {
 	public static final int PVP_TIME=9;
 	public static final int PVP_TIME_PLUS=10;
 	public static final int PVP_TIME_MINUS=11;
+
+	private static HashSet<Inventory> inventories=new HashSet<Inventory>();
 	
 	public static ItemStack getMenuItem(int i, Player p) {
 		List<String> lore = new ArrayList<>();
@@ -168,7 +173,7 @@ public class InventoryMenu {
 				Pvptoggle.pvptoggle.getLogger().warning(ChatColor.RED + "ERROR IN pvpMenuFillEmpty(): " + e.toString());
 			}
   		}
-		return inv;
+		return registerInv(inv);
 	}
 	
 	public static Inventory pvpMenu(Player p) {
@@ -186,29 +191,30 @@ public class InventoryMenu {
 			inv.setItem(8, getMenuItem(CLOSE, p));
 
 			inv2 = pvpMenuFillEmpty(inv, p);
-			return inv2;
+			return registerInv(inv2);
 		} else {
-			return pvpMenuFillEmpty(Bukkit.createInventory(null, 3*9, "No Permissiom"), p);
+			return registerInv(pvpMenuFillEmpty(Bukkit.createInventory(null, 3*9, "No Permission"), p));
 		}
 	}
 	
 	
-	public static Inventory pvpBlacklistMenu(Player p) {
-		Inventory inv = Bukkit.createInventory(null, 3*9, "Blacklist-Menu");
+	public static Inventory pvpListMenu(Player p,String listname, String key) {
+		Inventory inv = Bukkit.createInventory(null, 3*9, listname+"-Menu");
 		PersistentDataContainer pdc = p.getPersistentDataContainer();
-		PersistentDataContainer pBlacklist = pdc.get(new NamespacedKey(Pvptoggle.pvptoggle, "blacklist"), PersistentDataType.TAG_CONTAINER);
+		PersistentDataContainer plist = pdc.get(new NamespacedKey(Pvptoggle.pvptoggle, key), PersistentDataType.TAG_CONTAINER);
 		int i = 0;
-		for (NamespacedKey blacklistedPlayerUuid:pBlacklist.getKeys()) {
+		for (NamespacedKey listedPlayerUuid:plist.getKeys()) {
 			ItemStack item = new ItemStack(Material.PLAYER_HEAD);
 			SkullMeta m = (SkullMeta) item.getItemMeta();
-			OfflinePlayer target=Bukkit.getOfflinePlayer(UUID.fromString(blacklistedPlayerUuid.getKey()));
-			PlayerProfile profile=target.getPlayerProfile().update().join();
-			m.setDisplayName(ChatColor.GREEN + profile.getName());
-			m.setOwningPlayer(target);
-			List<String> lore = new ArrayList<>();
-			lore.add(ChatColor.BLUE + "Rechtsklick:" + ChatColor.RED + " Spieler entfernen");
-			m.setLore(lore);
-			item.setItemMeta(m);
+			OfflinePlayer target=Bukkit.getOfflinePlayer(UUID.fromString(listedPlayerUuid.getKey()));
+			target.getPlayerProfile().update().thenAccept(profile->{
+				m.setDisplayName(ChatColor.GREEN + profile.getName());
+				m.setOwnerProfile(profile);
+				List<String> lore = new ArrayList<>();
+				lore.add(ChatColor.BLUE + "Rechtsklick:" + ChatColor.RED + " Spieler entfernen");
+				m.setLore(lore);
+				item.setItemMeta(m);
+			});
 			if (!((i == 8) || (i == 26))) {
 				inv.setItem(i, item);
 			} else {
@@ -219,42 +225,18 @@ public class InventoryMenu {
 		}
 		inv.setItem(8, getMenuItem(CLOSE, p));
 		inv.setItem(26, getMenuItem(BACK, p));
-		
-		return pvpMenuFillEmpty(inv, p);
+
+		return registerInv(pvpMenuFillEmpty(inv, p));
 	}
-	
-	
-	public static Inventory pvpWhitelistMenu(Player p) {
-		Inventory inv = Bukkit.createInventory(null, 3*9, "Whitelist-Menu");
-		PersistentDataContainer pdc = p.getPersistentDataContainer();
-		PersistentDataContainer pWhitelist = pdc.get(new NamespacedKey(Pvptoggle.pvptoggle, "whitelist"), PersistentDataType.TAG_CONTAINER);
-		int i = 0;
-		for (NamespacedKey whitelistedPlayerUuid:pWhitelist.getKeys()) {
-			ItemStack item = new ItemStack(Material.PLAYER_HEAD);
-			SkullMeta m = (SkullMeta) item.getItemMeta();
-			OfflinePlayer target=Bukkit.getOfflinePlayer(UUID.fromString(whitelistedPlayerUuid.getKey()));
-			PlayerProfile profile=target.getPlayerProfile().update().join();
-			m.setDisplayName(ChatColor.GREEN + profile.getName());
-			m.setOwningPlayer(target);
-			List<String> lore = new ArrayList<>();
-			lore.add(ChatColor.BLUE + "Rechtsklick:" + ChatColor.RED + " Spieler entfernen");
-			m.setLore(lore);
-			item.setItemMeta(m);
-			if (!((i == 8) || (i == 26))) {
-				inv.setItem(i, item);
-			} else {
-				i++;
-				inv.setItem(i, item);
-			}
-			i++;
-		}
-		inv.setItem(8, getMenuItem(CLOSE, p));
-		inv.setItem(26, getMenuItem(BACK, p));
-		
-		return pvpMenuFillEmpty(inv, p);
+
+	public static Inventory pvpListAddMenu(Player p,String listname, String key){
+		AnvilInventory inv =(AnvilInventory) Bukkit.createInventory(null, InventoryType.ANVIL,"Bitte Spielername eingeben");
+		inv.setItem(0,new ItemStack(Material.PAPER));
+		inv.setRepairCost(0);
+
+		return registerInv(inv);
 	}
-	
-	
+
 	public static Inventory pvpOpSettingsMenu(Player p) {
 		Inventory inv = Bukkit.createInventory(null, 3*9, "Operator-Menu");
 		inv.setItem(8, getMenuItem(CLOSE, p));
@@ -263,8 +245,13 @@ public class InventoryMenu {
 		inv.setItem(13, getMenuItem(PVP_TIME_MINUS, p));
 		inv.setItem(14, getMenuItem(PVP_TIME, p));
 		inv.setItem(15, getMenuItem(PVP_TIME_PLUS, p));
-		
-		return pvpMenuFillEmpty(inv, p);
+
+		return registerInv(pvpMenuFillEmpty(inv, p));
+	}
+
+	public static Inventory registerInv(Inventory inv) {
+		inventories.add(inv);
+		return inv;
 	}
 }
 

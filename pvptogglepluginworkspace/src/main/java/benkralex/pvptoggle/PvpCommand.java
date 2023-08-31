@@ -136,39 +136,40 @@ public class PvpCommand {
         //PvP Whitelist Command
         PersistentDataContainer pdc = sender.getPersistentDataContainer();
         PersistentDataContainer pdcList = pdc.getOrDefault(new NamespacedKey(Pvptoggle.pvptoggle,key),PersistentDataType.TAG_CONTAINER,pdc.getAdapterContext().newPersistentDataContainer());
-        PlayerProfile targetProfile=ptarget.getPlayerProfile().update().join();
-        if (action == 1) {
-            //anzeigen
-            if(!pdcList.isEmpty()){
-                int i = 0;
-                sender.sendMessage(ChatColor.DARK_GREEN + "Deine " + listName + ":");
-                for (NamespacedKey uuid:pdcList.getKeys()) {
-                    i++;
-                    sender.sendMessage("" + ChatColor.BLUE + i + ". " + Bukkit.getOfflinePlayer(UUID.fromString(uuid.getKey())).getName());
+        ptarget.getPlayerProfile().update().thenAccept(targetProfile->{
+            if (action == 1) {
+                //anzeigen
+                if(!pdcList.isEmpty()){
+                    int i = 0;
+                    sender.sendMessage(ChatColor.DARK_GREEN + "Deine " + listName + ":");
+                    for (NamespacedKey uuid:pdcList.getKeys()) {
+                        i++;
+                        sender.sendMessage("" + ChatColor.BLUE + i + ". " + Bukkit.getOfflinePlayer(UUID.fromString(uuid.getKey())).getName());
+                    }
+                } else {
+                    sender.sendMessage("Deine " + listName + " ist leer");
+                }
+            } else if (action == 2) {
+                //hinzufügen
+                if (pdcList.has(new NamespacedKey(Pvptoggle.pvptoggle,targetProfile.getUniqueId().toString()),PersistentDataType.TAG_CONTAINER)) {
+                    sender.sendMessage(ChatColor.RED + "Der Spieler " + targetProfile.getName() + ChatColor.RED + " ist schon in deiner " + listName);
+                }else{
+                    pdcList.set(new NamespacedKey(Pvptoggle.pvptoggle,targetProfile.getUniqueId().toString()),PersistentDataType.TAG_CONTAINER,pdcList.getAdapterContext().newPersistentDataContainer());
+                    sender.sendMessage(ChatColor.GREEN + targetProfile.getName() + ChatColor.GREEN + " wurde zu deiner "+listName+" hinzugefügt");
+                }
+            } else if (action == 3) {
+                //entfernen
+                if (!pdcList.has(new NamespacedKey(Pvptoggle.pvptoggle,targetProfile.getUniqueId().toString()),PersistentDataType.TAG_CONTAINER)) {
+                    sender.sendMessage(ChatColor.RED + "Der Spieler " + targetProfile.getName() + ChatColor.RED + " ist nicht in deiner "+listName);
+                }else{
+                    pdcList.remove(new NamespacedKey(Pvptoggle.pvptoggle,targetProfile.getUniqueId().toString()));
+                    sender.sendMessage(ChatColor.GREEN + targetProfile.getName() + ChatColor.GREEN + " wurde aus deiner "+listName+" entfernt");
                 }
             } else {
-                sender.sendMessage("Deine " + listName + " ist leer");
+                sender.sendMessage("Fehler");
             }
-        } else if (action == 2) {
-            //hinzufügen
-            if (pdcList.has(new NamespacedKey(Pvptoggle.pvptoggle,targetProfile.getUniqueId().toString()),PersistentDataType.TAG_CONTAINER)) {
-                sender.sendMessage(ChatColor.RED + "Der Spieler " + targetProfile.getName() + ChatColor.RED + " ist schon in deiner " + listName);
-            }else{
-                pdcList.set(new NamespacedKey(Pvptoggle.pvptoggle,targetProfile.getUniqueId().toString()),PersistentDataType.TAG_CONTAINER,pdcList.getAdapterContext().newPersistentDataContainer());
-                sender.sendMessage(ChatColor.GREEN + targetProfile.getName() + ChatColor.GREEN + " wurde zu deiner "+listName+" hinzugefügt");
-            }
-        } else if (action == 3) {
-            //entfernen
-            if (!pdcList.has(new NamespacedKey(Pvptoggle.pvptoggle,targetProfile.getUniqueId().toString()),PersistentDataType.TAG_CONTAINER)) {
-                sender.sendMessage(ChatColor.RED + "Der Spieler " + targetProfile.getName() + ChatColor.RED + " ist nicht in deiner "+listName);
-            }else{
-                pdcList.remove(new NamespacedKey(Pvptoggle.pvptoggle,targetProfile.getUniqueId().toString()));
-                sender.sendMessage(ChatColor.GREEN + targetProfile.getName() + ChatColor.GREEN + " wurde aus deiner "+listName+" entfernt");
-            }
-        } else {
-            sender.sendMessage("Fehler");
-        }
-        pdc.set(new NamespacedKey(Pvptoggle.pvptoggle,key),PersistentDataType.TAG_CONTAINER,pdcList);
+            pdc.set(new NamespacedKey(Pvptoggle.pvptoggle,key),PersistentDataType.TAG_CONTAINER,pdcList);
+        });
     }
 
 

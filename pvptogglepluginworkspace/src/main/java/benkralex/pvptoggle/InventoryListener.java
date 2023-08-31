@@ -49,10 +49,10 @@ public class InventoryListener implements Listener{
                     }
                     return;
                 } else if (iname.equals("Whitelist")) {
-                    p.openInventory(InventoryMenu.pvpWhitelistMenu(p));
+                    p.openInventory(InventoryMenu.pvpListMenu(p,"Whitelist","whitelist"));
                     return;
                 } else if (iname.equals("Blacklist")) {
-                    p.openInventory(InventoryMenu.pvpBlacklistMenu(p));
+                    p.openInventory(InventoryMenu.pvpListMenu(p,"Blacklist","blacklist"));
                     return;
                 } else if (iname.equals("Menu für Operators")) {
                     p.openInventory(InventoryMenu.pvpOpSettingsMenu(p));

@@ -23,10 +23,10 @@ public class ListListener implements Listener {
             OfflinePlayer ptarget = ((SkullMeta) item.getItemMeta()).getOwningPlayer();
             if (invtitle.equals("Whitelist-Menu")) {
                 PvpCommand.pvpList(p, ptarget, "whitelist", "Whitelist", 3);
-                p.openInventory(InventoryMenu.pvpWhitelistMenu(p));
+                p.openInventory(InventoryMenu.pvpListMenu(p,"Whitelist","whitelist"));
             } else if (invtitle.equals("Blacklist-Menu")) {
                 PvpCommand.pvpList(p, ptarget, "blacklist", "Blacklist", 3);
-                p.openInventory(InventoryMenu.pvpBlacklistMenu(p));
+                p.openInventory(InventoryMenu.pvpListMenu(p, "Blacklist", "blacklist"));
             }
         }
     }
