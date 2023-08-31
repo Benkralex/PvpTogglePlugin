@@ -202,6 +202,9 @@ public class InventoryMenu {
 			SkullMeta m = (SkullMeta) item.getItemMeta();
 			m.setDisplayName(ChatColor.GREEN + Bukkit.getPlayer(UUID.fromString(blacklistedPlayerUuid.getKey())).getDisplayName());
 			m.setOwningPlayer(Bukkit.getPlayer(UUID.fromString(blacklistedPlayerUuid.getKey())));
+			List<String> lore = new ArrayList<>();
+			lore.add(ChatColor.BLUE + "Rechtsklick:" + ChatColor.RED + " Spieler entfernen");
+			m.setLore(lore);
 			item.setItemMeta(m);
 			if (!((i == 8) || (i == 26))) {
 				inv.setItem(i, item);
@@ -228,6 +231,9 @@ public class InventoryMenu {
 			SkullMeta m = (SkullMeta) item.getItemMeta();
 			m.setDisplayName(ChatColor.GREEN + Bukkit.getOfflinePlayer(UUID.fromString(whitelistedPlayerUuid.getKey())).getName());
 			m.setOwningPlayer(Bukkit.getOfflinePlayer(UUID.fromString(whitelistedPlayerUuid.getKey())));
+			List<String> lore = new ArrayList<>();
+			lore.add(ChatColor.BLUE + "Rechtsklick:" + ChatColor.RED + " Spieler entfernen");
+			m.setLore(lore);
 			item.setItemMeta(m);
 			if (!((i == 8) || (i == 26))) {
 				inv.setItem(i, item);

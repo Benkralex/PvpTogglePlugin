@@ -11,6 +11,7 @@ public final class Pvptoggle extends JavaPlugin {
     public void onEnable() {
         Bukkit.getPluginManager().registerEvents(new PvpEvent(), this);
         Bukkit.getPluginManager().registerEvents(new InventoryListener(), this);
+        Bukkit.getPluginManager().registerEvents(new ListListener(), this);
         Config.createConfig();
         if (Config.getPvpTime() < 0) {
             Config.setPvpTime(0);
