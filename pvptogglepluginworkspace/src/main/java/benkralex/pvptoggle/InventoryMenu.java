@@ -240,7 +240,7 @@ public class InventoryMenu {
 
 	public static Inventory pvpListAddMenu(Player p,String listname, String key){
 		AnvilInventory inv = (AnvilInventory) Bukkit.createInventory(null, InventoryType.ANVIL,"Bitte Spielername eingeben");
-		inv.setItem(0,new ItemStack(Material.PAPER));
+		inv.setItem(0,new ItemStack(Material.NAME_TAG));
 		inv.setRepairCost(0);
 
 		return registerInv(inv);
