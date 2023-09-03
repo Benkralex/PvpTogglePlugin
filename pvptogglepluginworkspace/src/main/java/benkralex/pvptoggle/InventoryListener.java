@@ -1,5 +1,6 @@
 package benkralex.pvptoggle;
 
+import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import benkralex.pvptoggle.InventoryMenu;
 import org.bukkit.event.EventHandler;
@@ -71,6 +72,8 @@ public class InventoryListener implements Listener{
                 } else if (iname.equals("Zurück")) {
                     p.openInventory(InventoryMenu.pvpMenu(p));
                     return;
+                } else if (iname.equals("Spieler hinzufügen")) {
+                    p.openInventory(InventoryMenu.pvpListAddMenu(p, "Whitelist", "whitelist"));
                 } else {
                     return;
                 }
@@ -85,7 +88,9 @@ public class InventoryListener implements Listener{
                 } else if (iname.equals("Zurück")) {
                     p.openInventory(InventoryMenu.pvpMenu(p));
                     return;
-                } else {
+                } else if (iname.equals("Spieler hinzufügen")) {
+                    p.openInventory(InventoryMenu.pvpListAddMenu(p, "Blacklist", "blacklist"));
+                }else {
                     return;
                 }
             }
@@ -119,6 +124,12 @@ public class InventoryListener implements Listener{
                     }
                     inv.setItem(14, InventoryMenu.getMenuItem(InventoryMenu.PVP_TIME, p));
                 }
+            }
+        } else if (invtitle.equals(("Bitte Spielername eingeben"))) {
+            if (e.getCurrentItem() != null) {
+                e.setCancelled(true);
+                String iname = e.getCurrentItem().getItemMeta().getDisplayName();
+                e.getWhoClicked().sendMessage( ChatColor.RED + iname + "konnte nicht hinzugefügt werden");
             }
         }
     }

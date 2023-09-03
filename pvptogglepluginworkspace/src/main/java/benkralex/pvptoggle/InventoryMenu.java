@@ -34,6 +34,7 @@ public class InventoryMenu {
 	public static final int PVP_TIME=9;
 	public static final int PVP_TIME_PLUS=10;
 	public static final int PVP_TIME_MINUS=11;
+	public static final int LIST_ADD=12;
 
 	private static HashSet<Inventory> inventories=new HashSet<Inventory>();
 	
@@ -158,6 +159,13 @@ public class InventoryMenu {
 				mpvptimeminus.setLore(lore);
 				ipvptimeminus.setItemMeta(mpvptimeminus);
 				return ipvptimeminus;
+			case 12:
+				ItemStack iAddPlayer = new ItemStack(Material.NETHER_STAR);
+				ItemMeta mAddPlayer = iAddPlayer.getItemMeta();
+				mAddPlayer.setDisplayName("Spieler hinzufügen");
+				mAddPlayer.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+				iAddPlayer.setItemMeta(mAddPlayer);
+				return iAddPlayer;
 			default:
 				return null;
 		}
@@ -215,7 +223,7 @@ public class InventoryMenu {
 				m.setLore(lore);
 				item.setItemMeta(m);
 			});
-			if (!((i == 8) || (i == 26))) {
+			if (!((i == 8) || (i == 26) || (i == 22))) {
 				inv.setItem(i, item);
 			} else {
 				i++;
@@ -225,12 +233,13 @@ public class InventoryMenu {
 		}
 		inv.setItem(8, getMenuItem(CLOSE, p));
 		inv.setItem(26, getMenuItem(BACK, p));
+		inv.setItem(22, getMenuItem(LIST_ADD, p));
 
 		return registerInv(pvpMenuFillEmpty(inv, p));
 	}
 
 	public static Inventory pvpListAddMenu(Player p,String listname, String key){
-		AnvilInventory inv =(AnvilInventory) Bukkit.createInventory(null, InventoryType.ANVIL,"Bitte Spielername eingeben");
+		AnvilInventory inv = (AnvilInventory) Bukkit.createInventory(null, InventoryType.ANVIL,"Bitte Spielername eingeben");
 		inv.setItem(0,new ItemStack(Material.PAPER));
 		inv.setRepairCost(0);
 
