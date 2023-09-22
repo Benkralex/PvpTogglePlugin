@@ -74,7 +74,7 @@ public class InventoryListener implements Listener{
                     p.openInventory(InventoryMenu.pvpMenu(p));
                     return;
                 } else if (iname.equals("Spieler hinzufügen")) {
-                    p.openInventory(InventoryMenu.pvpListAddMenu(p, "Whitelist", "whitelist"));
+                    //p.openInventory(InventoryMenu.pvpListAddMenu(p, "Whitelist", "whitelist"));
                 } else {
                     return;
                 }
