@@ -14,6 +14,7 @@ import org.bukkit.persistence.PersistentDataType;
 public class InventoryListener implements Listener{
     @EventHandler
     public void onPvpMenuInteract(InventoryClickEvent e) {
+        if (e.getInventory() == null) return;
         Player p = (Player) e.getWhoClicked();
 	    Inventory inv = e.getClickedInventory();
         String invtitle = e.getView().getTitle();
