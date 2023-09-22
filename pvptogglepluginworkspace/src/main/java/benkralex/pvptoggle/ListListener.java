@@ -19,6 +19,7 @@ public class ListListener implements Listener {
         String invtitle = e.getView().getTitle();
         Player p = (Player) e.getWhoClicked();
 
+        if (item == null) return;
         if (item.getType() == Material.PLAYER_HEAD && e.isRightClick()) {
             OfflinePlayer ptarget = ((SkullMeta) item.getItemMeta()).getOwningPlayer();
             if (invtitle.equals("Whitelist-Menu")) {
